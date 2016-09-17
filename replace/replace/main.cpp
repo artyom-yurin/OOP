@@ -48,7 +48,7 @@ int main(int argc, char * argv[])
 		while (positionString != string::npos)
 		{
 			currentString.replace(positionString, searchString.size(), replaceString);
-			positionString = currentString.find(searchString, positionString);
+			positionString = currentString.find(searchString, positionString + replaceString.size());
 		}
 		if (!(output << currentString << "\n"))
 		{
