@@ -43,7 +43,7 @@ int main(int argc, char * argv[])
 
 	while (getline(input, currentString))
 	{
-		int positionString = currentString.find(searchString, 0);
+		auto positionString = currentString.find(searchString, 0);
 
 		while (positionString != string::npos)
 		{
