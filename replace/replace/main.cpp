@@ -4,6 +4,23 @@
 
 using namespace std;
 
+namespace
+{
+	auto FindAndReplace(const std::string & inputString, const std::string & searchString, const std::string & replaceString)
+	{
+		std::string newString = inputString;
+		auto positionString = newString.find(searchString, 0);
+
+		while (positionString != string::npos)
+		{
+			newString.replace(positionString, searchString.size(), replaceString);
+			positionString = newString.find(searchString, positionString + replaceString.size());
+		}
+		
+		return newString;
+	}
+}
+
 int main(int argc, char * argv[])
 {
 	if (argc != 5)
@@ -43,13 +60,7 @@ int main(int argc, char * argv[])
 
 	while (getline(input, currentString))
 	{
-		auto positionString = currentString.find(searchString, 0);
-
-		while (positionString != string::npos)
-		{
-			currentString.replace(positionString, searchString.size(), replaceString);
-			positionString = currentString.find(searchString, positionString + replaceString.size());
-		}
+		currentString = FindAndReplace(currentString, searchString, replaceString);
 		if (!(output << currentString << "\n"))
 		{
 			cout << "Failed to save data on disk\n";
