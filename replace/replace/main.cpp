@@ -8,15 +8,19 @@ namespace
 {
 	auto FindAndReplace(const std::string & inputString, const std::string & searchString, const std::string & replaceString)
 	{
-		std::string newString = inputString;
-		auto positionString = newString.find(searchString, 0);
+		std::string newString;
+		int startPosition = 0;
+		auto positionString = inputString.find(searchString, 0);
 
 		while (positionString != string::npos)
 		{
-			newString.replace(positionString, searchString.size(), replaceString);
-			positionString = newString.find(searchString, positionString + replaceString.size());
+			newString += inputString.substr(startPosition, positionString - startPosition);
+			startPosition = positionString + replaceString.size();
+			positionString = newString.find(searchString, startPosition);
 		}
 		
+		newString += inputString.substr(startPosition);
+
 		return newString;
 	}
 }
