@@ -1,0 +1,2 @@
+Input byte: 255
+Output byte: 255

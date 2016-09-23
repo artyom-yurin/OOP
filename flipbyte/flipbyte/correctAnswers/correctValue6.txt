@@ -1,0 +1,2 @@
+Input byte: 6
+Output byte: 96

@@ -5,6 +5,17 @@ using namespace std;
 
 namespace
 {
+	bool isNumber(char * str)
+	{
+		for (int i = 0; i < strlen(str); ++i)
+		{
+			if (!isdigit(str[i])) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
 	void flipByte(uint8_t & byte)
 	{
 		byte = (byte & 0b01010101 << 1) | (byte & 0b10101010 >> 1);
@@ -20,14 +31,12 @@ int main(int argc, char * argv[])
 		cout << "Invalid arguments count\n"
 			<< "Usage: flipbyte.exe <input byte>\n";
 		return 1;
-	}
-
-	if ((atoi(argv[1]) > 255) &&
-		(atoi(argv[1]) < 0) &&
-		(!isdigit(atoi(argv[1]))))
+	};
+	if ((!isNumber(argv[1])) || !((atoi(argv[1]) <= 255) && (atoi(argv[1]) >= 0)))
 	{
 		cout << "Invalid value\n"
-			<< "<input byte> must be unsign int(0 .. 255)\n";
+			<< "<input byte> must be unsigned int(0 .. 255)\n";
+		return 1;
 	}
 
 	uint8_t byte = static_cast <uint8_t> (atoi(argv[1]));

@@ -1,0 +1,2 @@
+Input byte: 0
+Output byte: 0

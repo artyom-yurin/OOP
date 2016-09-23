@@ -1,0 +1,2 @@
+Invalid value
+<input byte> must be unsigned int(0 .. 255)
