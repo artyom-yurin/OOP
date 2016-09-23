@@ -6,7 +6,21 @@ using namespace std;
 
 namespace
 {
-	auto FindAndReplace(const std::string & inputString, const std::string & searchString, const std::string & replaceString)
+
+	string copyString(const string & inputString, int startPosition, int finalPosition)
+	{
+		string newString;
+		int i = startPosition;
+		while (i != finalPosition)
+		{
+			newString += inputString[i];
+			++i;
+		}
+
+		return newString;
+	}
+
+	auto FindAndReplace(const string & inputString, const string & searchString, const string & replaceString)
 	{
 		std::string newString;
 		int startPosition = 0;
@@ -14,12 +28,12 @@ namespace
 
 		while (positionString != string::npos)
 		{
-			newString += inputString.substr(startPosition, positionString - startPosition);
-			startPosition = positionString + replaceString.size();
-			positionString = newString.find(searchString, startPosition);
+			newString += copyString(inputString,  startPosition, positionString) + replaceString;
+			startPosition = positionString + searchString.length();
+			positionString = inputString.find(searchString, startPosition);
 		}
-		
-		newString += inputString.substr(startPosition);
+
+		newString += copyString(inputString, startPosition, inputString.length());
 
 		return newString;
 	}
@@ -27,7 +41,7 @@ namespace
 
 int main(int argc, char * argv[])
 {
-	if (argc != 5)
+    if (argc != 5)
 	{
 		cout << "Invalid arguments count\n"
 			<< "Usage: replace.exe <input file> <output file> <search string> <replace string>\n";
