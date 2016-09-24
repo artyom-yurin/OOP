@@ -6,6 +6,13 @@ if NOT ERRORLEVEL 1 goto err
 fc.exe "%TEMP%\output.txt" correctAnswers\correctInvalidArguments.txt
 if ERRORLEVEL 1 goto err
 echo Test for invalid argements succeed!
+
+rem empty string 
+%PROGRAM% "tests\name.txt" %TEMP%\answerEmptyString "" "A" > "%TEMP%\output.txt"
+if NOT ERRORLEVEL 1 goto err
+fc.exe "%TEMP%\output.txt" correctAnswers\correctEmptyString.txt
+if ERRORLEVEL 1 goto err
+echo Test for empty string succeed!
                                                                                                                           
 rem delete all "V" 
 %PROGRAM% "tests\name.txt" %TEMP%\answerName.txt "V" ""
