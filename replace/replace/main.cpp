@@ -6,20 +6,6 @@ using namespace std;
 
 namespace
 {
-
-	string copyString(const string & inputString, size_t startPosition, size_t finalPosition)
-	{
-		string newString;
-		size_t i = startPosition;
-		while (i != finalPosition)
-		{
-			newString += inputString[i];
-			++i;
-		}
-
-		return newString;
-	}
-
 	auto FindAndReplace(const string & inputString, const string & searchString, const string & replaceString)
 	{
 		std::string newString;
@@ -28,12 +14,13 @@ namespace
 
 		while (positionString != string::npos)
 		{
-			newString += copyString(inputString,  startPosition, positionString) + replaceString;
+			newString.append(inputString,  startPosition, positionString - startPosition) + replaceString;
+			newString.append(replaceString);
 			startPosition = positionString + searchString.length();
 			positionString = inputString.find(searchString, startPosition);
 		}
 
-		newString += copyString(inputString, startPosition, inputString.length());
+		newString.append(inputString, startPosition);
 
 		return newString;
 	}
