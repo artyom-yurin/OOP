@@ -7,10 +7,10 @@ using namespace std;
 namespace
 {
 
-	string copyString(const string & inputString, int startPosition, int finalPosition)
+	string copyString(const string & inputString, size_t startPosition, size_t finalPosition)
 	{
 		string newString;
-		int i = startPosition;
+		size_t i = startPosition;
 		while (i != finalPosition)
 		{
 			newString += inputString[i];
@@ -23,7 +23,7 @@ namespace
 	auto FindAndReplace(const string & inputString, const string & searchString, const string & replaceString)
 	{
 		std::string newString;
-		int startPosition = 0;
+		size_t startPosition = 0;
 		auto positionString = inputString.find(searchString, 0);
 
 		while (positionString != string::npos)
