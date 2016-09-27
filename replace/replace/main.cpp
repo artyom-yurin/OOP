@@ -14,7 +14,7 @@ namespace
 
 		while (positionString != string::npos)
 		{
-			newString.append(inputString,  startPosition, positionString - startPosition) + replaceString;
+			newString.append(inputString,  startPosition, positionString - startPosition);
 			newString.append(replaceString);
 			startPosition = positionString + searchString.length();
 			positionString = inputString.find(searchString, startPosition);
