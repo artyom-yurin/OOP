@@ -1,0 +1,5 @@
+Invalid value
+Input File:
+<number> <number> <number>
+<number> <number> <number>
+<number> <number> <number>

@@ -169,6 +169,7 @@ int main(int argc, char * argv[])
 	{
 		cout << "Invalid arguments count\n"
 			<< "Usage: invert.exe <matrix file>\n";
+		return 1;
 	}
 
 	ifstream matrixFile(argv[1]);
