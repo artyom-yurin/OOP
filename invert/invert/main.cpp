@@ -10,6 +10,58 @@ typedef array<array <float, 3>, 3> Matrix3;
 
 namespace
 {
+	Matrix2 GetMinor(const Matrix3 &matrix, int row, int column)
+	{
+		Matrix2 minor = {
+			{
+				{ 0, 0 },
+				{ 0, 0 }
+			}
+		};
+
+		int l = 0;
+		for (int i = 0; i < 3; ++i)
+		{		
+			if (i == row)
+			{
+				continue;
+			}
+			int k = 0;
+			for (int j = 0; j < 3; ++j)
+			{
+				if (j == column)
+				{
+					continue;
+				}
+				minor[l][k] = matrix[i][j];
+				++k;
+			}
+			++l;
+		}
+		return minor;
+	}
+	void PrintMatrix(Matrix3 &matrix)
+	{
+		for (int i = 0; i < 3; ++i)
+		{
+			for (int j = 0; j < 3; ++j)
+			{
+				cout << matrix[i][j] << " ";
+			}
+			cout << "\n";
+		}
+	}
+	void PrintMatrix(Matrix2 &matrix)
+	{
+		for (int i = 0; i < 2; ++i)
+		{
+			for (int j = 0; j < 2; ++j)
+			{
+				cout << matrix[i][j] << " ";
+			}
+			cout << "\n";
+		}
+	}
 	float GetDeterminantMatrix2(Matrix3 & matrix)
 	{
 		return matrix[0][0] * matrix[1][1] -
@@ -75,7 +127,6 @@ int main(int argc, char * argv[])
 
 	if (GetDeterminantMatrix3(matrix) != 0)
 	{
-
 	}
 	else
 	{
