@@ -24,19 +24,19 @@ float GetDeterminant3(const Matrix & matrix)
 		matrix[0][1] * matrix[1][0] * matrix[2][2];
 }
 
-Matrix GetMinor(const Matrix &matrix, int row, int column)
+Matrix GetMinor(const Matrix &matrix, size_t row, size_t column)
 {
 	Matrix minor (MATRIX_DIMENSION2, vector <float> (MATRIX_DIMENSION2, 0.f));
 
-	int l = 0;
-	for (int i = 0; i < matrix.size(); ++i)
+	size_t l = 0;
+	for (size_t i = 0; i < matrix.size(); ++i)
 	{		
 		if (i == row)
 		{
 			continue;
 		}
-		int k = 0;
-		for (int j = 0; j < matrix.size(); ++j)
+		size_t k = 0;
+		for (size_t j = 0; j < matrix.size(); ++j)
 		{
 			if (j == column)
 			{
@@ -54,9 +54,9 @@ Matrix GetMinorMatrix(const Matrix &matrix)
 {
 	Matrix minorMatrix (MATRIX_DIMENSION3, vector <float> (MATRIX_DIMENSION3, 0.f));
 
-	for (int i = 0; i < minorMatrix.size(); ++i)
+	for (size_t i = 0; i < minorMatrix.size(); ++i)
 	{
-		for (int j = 0; j < minorMatrix.size(); ++j)
+		for (size_t j = 0; j < minorMatrix.size(); ++j)
 		{
 			minorMatrix[i][j] = GetDeterminant2(GetMinor(matrix, i, j));
 		}
@@ -67,9 +67,9 @@ Matrix GetMinorMatrix(const Matrix &matrix)
 
 void PrintMatrix(const Matrix &matrix)
 {
-	for (int i = 0; i < matrix.size(); ++i)
+	for (size_t i = 0; i < matrix.size(); ++i)
 	{
-		for (int j = 0; j < matrix.size(); ++j)
+		for (size_t j = 0; j < matrix.size(); ++j)
 		{
 			cout << fixed;
 			cout.precision(3);
@@ -81,9 +81,9 @@ void PrintMatrix(const Matrix &matrix)
 
 bool GetMatrix(ifstream & file, Matrix & matrix)
 {
-	for (int i = 0; i < matrix.size(); ++i)
+	for (size_t i = 0; i < matrix.size(); ++i)
 	{
-		for (int j = 0; j < matrix.size(); ++j)
+		for (size_t j = 0; j < matrix.size(); ++j)
 		{
 			if (!(file >> matrix[i][j]))
 			{
