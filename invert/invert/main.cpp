@@ -119,13 +119,17 @@ Matrix GetAlgebraicAdditionsMatrixTransposed(const Matrix &matrix)
 
 Matrix MultiplicationScalarOnMatrix(const Matrix & matrix, float scalar)
 {
-	return{ 
+	Matrix newMatrix(MATRIX_DIMENSION3, vector <float>(MATRIX_DIMENSION3, 0.f));
+
+	for (size_t i = 0; i < matrix.size(); ++i)
+	{
+		for (size_t j = 0; j < matrix.size(); ++j)
 		{
-			{matrix[0][0] * scalar, matrix[0][1] * scalar, matrix[0][2] * scalar},
-			{matrix[1][0] * scalar, matrix[1][1] * scalar, matrix[1][2] * scalar},
-			{matrix[2][0] * scalar, matrix[2][1] * scalar, matrix[2][2] * scalar}
-		} 
-	};
+			newMatrix[i][j] = matrix[i][j] * scalar;
+		}
+	}
+
+	return newMatrix;
 }
 
 Matrix InvertMatrix(Matrix & matrix)
