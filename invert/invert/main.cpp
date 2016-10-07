@@ -1,5 +1,6 @@
 #include <vector>
 #include <iostream>
+#include <iomanip>
 #include <fstream>
 
 using namespace std;
@@ -71,9 +72,9 @@ void PrintMatrix(const Matrix &matrix)
 	{
 		for (size_t j = 0; j < matrix.size(); ++j)
 		{
-			cout << fixed;
-			cout.precision(3);
-			cout << matrix[i][j] << " ";
+			cout << fixed
+				<< setprecision(3)
+				<< matrix[i][j] << " ";
 		}
 		cout << endl;
 	}
