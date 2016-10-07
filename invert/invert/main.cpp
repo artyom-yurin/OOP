@@ -1,19 +1,20 @@
-#include <array>
+#include <vector>
 #include <iostream>
 #include <fstream>
 
 using namespace std;
+const unsigned MATRIX_DIMENSION3 = 3;
+const unsigned MATRIX_DIMENSION2 = 2;
 
-typedef array<array <float, 2>, 2> Matrix2;
-typedef array<array <float, 3>, 3> Matrix3;
+typedef vector<vector <float>> Matrix;
 
-float GetDeterminant(const Matrix2 & matrix)
+float GetDeterminant2(const Matrix & matrix)
 {
 	return matrix[0][0] * matrix[1][1] -
 		matrix[0][1] * matrix[1][0];
 }
 
-float GetDeterminant(const Matrix3 & matrix)
+float GetDeterminant3(const Matrix & matrix)
 {
 	return  matrix[0][0] * matrix[1][1] * matrix[2][2] +
 		matrix[0][2] * matrix[1][0] * matrix[2][1] +
@@ -23,24 +24,19 @@ float GetDeterminant(const Matrix3 & matrix)
 		matrix[0][1] * matrix[1][0] * matrix[2][2];
 }
 
-Matrix2 GetMinor(const Matrix3 &matrix, int row, int column)
+Matrix GetMinor(const Matrix &matrix, int row, int column)
 {
-	Matrix2 minor = {
-		{
-			{ 0, 0 },
-			{ 0, 0 }
-		}
-	};
+	Matrix minor (MATRIX_DIMENSION2, vector <float> (MATRIX_DIMENSION2, 0.f));
 
 	int l = 0;
-	for (int i = 0; i < 3; ++i)
+	for (int i = 0; i < matrix.size(); ++i)
 	{		
 		if (i == row)
 		{
 			continue;
 		}
 		int k = 0;
-		for (int j = 0; j < 3; ++j)
+		for (int j = 0; j < matrix.size(); ++j)
 		{
 			if (j == column)
 			{
@@ -54,32 +50,26 @@ Matrix2 GetMinor(const Matrix3 &matrix, int row, int column)
 	return minor;
 }
 
-Matrix3 GetMinorMatrix(const Matrix3 &matrix)
+Matrix GetMinorMatrix(const Matrix &matrix)
 {
-	Matrix3 minorMatrix = {
-		{
-			{0, 0, 0},
-			{0, 0, 0},
-			{0, 0, 0}
-		}
-	};
+	Matrix minorMatrix (MATRIX_DIMENSION3, vector <float> (MATRIX_DIMENSION3, 0.f));
 
-	for (int i = 0; i < 3; ++i)
+	for (int i = 0; i < minorMatrix.size(); ++i)
 	{
-		for (int j = 0; j < 3; ++j)
+		for (int j = 0; j < minorMatrix.size(); ++j)
 		{
-			minorMatrix[i][j] = GetDeterminant(GetMinor(matrix, i, j));
+			minorMatrix[i][j] = GetDeterminant2(GetMinor(matrix, i, j));
 		}
 	}
 
 	return minorMatrix;
 }
 
-void PrintMatrix(const Matrix3 &matrix)
+void PrintMatrix(const Matrix &matrix)
 {
-	for (int i = 0; i < 3; ++i)
+	for (int i = 0; i < matrix.size(); ++i)
 	{
-		for (int j = 0; j < 3; ++j)
+		for (int j = 0; j < matrix.size(); ++j)
 		{
 			cout << fixed;
 			cout.precision(3);
@@ -89,25 +79,11 @@ void PrintMatrix(const Matrix3 &matrix)
 	}
 }
 
-void PrintMatrix(const Matrix2 &matrix)
-{	
-	for (int i = 0; i < 2; ++i)
-	{
-		for (int j = 0; j < 2; ++j)
-		{
-			cout << fixed;
-			cout.precision(3);
-			cout << matrix[i][j] << " ";
-		}
-		cout << "\n";
-	}
-}
-
-bool GetMatrix(ifstream & file, Matrix3 & matrix)
+bool GetMatrix(ifstream & file, Matrix & matrix)
 {
-	for (int i = 0; i < 3; ++i)
+	for (int i = 0; i < matrix.size(); ++i)
 	{
-		for (int j = 0; j < 3; ++j)
+		for (int j = 0; j < matrix.size(); ++j)
 		{
 			if (!(file >> matrix[i][j]))
 			{
@@ -118,7 +94,7 @@ bool GetMatrix(ifstream & file, Matrix3 & matrix)
 	return true;
 }
 
-Matrix3 GetMatrixAlgebraicAdditions(const Matrix3 &matrix)
+Matrix GetMatrixAlgebraicAdditions(const Matrix &matrix)
 {
 	return{ 
 		{
@@ -129,7 +105,7 @@ Matrix3 GetMatrixAlgebraicAdditions(const Matrix3 &matrix)
 	};
 }
 
-Matrix3 GetTransposedMatrixAlgebraicAdditions(const Matrix3 &matrix)
+Matrix GetTransposedMatrixAlgebraicAdditions(const Matrix &matrix)
 {
 	return{
 		{
@@ -140,7 +116,7 @@ Matrix3 GetTransposedMatrixAlgebraicAdditions(const Matrix3 &matrix)
 	};
 }
 
-Matrix3 MultiplicationScalar(const Matrix3 & matrix, float scalar)
+Matrix MultiplicationScalar(const Matrix & matrix, float scalar)
 {
 	return{ 
 		{
@@ -151,10 +127,10 @@ Matrix3 MultiplicationScalar(const Matrix3 & matrix, float scalar)
 	};
 }
 
-Matrix3 InvertMatrix(Matrix3 & matrix)
+Matrix InvertMatrix(Matrix & matrix)
 {
-	Matrix3 newMatrix;
-	float determinant = 1 / GetDeterminant(matrix);
+	Matrix newMatrix(MATRIX_DIMENSION3, vector <float> (MATRIX_DIMENSION3, 0.f));
+	float determinant = 1 / GetDeterminant3(matrix);
 
 	newMatrix = GetMinorMatrix(matrix);
 	newMatrix = GetMatrixAlgebraicAdditions(newMatrix);
@@ -180,13 +156,7 @@ int main(int argc, char * argv[])
 		return 1;
 	}
 
-	Matrix3 matrix = {
-		{ 
-			{ 0, 0, 0 },
-			{ 0, 0, 0 },
-			{ 0, 0, 0 }
-		}
-	};
+	Matrix matrix (MATRIX_DIMENSION3, vector <float> (MATRIX_DIMENSION3, 0.f));
 	if (!GetMatrix(matrixFile, matrix))
 	{
 		cout << "Invalid value\n"
@@ -197,7 +167,7 @@ int main(int argc, char * argv[])
 		return 1;
 	}
 
-	if (GetDeterminant(matrix) != 0)
+	if (GetDeterminant3(matrix) != 0)
 	{
 		PrintMatrix(InvertMatrix(matrix));
 	}
