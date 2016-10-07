@@ -51,7 +51,7 @@ Matrix GetMinor(const Matrix &matrix, size_t row, size_t column)
 	return minor;
 }
 
-Matrix GetMinorMatrix(const Matrix &matrix)
+Matrix GetMatrixMinor(const Matrix &matrix)
 {
 	Matrix minorMatrix (MATRIX_DIMENSION3, vector <float> (MATRIX_DIMENSION3, 0.f));
 
@@ -80,7 +80,7 @@ void PrintMatrix(const Matrix &matrix)
 	}
 }
 
-bool GetMatrix(ifstream & file, Matrix & matrix)
+bool CanReadMatrixFromFile(ifstream & file, Matrix & matrix)
 {
 	for (size_t i = 0; i < matrix.size(); ++i)
 	{
@@ -95,7 +95,7 @@ bool GetMatrix(ifstream & file, Matrix & matrix)
 	return true;
 }
 
-Matrix GetMatrixAlgebraicAdditions(const Matrix &matrix)
+Matrix GetAlgebraicAdditionsMatrix(const Matrix &matrix)
 {
 	return{ 
 		{
@@ -106,7 +106,7 @@ Matrix GetMatrixAlgebraicAdditions(const Matrix &matrix)
 	};
 }
 
-Matrix GetTransposedMatrixAlgebraicAdditions(const Matrix &matrix)
+Matrix GetAlgebraicAdditionsMatrixTransposed(const Matrix &matrix)
 {
 	return{
 		{
@@ -117,7 +117,7 @@ Matrix GetTransposedMatrixAlgebraicAdditions(const Matrix &matrix)
 	};
 }
 
-Matrix MultiplicationScalar(const Matrix & matrix, float scalar)
+Matrix MultiplicationScalarOnMatrix(const Matrix & matrix, float scalar)
 {
 	return{ 
 		{
@@ -133,9 +133,10 @@ Matrix InvertMatrix(Matrix & matrix)
 	Matrix newMatrix(MATRIX_DIMENSION3, vector <float> (MATRIX_DIMENSION3, 0.f));
 	float determinant = 1 / GetDeterminant3(matrix);
 
-	newMatrix = GetMinorMatrix(matrix);
-	newMatrix = GetMatrixAlgebraicAdditions(newMatrix);
-	newMatrix = MultiplicationScalar(newMatrix, determinant);
+	newMatrix = GetMatrixMinor(matrix);
+	newMatrix = GetAlgebraicAdditionsMatrix(newMatrix);
+	newMatrix = GetAlgebraicAdditionsMatrixTransposed(newMatrix);
+	newMatrix = MultiplicationScalarOnMatrix(newMatrix, determinant);
 
 	return newMatrix;
 }
@@ -158,7 +159,7 @@ int main(int argc, char * argv[])
 	}
 
 	Matrix matrix (MATRIX_DIMENSION3, vector <float> (MATRIX_DIMENSION3, 0.f));
-	if (!GetMatrix(matrixFile, matrix))
+	if (!CanReadMatrixFromFile(matrixFile, matrix))
 	{
 		cout << "Invalid value" << endl
 			<< "Input File:" << endl
