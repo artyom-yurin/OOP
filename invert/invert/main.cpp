@@ -75,7 +75,7 @@ void PrintMatrix(const Matrix &matrix)
 			cout.precision(3);
 			cout << matrix[i][j] << " ";
 		}
-		cout << "\n";
+		cout << endl;
 	}
 }
 
@@ -143,8 +143,8 @@ int main(int argc, char * argv[])
 {
 	if (argc != 2)
 	{
-		cout << "Invalid arguments count\n"
-			<< "Usage: invert.exe <matrix file>\n";
+		cout << "Invalid arguments count" << endl
+			<< "Usage: invert.exe <matrix file>" << endl;
 		return 1;
 	}
 
@@ -152,18 +152,18 @@ int main(int argc, char * argv[])
 
 	if (!matrixFile.is_open())
 	{
-		cout << "Failed to open " << argv[1] << " for reading\n";
+		cout << "Failed to open " << argv[1] << " for reading" << endl;
 		return 1;
 	}
 
 	Matrix matrix (MATRIX_DIMENSION3, vector <float> (MATRIX_DIMENSION3, 0.f));
 	if (!GetMatrix(matrixFile, matrix))
 	{
-		cout << "Invalid value\n"
-			<< "Input File:\n"
-			<< "<number> <number> <number>\n"
-			<< "<number> <number> <number>\n"
-			<< "<number> <number> <number>\n";
+		cout << "Invalid value" << endl
+			<< "Input File:" << endl
+			<< "<number> <number> <number>" << endl
+			<< "<number> <number> <number>" << endl
+			<< "<number> <number> <number>" << endl;
 		return 1;
 	}
 
@@ -173,7 +173,7 @@ int main(int argc, char * argv[])
 	}
 	else
 	{
-		cout << "Inverse matrix does not exist\n";
+		cout << "Inverse matrix does not exist" << endl;
 	}
 
 	return 0;
