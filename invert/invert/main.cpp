@@ -9,13 +9,13 @@ const unsigned MATRIX_DIMENSION2 = 2;
 
 typedef vector<vector <float>> Matrix;
 
-float GetDeterminant2(const Matrix & matrix)
+float GetDeterminant2Matrix(const Matrix & matrix)
 {
 	return matrix[0][0] * matrix[1][1] -
 		matrix[0][1] * matrix[1][0];
 }
 
-float GetDeterminant3(const Matrix & matrix)
+float GetDeterminant3Matrix(const Matrix & matrix)
 {
 	return  matrix[0][0] * matrix[1][1] * matrix[2][2] +
 		matrix[0][2] * matrix[1][0] * matrix[2][1] +
@@ -97,7 +97,7 @@ Matrix GetMatrixMinor(const Matrix &matrix)
 	{
 		for (size_t j = 0; j < minorMatrix.size(); ++j)
 		{
-			minorMatrix[i][j] = GetDeterminant2(GetMinor(matrix, i, j));
+			minorMatrix[i][j] = GetDeterminant2Matrix(GetMinor(matrix, i, j));
 		}
 	}
 
@@ -185,7 +185,7 @@ Matrix MultiplicationScalarOnMatrix(const Matrix & matrix, float scalar)
 Matrix InvertMatrix(Matrix & matrix)
 {
 	Matrix newMatrix(MATRIX_DIMENSION3, vector <float> (MATRIX_DIMENSION3, 0.f));
-	float determinant = 1 / GetDeterminant3(matrix);
+	float determinant = 1 / GetDeterminant3Matrix(matrix);
 
 	newMatrix = GetMatrixMinor(matrix);
 	newMatrix = GetAlgebraicAdditionsMatrix(newMatrix);
@@ -223,7 +223,7 @@ int main(int argc, char * argv[])
 		return 1;
 	}
 
-	if (GetDeterminant3(matrix) != 0)
+	if (GetDeterminant3Matrix(matrix) != 0)
 	{
 		PrintMatrix(InvertMatrix(matrix));
 	}
