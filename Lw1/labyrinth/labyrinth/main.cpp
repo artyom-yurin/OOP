@@ -16,6 +16,12 @@ struct Size
 	size_t height = 0;
 };
 
+struct Coordinates
+{
+	size_t i = 0;
+	size_t j = 0;
+};
+
 void PrintLabyrinth(ofstream & output, LabyrinthChar & labyrinth, const Size & size)
 {
 	for (size_t i = 0; i < size.height; ++i)
@@ -39,6 +45,17 @@ void InitLabyrinth(LabyrinthInt & labyrinth)
 	}
 }
 
+void InitLabyrinth(LabyrinthChar & labyrinth)
+{
+	for (size_t i = 0; i < MAX_HEIGHT_LABYRINTH; ++i)
+	{
+		for (size_t j = 0; j < MAX_WIDTH_LABYRINTH; ++j)
+		{
+			labyrinth[i][j] = ' ';
+		}
+	}
+}
+
 void ConvertLabyrintIntToChar(LabyrinthChar & labyrinth, LabyrinthInt & labyrinthInt, Size & size)
 {
 	for (size_t i = 0; i < size.height; ++i)
@@ -58,12 +75,89 @@ void ConvertLabyrintIntToChar(LabyrinthChar & labyrinth, LabyrinthInt & labyrint
 	}
 }
 
+void GetStartAndFinishCoordinate(LabyrinthChar & labyrinth, Size & size, Coordinates & startPoint, Coordinates & finishPoint)
+{
+	for (size_t i = 0; i < size.height; ++i)
+	{
+		for (size_t j = 0; j < size.width; ++j)
+		{
+			if ((labyrinth[i][j] == 'A') || (labyrinth[i][j] == 'B'))
+			{
+				if ((startPoint.i == 0) && (startPoint.j == 0))
+				{
+					startPoint.i = i + 1;
+					startPoint.j = j + 1;
+				}
+				else
+				{
+					finishPoint.i = i + 1;
+					finishPoint.j = j + 1;
+				}
+			}
+		}
+	}
+}
+
+bool FindWay(LabyrinthInt & labyrinth, Size & size, Coordinates finalPoint)
+{
+	size_t currentNumber = 1;
+	bool isIteration = false;
+	while ((labyrinth[finalPoint.i][finalPoint.j] == 0) && (!isIteration))
+	{
+		isIteration = true;
+		for (size_t i = 1; i <= size.height; ++i)
+		{
+			for (size_t j = 1; j <= size.width; ++j)
+			{
+				if (labyrinth[i][j] == currentNumber)
+				{
+					++currentNumber;
+					if (labyrinth[i + 1][j] == 0)
+					{
+						labyrinth[i + 1][j] = currentNumber;
+						isIteration = false;
+					}
+					if (labyrinth[i - 1][j] == 0)
+					{
+						labyrinth[i - 1][j] = currentNumber;
+						isIteration = false;
+					}
+					if (labyrinth[i][j + 1] == 0)
+					{
+						labyrinth[i][j + 1] = currentNumber;
+						isIteration = false;
+					}
+					if (labyrinth[i][j - 1] == 0)
+					{
+						labyrinth[i][j - 1] = currentNumber;
+						isIteration = false;
+					}
+				}
+			}
+		}
+	}
+
+	if (isIteration)
+	{
+		return false;
+	}
+
+	return true;
+}
+
 bool FindWayLabyrinth(LabyrinthChar & labyrinth, Size & labyrinthSize)
 {
 	LabyrinthInt  labyrinthInt;
+	Coordinates startPoint;
+	Coordinates finishPoint;
 	InitLabyrinth(labyrinthInt);
 	ConvertLabyrintIntToChar(labyrinth, labyrinthInt, labyrinthSize);
-
+	GetStartAndFinishCoordinate(labyrinth, labyrinthSize, startPoint, finishPoint);
+	labyrinthInt[startPoint.i][startPoint.j] = 1;
+	if (!FindWay(labyrinthInt, labyrinthSize, finishPoint))
+	{
+		return false;
+	}
 
 	return true;
 }
@@ -140,10 +234,11 @@ int main(int argc, char * argv[])
 		return 1;
 	}
 
-	LabyrinthChar labyrinthCh;
+	LabyrinthChar labyrinth;
+	InitLabyrinth(labyrinth);
 	Size labyrinthSize;
 	
-	if (!CanReadLabyrinthFromFile(input, labyrinthCh, labyrinthSize))
+	if (!CanReadLabyrinthFromFile(input, labyrinth, labyrinthSize))
 	{
 		cout << "Failed to read labyrinth\n"
 			<< "Labyrinth have not 1 start point and 1 finish point\n"
@@ -151,9 +246,13 @@ int main(int argc, char * argv[])
 		return 1;
 	}
 
-	FindWayLabyrinth(labyrinthCh, labyrinthSize);
+	if (!FindWayLabyrinth(labyrinth, labyrinthSize))
+	{
+		cout << "Labyrinth has no access\n";
+		return 1;
+	}
 
-	PrintLabyrinth(output, labyrinthCh, labyrinthSize);
+	PrintLabyrinth(output, labyrinth, labyrinthSize);
 
 	if (!output.flush())
 	{
