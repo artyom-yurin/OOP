@@ -182,17 +182,24 @@ Matrix MultiplicationScalarOnMatrix(const Matrix & matrix, float scalar)
 	return newMatrix;
 }
 
-Matrix InvertMatrix(Matrix & matrix)
+void InvertMatrix(const Matrix & matrix)
 {
-	Matrix newMatrix(MATRIX_DIMENSION3, vector <float> (MATRIX_DIMENSION3, 0.f));
-	float determinant = 1 / GetDeterminant3Matrix(matrix);
+	if (GetDeterminant3Matrix(matrix) != 0)
+	{
+		Matrix newMatrix(MATRIX_DIMENSION3, vector <float>(MATRIX_DIMENSION3, 0.f));
+		float determinant = 1 / GetDeterminant3Matrix(matrix);
 
-	newMatrix = GetMatrixMinor(matrix);
-	newMatrix = GetAlgebraicAdditionsMatrix(newMatrix);
-	newMatrix = GetAlgebraicAdditionsMatrixTransposed(newMatrix);
-	newMatrix = MultiplicationScalarOnMatrix(newMatrix, determinant);
+		newMatrix = GetMatrixMinor(matrix);
+		newMatrix = GetAlgebraicAdditionsMatrix(newMatrix);
+		newMatrix = GetAlgebraicAdditionsMatrixTransposed(newMatrix);
+		newMatrix = MultiplicationScalarOnMatrix(newMatrix, determinant);
 
-	return newMatrix;
+		PrintMatrix(newMatrix);
+	}
+	else
+	{
+		cout << "Inverse matrix does not exist" << endl;
+	}
 }
 
 int main(int argc, char * argv[])
@@ -223,14 +230,7 @@ int main(int argc, char * argv[])
 		return 1;
 	}
 
-	if (GetDeterminant3Matrix(matrix) != 0)
-	{
-		PrintMatrix(InvertMatrix(matrix));
-	}
-	else
-	{
-		cout << "Inverse matrix does not exist" << endl;
-	}
+	InvertMatrix(matrix);
 
 	return 0;
 }
