@@ -7,7 +7,7 @@ using namespace std;
 const unsigned MATRIX_DIMENSION3 = 3;
 const unsigned MATRIX_DIMENSION2 = 2;
 
-typedef vector<vector <float>> Matrix;
+typedef vector<vector <double>> Matrix;
 
 float GetDeterminant2Matrix(const Matrix & matrix)
 {
@@ -25,47 +25,9 @@ float GetDeterminant3Matrix(const Matrix & matrix)
 		matrix[0][1] * matrix[1][0] * matrix[2][2];
 }
 
-//float GetDeterminant(const Matrix & matrix)
-//{
-//	float determinant = 0.f;
-//	size_t size = matrix.size();
-//	Matrix currentMatrix(size, vector <float>(size, 0.f));
-//	currentMatrix = matrix;
-//
-//	float degree = 0;
-//	for (size_t i = 0; i < size - 1; ++i)
-//	{
-//		size_t t = 1;
-//		while (currentMatrix[i][i] == 0)
-//		{
-//			for (size_t j = 0; j < size; ++j)
-//			{
-//				currentMatrix[i][j] = determinant;
-//				currentMatrix[i][j] = currentMatrix[i + t][j];
-//				currentMatrix[i + t][j] = determinant;
-//			}
-//			degree++;
-//			t++;
-//		}
-//
-//		for (size_t k = i + 1; k < size; ++k)
-//		{
-//			determinant = currentMatrix[k][i] / currentMatrix[i][i];
-//			for (size_t j = 0; j < size; j++)
-//				currentMatrix[k][j] -= currentMatrix[i][j] * determinant;
-//		}
-//	}
-//
-//	determinant = pow(-1.f, degree);
-//	for (size_t i = 0; i < size; ++i)
-//		determinant *= currentMatrix[i][i];
-//
-//	return determinant;
-//}
-
 Matrix GetMinor(const Matrix &matrix, size_t row, size_t column)
 {
-	Matrix minor (MATRIX_DIMENSION2, vector <float> (MATRIX_DIMENSION2, 0.f));
+	Matrix minor (MATRIX_DIMENSION2, vector <double> (MATRIX_DIMENSION2, 0));
 
 	size_t l = 0;
 	for (size_t i = 0; i < matrix.size(); ++i)
@@ -91,7 +53,7 @@ Matrix GetMinor(const Matrix &matrix, size_t row, size_t column)
 
 Matrix GetMatrixMinor(const Matrix &matrix)
 {
-	Matrix minorMatrix (MATRIX_DIMENSION3, vector <float> (MATRIX_DIMENSION3, 0.f));
+	Matrix minorMatrix (MATRIX_DIMENSION3, vector <double> (MATRIX_DIMENSION3, 0));
 
 	for (size_t i = 0; i < minorMatrix.size(); ++i)
 	{
@@ -135,7 +97,7 @@ bool CanReadMatrixFromFile(ifstream & file, Matrix & matrix)
 
 Matrix GetAlgebraicAdditionsMatrix(const Matrix &matrix)
 {
-	Matrix newMatrix(MATRIX_DIMENSION3, vector <float>(MATRIX_DIMENSION3, 0.f));
+	Matrix newMatrix(MATRIX_DIMENSION3, vector <double>(MATRIX_DIMENSION3, 0.f));
 
 	for (size_t i = 0; i < matrix.size(); ++i)
 	{
@@ -154,7 +116,7 @@ Matrix GetAlgebraicAdditionsMatrix(const Matrix &matrix)
 
 Matrix GetAlgebraicAdditionsMatrixTransposed(const Matrix &matrix)
 {
-	Matrix newMatrix(MATRIX_DIMENSION3, vector <float>(MATRIX_DIMENSION3, 0.f));
+	Matrix newMatrix(MATRIX_DIMENSION3, vector <double>(MATRIX_DIMENSION3, 0.f));
 
 	for (size_t i = 0; i < matrix.size(); ++i)
 	{
@@ -167,9 +129,9 @@ Matrix GetAlgebraicAdditionsMatrixTransposed(const Matrix &matrix)
 	return newMatrix;
 }
 
-Matrix MultiplicationScalarOnMatrix(const Matrix & matrix, float scalar)
+Matrix MultiplicationScalarOnMatrix(const Matrix & matrix, double scalar)
 {
-	Matrix newMatrix(MATRIX_DIMENSION3, vector <float>(MATRIX_DIMENSION3, 0.f));
+	Matrix newMatrix(MATRIX_DIMENSION3, vector <double>(MATRIX_DIMENSION3, 0));
 
 	for (size_t i = 0; i < matrix.size(); ++i)
 	{
@@ -186,8 +148,8 @@ void InvertMatrix(const Matrix & matrix)
 {
 	if (GetDeterminant3Matrix(matrix) != 0)
 	{
-		Matrix newMatrix(MATRIX_DIMENSION3, vector <float>(MATRIX_DIMENSION3, 0.f));
-		float determinant = 1 / GetDeterminant3Matrix(matrix);
+		Matrix newMatrix(MATRIX_DIMENSION3, vector <double>(MATRIX_DIMENSION3, 0.f));
+		double determinant = 1 / GetDeterminant3Matrix(matrix);
 
 		newMatrix = GetMatrixMinor(matrix);
 		newMatrix = GetAlgebraicAdditionsMatrix(newMatrix);
@@ -219,7 +181,7 @@ int main(int argc, char * argv[])
 		return 1;
 	}
 
-	Matrix matrix (MATRIX_DIMENSION3, vector <float> (MATRIX_DIMENSION3, 0.f));
+	Matrix matrix (MATRIX_DIMENSION3, vector <double> (MATRIX_DIMENSION3, 0));
 	if (!CanReadMatrixFromFile(matrixFile, matrix))
 	{
 		cout << "Invalid value" << endl
