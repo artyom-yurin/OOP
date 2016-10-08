@@ -3,8 +3,8 @@
 #include <array>
 #include <string>
 
-const int MAX_WIDTH_LABYRINTH = 100;
-const int MAX_HEIGHT_LABYRINTH = 100;
+const int MAX_WIDTH_LABYRINTH = 102;
+const int MAX_HEIGHT_LABYRINTH = 102;
 
 using namespace std;
 typedef array <array <char, MAX_WIDTH_LABYRINTH>, MAX_HEIGHT_LABYRINTH> LabyrinthChar;
@@ -28,6 +28,46 @@ void PrintLabyrinth(ofstream & output, LabyrinthChar & labyrinth, const Size & s
 	}
 }
 
+void InitLabyrinth(LabyrinthInt & labyrinth)
+{
+	for (size_t i = 0; i < MAX_HEIGHT_LABYRINTH; ++i)
+	{
+		for (size_t j = 0; j < MAX_WIDTH_LABYRINTH; ++j)
+		{
+			labyrinth[i][j] = -1;
+		}
+	}
+}
+
+void ConvertLabyrintIntToChar(LabyrinthChar & labyrinth, LabyrinthInt & labyrinthInt, Size & size)
+{
+	for (size_t i = 0; i < size.height; ++i)
+	{
+		for (size_t j = 0; j < size.width; ++j)
+		{
+			switch (labyrinth[i][j])
+			{
+				case '#': 
+					labyrinth[i + 1][j + 1] = -1;
+					break;
+				case ' ':
+					labyrinth[i + 1][j + 1] = 0;
+					break;
+			}
+		}
+	}
+}
+
+bool FindWayLabyrinth(LabyrinthChar & labyrinth, Size & labyrinthSize)
+{
+	LabyrinthInt  labyrinthInt;
+	InitLabyrinth(labyrinthInt);
+	ConvertLabyrintIntToChar(labyrinth, labyrinthInt, labyrinthSize);
+
+
+	return true;
+}
+
 bool CanReadLabyrinthFromFile(ifstream & input, LabyrinthChar & labyrinth, Size & size)
 {
 	string line;
@@ -35,9 +75,17 @@ bool CanReadLabyrinthFromFile(ifstream & input, LabyrinthChar & labyrinth, Size 
 	int countPoint = 0;
 	while (getline(input, line))
 	{
+		if (i > 100)
+		{
+			return false;
+		}
 		if (size.width < line.size())
 		{
 			size.width = line.size();
+			if (size.width > 100)
+			{
+				return false;
+			}
 		}
 		for (size_t j = 0; j < size.width; ++j)
 		{
@@ -93,15 +141,17 @@ int main(int argc, char * argv[])
 	}
 
 	LabyrinthChar labyrinthCh;
-	LabyrinthInt  labyrinthInt;
 	Size labyrinthSize;
 	
 	if (!CanReadLabyrinthFromFile(input, labyrinthCh, labyrinthSize))
 	{
 		cout << "Failed to read labyrinth\n"
-			<< "Labyrinth have not 1 start point and 1 finish point\n";
+			<< "Labyrinth have not 1 start point and 1 finish point\n"
+			<< "or Labyrinth's size invalid\n";
 		return 1;
 	}
+
+	FindWayLabyrinth(labyrinthCh, labyrinthSize);
 
 	PrintLabyrinth(output, labyrinthCh, labyrinthSize);
 
