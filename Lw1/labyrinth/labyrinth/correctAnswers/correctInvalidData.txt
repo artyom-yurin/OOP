@@ -1,0 +1,3 @@
+Failed to read labyrinth
+Labyrinth have not 1 start point and 1 finish point
+or Labyrinth's size invalid
