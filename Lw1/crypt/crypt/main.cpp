@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <string>
 
 using namespace std;
 
@@ -9,9 +10,33 @@ const int DECRYPT = 1;
 
 bool IsNumber(char * str)
 {
-	for (int i = 0; i < strlen(str); ++i)
+	for (size_t i = 0; i < strlen(str); ++i)
 	{
 		if (!isdigit(str[i])) {
+			return false;
+		}
+	}
+	return true;
+}
+
+bool CryptFile(ifstream & input, ofstream & output, int key, int mode)
+{
+	string currentString = "";
+	while (getline(input, currentString))
+	{
+		if (mode == CRYPT)
+		{
+			//XOR
+			//Swap bits
+		}
+		else
+		{
+			//Swap bits
+			//XOR
+		}
+
+		if (!(output << currentString << "\n"))
+		{
 			return false;
 		}
 	}
@@ -66,7 +91,17 @@ int main(int argc, char * argv [])
 	}
 	int key = atoi(argv[4]);
 
+	if (!CryptFile(input, output, key, mode))
+	{
+		cout << "Failed to save data on disk\n";
+		return 1;
+	}
 
+	if (!output.flush())
+	{
+		cout << "Failed to save data on disk\n";
+		return 1;
+	}
 
 	return 0;
 }
