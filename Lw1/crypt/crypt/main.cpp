@@ -19,20 +19,28 @@ bool IsNumber(char * str)
 	return true;
 }
 
-bool CryptFile(ifstream & input, ofstream & output, int key, int mode)
+void XorString(string & inputString, const int key)
+{
+	for (size_t i = 0; i < inputString.length(); ++i)
+	{
+		inputString[i] = inputString[i] ^ key;
+	}
+}
+
+bool CryptFile(ifstream & input, ofstream & output, const int key, const int mode)
 {
 	string currentString = "";
 	while (getline(input, currentString))
 	{
 		if (mode == CRYPT)
 		{
-			//XOR
+			XorString(currentString, key);
 			//Swap bits
 		}
 		else
 		{
 			//Swap bits
-			//XOR
+			XorString(currentString, key);
 		}
 
 		if (!(output << currentString << "\n"))
