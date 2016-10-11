@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <cctype>
 
 using namespace std;
 
@@ -19,28 +20,54 @@ bool IsNumber(char * str)
 	return true;
 }
 
-void XorString(string & inputString, const int key)
+ uint8_t MixBitsCrypt(const uint8_t byte)
 {
-	for (size_t i = 0; i < inputString.length(); ++i)
-	{
-		inputString[i] = inputString[i] ^ key;
-	}
+	 uint8_t result = 0;
+	 result |= (byte & 0b10000000 >> 2);
+	 result |= (byte & 0b00011000 << 3);
+	 result |= (byte & 0b00000111 << 2);
+	 result |= (byte & 0b01100000 >> 5);
+	 return result;
 }
 
-bool CryptFile(ifstream & input, ofstream & output, const int key, const int mode)
+uint8_t MixBitsDecrypt(const uint8_t byte)
+{
+	uint8_t result = 0;
+	result |= (byte & 0b00100000 << 2);
+	result |= (byte & 0b11000000 >> 3);
+	result |= (byte & 0b00011100 >> 2);
+	result |= (byte & 0b00000011 << 5);
+	return result;
+}
+
+bool CryptFile(ifstream & input, ofstream & output, const uint8_t key)
 {
 	string currentString = "";
 	while (getline(input, currentString))
 	{
-		if (mode == CRYPT)
+		for (size_t i = 0; i < currentString.length(); ++i)
 		{
-			XorString(currentString, key);
-			//Swap bits
+			currentString[i] ^= key;
+			MixBitsCrypt(currentString[i]);
 		}
-		else
+
+		if (!(output << currentString << "\n"))
 		{
-			//Swap bits
-			XorString(currentString, key);
+			return false;
+		}
+	}
+	return true;
+}
+
+bool DecryptFile(ifstream & input, ofstream & output, const uint8_t key)
+{
+	string currentString = "";
+	while (getline(input, currentString))
+	{
+		for (size_t i = 0; i < currentString.length(); ++i)
+		{
+			MixBitsDecrypt(currentString[i]);
+			currentString[i] ^= key;
 		}
 
 		if (!(output << currentString << "\n"))
@@ -99,11 +126,23 @@ int main(int argc, char * argv [])
 	}
 	int key = atoi(argv[4]);
 
-	if (!CryptFile(input, output, key, mode))
+	if (mode == CRYPT)
 	{
-		cout << "Failed to save data on disk\n";
-		return 1;
+		if (!CryptFile(input, output, key))
+		{
+			cout << "Failed to save data on disk\n";
+			return 1;
+		}
 	}
+	else
+	{
+		if (!DecryptFile(input, output, key))
+		{
+			cout << "Failed to save data on disk\n";
+			return 1;
+		}
+	}
+	
 
 	if (!output.flush())
 	{
