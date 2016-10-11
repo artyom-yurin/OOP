@@ -8,7 +8,6 @@ using namespace std;
 const int CRYPT = 0;
 const int DECRYPT = 1;
 
-
 bool IsNumber(char * str)
 {
 	for (size_t i = 0; i < strlen(str); ++i)
@@ -80,7 +79,7 @@ bool DecryptFile(ifstream & input, ofstream & output, const uint8_t key)
 
 int main(int argc, char * argv [])
 {
-	if (argc != 5)
+    if (argc != 5)
 	{
 		cout << "Invalid arguments count\n"
 			<< "Usage: crypt.exe crypt <input file> <output file> <key>\n"
@@ -88,18 +87,20 @@ int main(int argc, char * argv [])
 			<< "crypt.exe decrypt <input file> <output file> <key>\n";
 		return 1;
 	}
-	int mode;
-	if (argv[1] = "crypt")
+	int workMode;
+	string mode = argv[1];
+	if (mode == "crypt")
 	{
-		mode = CRYPT;
+		workMode = CRYPT;
 	} 
-	else if (argv[1] = "decrypt")
+	else if (mode == "decrypt")
 	{
-		mode = DECRYPT;
+		workMode = DECRYPT;
 	}
 	else
 	{
-		cout << "Unknown mode\n";
+		cout << "Unknown mode\n"
+			<< "Usage: crypt or decrypt\n";
 		return 1;
 	}
 
@@ -119,14 +120,20 @@ int main(int argc, char * argv [])
 		return 1;
 	}
 
-	if (!IsNumber(argv[4]) && ((atoi(argv[4]) >= 0) && (atoi(argv[4]) <= 255)))
+	if (!IsNumber(argv[4]))
 	{
-		cout << "Key must be 0 to 255\n";
+		cout << "Key must be number\n";
 		return 1;
 	}
-	int key = atoi(argv[4]);
 
-	if (mode == CRYPT)
+	if (!((atoi(argv[4]) >= 0) && (atoi(argv[4]) <= 255)))
+	{
+		cout << "Key must be for 0 to 255\n";
+		return 1;
+	}
+	uint8_t key = atoi(argv[4]);
+
+	if (workMode == CRYPT)
 	{
 		if (!CryptFile(input, output, key))
 		{
