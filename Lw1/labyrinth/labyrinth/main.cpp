@@ -129,7 +129,7 @@ void GetStartAndFinishCoordinate(const LabyrinthChar & labyrinth, const Size & s
 
 bool FindWay(LabyrinthInt & labyrinth, const Size & size, const Coordinates finalPoint)
 {
-	size_t currentNumber = 1;
+	int currentNumber = 1;
 	bool isIteration = false;
 	while ((labyrinth[finalPoint.i][finalPoint.j] == 0) && (!isIteration))
 	{
