@@ -9,20 +9,39 @@ const unsigned MATRIX_DIMENSION2 = 2;
 
 typedef vector<vector <double>> Matrix;
 
+bool CheckSizeMatrix(const Matrix & matrix, size_t rightSize)
+{
+	return ((rightSize == matrix.size()) && (rightSize == matrix[0].size()));
+}
+
 double GetDeterminant2Matrix(const Matrix & matrix)
 {
-	return matrix[0][0] * matrix[1][1] -
-		matrix[0][1] * matrix[1][0];
+	if (CheckSizeMatrix(matrix, 2))
+	{
+		return matrix[0][0] * matrix[1][1] -
+			matrix[0][1] * matrix[1][0];
+	}
+	else
+	{
+		return 0;
+	}
 }
 
 double GetDeterminant3Matrix(const Matrix & matrix)
 {
-	return  matrix[0][0] * matrix[1][1] * matrix[2][2] +
-		matrix[0][2] * matrix[1][0] * matrix[2][1] +
-		matrix[0][1] * matrix[1][2] * matrix[2][0] -
-		matrix[0][2] * matrix[1][1] * matrix[2][0] -
-		matrix[0][0] * matrix[1][2] * matrix[2][1] -
-		matrix[0][1] * matrix[1][0] * matrix[2][2];
+	if (CheckSizeMatrix(matrix, 3))
+	{
+		return  matrix[0][0] * matrix[1][1] * matrix[2][2] +
+			matrix[0][2] * matrix[1][0] * matrix[2][1] +
+			matrix[0][1] * matrix[1][2] * matrix[2][0] -
+			matrix[0][2] * matrix[1][1] * matrix[2][0] -
+			matrix[0][0] * matrix[1][2] * matrix[2][1] -
+			matrix[0][1] * matrix[1][0] * matrix[2][2];
+	}
+	else
+	{
+		return 0;
+	}
 }
 
 Matrix GetMinor(const Matrix &matrix, size_t row, size_t column)
