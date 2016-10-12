@@ -38,15 +38,23 @@ uint8_t MixBitsDecrypt(const uint8_t byte)
 	return result;
 }
 
-bool CryptFile(ifstream & input, ofstream & output, const uint8_t key)
+bool CryptFile(ifstream & input, ofstream & output, const uint8_t key, Mode mode)
 {
 	string currentString = "";
 	while (getline(input, currentString))
 	{
 		for (size_t i = 0; i < currentString.size(); ++i)
 		{
-			currentString[i] ^= key;
-			MixBitsCrypt(currentString[i]);
+			if (mode == Mode::Crypt)
+			{
+				currentString[i] ^= key;
+				MixBitsCrypt(currentString[i]);
+			}
+			else
+			{
+				currentString[i] ^= key;
+				MixBitsDecrypt(currentString[i]);
+			}
 		}
 
 		if (!(output << currentString << "\n"))
@@ -87,7 +95,9 @@ int main(int argc, char * argv [])
 		return 1;
 	}
 	Mode workMode;
+
 	string mode = argv[1];
+
 	if (mode == "crypt")
 	{
 		workMode = Mode::Crypt;
@@ -132,23 +142,11 @@ int main(int argc, char * argv [])
 	}
 	uint8_t key = atoi(argv[4]);
 
-	if (workMode == Mode::Crypt)
+	if (!CryptFile(input, output, key, workMode))
 	{
-		if (!CryptFile(input, output, key))
-		{
-			cout << "Failed to save data on disk\n";
-			return 1;
-		}
+		cout << "Failed to save data on disk\n";
+		return 1;
 	}
-	else
-	{
-		if (!DecryptFile(input, output, key))
-		{
-			cout << "Failed to save data on disk\n";
-			return 1;
-		}
-	}
-	
 
 	if (!output.flush())
 	{
