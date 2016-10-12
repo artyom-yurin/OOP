@@ -5,7 +5,7 @@
 
 using namespace std;
 
-enum class Mode {Crypt, Decrypt};
+enum class Mode {Crypt, Decrypt, Unknown};
 
 bool IsNumber(char * str)
 {
@@ -65,23 +65,22 @@ bool CryptFile(ifstream & input, ofstream & output, const uint8_t key, Mode mode
 	return true;
 }
 
-bool DecryptFile(ifstream & input, ofstream & output, const uint8_t key)
+Mode DetermineMode(char * inputMode)
 {
-	string currentString = "";
-	while (getline(input, currentString))
-	{
-		for (size_t i = 0; i < currentString.size(); ++i)
-		{
-			MixBitsDecrypt(currentString[i]);
-			currentString[i] ^= key;
-		}
+	string mode = inputMode;
 
-		if (!(output << currentString << "\n"))
-		{
-			return false;
-		}
+	if (mode == "crypt")
+	{
+		return Mode::Crypt;
 	}
-	return true;
+	else if (mode == "decrypt")
+	{
+		return Mode::Decrypt;
+	}
+	else
+	{
+		return Mode::Unknown;
+	}
 }
 
 int main(int argc, char * argv [])
@@ -94,19 +93,9 @@ int main(int argc, char * argv [])
 			<< "crypt.exe decrypt <input file> <output file> <key>\n";
 		return 1;
 	}
-	Mode workMode;
-
-	string mode = argv[1];
-
-	if (mode == "crypt")
-	{
-		workMode = Mode::Crypt;
-	} 
-	else if (mode == "decrypt")
-	{
-		workMode = Mode::Decrypt;
-	}
-	else
+	Mode workMode = DetermineMode(argv[1]);
+	
+	if (workMode == Mode::Unknown)
 	{
 		cout << "Unknown mode\n"
 			<< "Usage: crypt or decrypt\n";
