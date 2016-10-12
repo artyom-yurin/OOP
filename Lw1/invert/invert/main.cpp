@@ -29,15 +29,13 @@ Matrix GetMinor(const Matrix &matrix, size_t row, size_t column)
 {
 	Matrix minor (MATRIX_DIMENSION2, vector <double> (MATRIX_DIMENSION2, 0));
 
-	size_t l = 0;
-	for (size_t i = 0; i < matrix.size(); ++i)
+	for (size_t i = 0, l = 0; i < matrix.size(); ++i)
 	{		
 		if (i == row)
 		{
 			continue;
 		}
-		size_t k = 0;
-		for (size_t j = 0; j < matrix.size(); ++j)
+		for (size_t j = 0, k = 0; j < matrix.size(); ++j)
 		{
 			if (j == column)
 			{
