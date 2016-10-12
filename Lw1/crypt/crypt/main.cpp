@@ -5,8 +5,7 @@
 
 using namespace std;
 
-const int CRYPT = 0;
-const int DECRYPT = 1;
+enum class Mode {Crypt, Decrypt};
 
 bool IsNumber(char * str)
 {
@@ -44,7 +43,7 @@ bool CryptFile(ifstream & input, ofstream & output, const uint8_t key)
 	string currentString = "";
 	while (getline(input, currentString))
 	{
-		for (size_t i = 0; i < currentString.length(); ++i)
+		for (size_t i = 0; i < currentString.size(); ++i)
 		{
 			currentString[i] ^= key;
 			MixBitsCrypt(currentString[i]);
@@ -63,7 +62,7 @@ bool DecryptFile(ifstream & input, ofstream & output, const uint8_t key)
 	string currentString = "";
 	while (getline(input, currentString))
 	{
-		for (size_t i = 0; i < currentString.length(); ++i)
+		for (size_t i = 0; i < currentString.size(); ++i)
 		{
 			MixBitsDecrypt(currentString[i]);
 			currentString[i] ^= key;
@@ -87,15 +86,15 @@ int main(int argc, char * argv [])
 			<< "crypt.exe decrypt <input file> <output file> <key>\n";
 		return 1;
 	}
-	int workMode;
+	Mode workMode;
 	string mode = argv[1];
 	if (mode == "crypt")
 	{
-		workMode = CRYPT;
+		workMode = Mode::Crypt;
 	} 
 	else if (mode == "decrypt")
 	{
-		workMode = DECRYPT;
+		workMode = Mode::Decrypt;
 	}
 	else
 	{
@@ -133,7 +132,7 @@ int main(int argc, char * argv [])
 	}
 	uint8_t key = atoi(argv[4]);
 
-	if (workMode == CRYPT)
+	if (workMode == Mode::Crypt)
 	{
 		if (!CryptFile(input, output, key))
 		{
