@@ -16,24 +16,34 @@ auto GetMaxMinElement(const vector <double> & numbers)
 	return minmax_element(numbers.begin(), numbers.end());
 }
 
+double GetMultiplier(const vector <double> & numbers)
+{
+	auto minMax = GetMaxMinElement(numbers);
+	double result = *minMax.second;
+
+	if (*minMax.first != 0)
+	{
+		result /= *minMax.first;
+	}
+
+	return result;
+}
+
 void ProcessVector(vector <double> & numbers)
 {
 	if (numbers.empty())
 	{
 		return;
 	}
-	auto minMax = GetMaxMinElement(numbers);
-	double multiplier = *minMax.second;
-	if (*minMax.first != 0)
-	{
-		multiplier /= *minMax.first;
-	}
+
+	double multiplier = GetMultiplier(numbers);
+	
 	transform(numbers.begin(), numbers.end(), numbers.begin(), [=](double element) {
 		return element * multiplier;
 	});
 }
 
-void PrintVector(ostream & output, vector <double> & numbers)
+void PrintVector(ostream & output, const vector <double> & numbers)
 {
 	for (const double & element : numbers)
 	{
