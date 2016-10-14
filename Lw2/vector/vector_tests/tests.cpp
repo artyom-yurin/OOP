@@ -36,7 +36,7 @@ BOOST_AUTO_TEST_CASE(Get_Numbers)
 	{
 		std::stringstream input("");
 		auto numbers = GetNumbers(input);
-		const vector <double> correctNumbers = {};
+		const vector <double> correctNumbers = { };
 		BOOST_CHECK(numbers == correctNumbers);
 	}
 
