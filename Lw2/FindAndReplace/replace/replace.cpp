@@ -17,7 +17,7 @@ int main(int argc, char * argv[])
 
 	std::string searchString = argv[1];
 
-	if (searchString != "")
+	if (!searchString.empty())
 	{
 		std::string replaceString = argv[2];
 
