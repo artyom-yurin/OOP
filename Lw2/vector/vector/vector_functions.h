@@ -6,9 +6,17 @@
 #include <iomanip>
 #include <iterator>
 
-std::vector <double> GetNumbers(std::istream & input);
+inline std::vector <double> GetNumbers(std::istream & input)
+{
+	std::vector <double> result;
+	copy(std::istream_iterator <double>(input), std::istream_iterator <double>(), back_inserter(result));
+	return result;
+}
 
-auto GetMaxMinElement(const std::vector <double> & numbers);
+inline auto GetMaxMinElement(const std::vector <double> & numbers)
+{
+	return std::minmax_element(numbers.begin(), numbers.end());
+}
 
 double GetMultiplier(const std::vector <double> & numbers);
 
