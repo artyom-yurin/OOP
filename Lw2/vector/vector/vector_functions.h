@@ -1,22 +1,25 @@
 #pragma once
 
-#include "stdafx.h"
+#include <vector>
+#include <algorithm>
+#include <string>
+#include <iomanip>
+#include <iterator>
+#include <iostream>
 
-using namespace std;
-
-vector <double> GetNumbers(istream & input)
+std::vector <double> GetNumbers(std::istream & input)
 {
-	vector <double> result;
-	copy(istream_iterator <double>(input), istream_iterator <double>(), back_inserter(result));
+	std::vector <double> result;
+	copy(std::istream_iterator <double>(input), std::istream_iterator <double>(), back_inserter(result));
 	return result;
 }
 
-auto GetMaxMinElement(const vector <double> & numbers)
+auto GetMaxMinElement(const std::vector <double> & numbers)
 {
-	return minmax_element(numbers.begin(), numbers.end());
+	return std::minmax_element(numbers.begin(), numbers.end());
 }
 
-double GetMultiplier(const vector <double> & numbers)
+double GetMultiplier(const std::vector <double> & numbers)
 {
 	auto minMax = GetMaxMinElement(numbers);
 	double result = *minMax.second;
@@ -29,7 +32,7 @@ double GetMultiplier(const vector <double> & numbers)
 	return result;
 }
 
-void ProcessVector(vector <double> & numbers)
+void ProcessVector(std::vector <double> & numbers)
 {
 	if (numbers.empty())
 	{
@@ -37,13 +40,13 @@ void ProcessVector(vector <double> & numbers)
 	}
 
 	double multiplier = GetMultiplier(numbers);
-	
+
 	transform(numbers.begin(), numbers.end(), numbers.begin(), [=](double element) {
 		return element * multiplier;
 	});
 }
 
-void PrintVector(ostream & output, const vector <double> & numbers)
+void PrintVector(std::ostream & output, const std::vector <double> & numbers)
 {
 	for (const double & element : numbers)
 	{
