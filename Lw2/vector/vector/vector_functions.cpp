@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "vector_functions.h"
 
 void ProcessVector(std::vector <double> & numbers)

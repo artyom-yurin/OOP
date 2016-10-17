@@ -1,11 +1,5 @@
 #pragma once
 
-#include <vector>
-#include <algorithm>
-#include <string>
-#include <iomanip>
-#include <iterator>
-
 inline std::vector <double> GetNumbers(std::istream & input)
 {
 	std::vector <double> result;

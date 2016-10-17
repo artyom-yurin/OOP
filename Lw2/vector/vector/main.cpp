@@ -1,5 +1,5 @@
+#include "stdafx.h"
 #include "vector_functions.h"
-#include "iostream"
 
 using namespace std;
 
