@@ -4,55 +4,58 @@
 #include "../vector/vector_functions.cpp"
 
 
-BOOST_AUTO_TEST_SUITE(Test)
+BOOST_AUTO_TEST_SUITE(GetNumbers_function)
 
-BOOST_AUTO_TEST_CASE(Get_Numbers)
-{
-	{
-		std::stringstream input("1 2 3 4 5");
-		auto numbers = GetNumbers(input);
-		const std::vector <double> correctNumbers = {
-			1, 2, 3, 4, 5
-		};
-		BOOST_CHECK(numbers == correctNumbers);
-	}
-
-	{
-		std::stringstream input("5 4 3 1 2 A r t e m 1 2 3");
-		auto numbers = GetNumbers(input);
-		const std::vector <double> correctNumbers = {
-			5, 4, 3, 1, 2
-		};
-		BOOST_CHECK(numbers == correctNumbers);
-	}
-	
-	{
-		std::stringstream input("5 4 3 1 2 A r t e m");
-		auto numbers = GetNumbers(input);
-		const std::vector <double> correctNumbers = {
-			5, 4, 3, 1, 2
-		};
-		BOOST_CHECK(numbers == correctNumbers);
-	}
-
+	BOOST_AUTO_TEST_CASE(makes_empty_vector_from_empty_buffer)
 	{
 		std::stringstream input("");
 		auto numbers = GetNumbers(input);
 		BOOST_CHECK(numbers.empty());
 	}
+	
+	BOOST_AUTO_TEST_SUITE(when_buffer_contains_data_incorrectly)
+	
+		BOOST_AUTO_TEST_CASE(should_considered_to_incorrectly_data)
+		{
+			std::stringstream input("5 4 3 1 2 A r t e m");
+			auto numbers = GetNumbers(input);
+			const std::vector <double> correctNumbers = {
+				5, 4, 3, 1, 2
+			};
+			BOOST_CHECK(numbers == correctNumbers);
+		}
 
-	{
-		std::stringstream input("1.01 2.31 3.12 3.1 3.4");
-		auto numbers = GetNumbers(input);
-		const std::vector <double> correctNumbers = {
-			1.01, 2.31, 3.12, 3.1, 3.4
-		};
-		BOOST_CHECK(numbers == correctNumbers);
-	}
-}
+	BOOST_AUTO_TEST_SUITE_END()
 
-BOOST_AUTO_TEST_CASE(Get_Min_And_Max)
-{
+	BOOST_AUTO_TEST_SUITE(when_buffer_contains_data_correctly)
+
+		BOOST_AUTO_TEST_CASE(should_considered_int_data)
+		{
+			std::stringstream input("5 4 3 1 2");
+			auto numbers = GetNumbers(input);
+			const std::vector <double> correctNumbers = {
+				5, 4, 3, 1, 2
+			};
+			BOOST_CHECK(numbers == correctNumbers);
+		}
+
+		BOOST_AUTO_TEST_CASE(should_considered_float_data)
+		{
+			std::stringstream input("1.01 2.31 3.12 3.1 3.4");
+			auto numbers = GetNumbers(input);
+			const std::vector <double> correctNumbers = {
+				1.01, 2.31, 3.12, 3.1, 3.4
+			};
+			BOOST_CHECK(numbers == correctNumbers);
+		}
+
+	BOOST_AUTO_TEST_SUITE_END()
+
+BOOST_AUTO_TEST_SUITE_END()
+
+BOOST_AUTO_TEST_SUITE(GetMinAndMax_function)
+	
+	BOOST_AUTO_TEST_CASE(should_find_int_min_and_max)
 	{
 		const std::vector <double> input = {
 			1, 2, 3, 4, 5
@@ -64,6 +67,7 @@ BOOST_AUTO_TEST_CASE(Get_Min_And_Max)
 		BOOST_CHECK_EQUAL(*result.second, correctMax);
 	}
 
+	BOOST_AUTO_TEST_CASE(should_find_float_min_and_max)
 	{
 		const std::vector <double> input = {
 			0.12, 2.3, 3.1, 2.45
@@ -74,19 +78,12 @@ BOOST_AUTO_TEST_CASE(Get_Min_And_Max)
 		BOOST_CHECK_EQUAL(*result.first, correctMin);
 		BOOST_CHECK_EQUAL(*result.second, correctMax);
 	}
-}
 
-BOOST_AUTO_TEST_CASE(Get_Multiplier)
-{
-	{
-		const std::vector <double> input = {
-			1, 2, 3, 4, 5
-		};
-		auto multiplier = GetMultiplier(input);
-		double correctMultiplier = 5;
-		BOOST_CHECK_EQUAL(correctMultiplier, multiplier);
-	}
+BOOST_AUTO_TEST_SUITE_END()
 
+BOOST_AUTO_TEST_SUITE(GetMultiplier_function)
+
+	BOOST_AUTO_TEST_CASE(when_min_equal_zero)
 	{
 		const std::vector <double> input = {
 			0, 1, 2, 3, 4
@@ -95,16 +92,22 @@ BOOST_AUTO_TEST_CASE(Get_Multiplier)
 		double correctMultiplier = 4;
 		BOOST_CHECK_EQUAL(correctMultiplier, multiplier);
 	}
-}
 
-BOOST_AUTO_TEST_CASE(Process_Vector)
-{
+	BOOST_AUTO_TEST_CASE(when_data_correct)
 	{
-		std::vector <double> input = {};
-		ProcessVector(input);
-		BOOST_CHECK(input.empty());
+		const std::vector <double> input = {
+			6, 5, 2, 3, 4
+		};
+		auto multiplier = GetMultiplier(input);
+		double correctMultiplier = 3;
+		BOOST_CHECK_EQUAL(correctMultiplier, multiplier);
 	}
 
+BOOST_AUTO_TEST_SUITE_END()
+
+BOOST_AUTO_TEST_SUITE(ProcessVector_function)
+
+	BOOST_AUTO_TEST_CASE(when_min_equal_zero)
 	{
 		std::vector <double> input = {
 			0, 1, 2, 3, 4
@@ -115,21 +118,24 @@ BOOST_AUTO_TEST_CASE(Process_Vector)
 		};
 		BOOST_CHECK(correctInput == input);
 	}
-
+	
+	BOOST_AUTO_TEST_CASE(correct_data)
 	{
 		std::vector <double> input = {
-			5, 6, 2, 3, 4
+			6, 5, 2, 3, 4
 		};
 		ProcessVector(input);
 		const std::vector <double> correctInput = {
-			15, 18, 6, 9, 12
+			18, 15, 6, 9, 12
 		};
 		BOOST_CHECK(correctInput == input);
 	}
-}
 
-BOOST_AUTO_TEST_CASE(Print_Vector)
-{
+BOOST_AUTO_TEST_SUITE_END()
+
+BOOST_AUTO_TEST_SUITE(PrintVector_function)
+
+	BOOST_AUTO_TEST_CASE(empty_vector)
 	{
 		std::stringstream buffer;
 		const std::vector <double> input = {};
@@ -139,17 +145,7 @@ BOOST_AUTO_TEST_CASE(Print_Vector)
 		BOOST_CHECK_EQUAL(line, "");
 	}
 
-	{
-		std::stringstream buffer;
-		const std::vector <double> input = {
-			1, 2, 3, 4, 5
-		};
-		PrintVector(buffer, input);
-		std::string line;
-		getline(buffer, line);
-		BOOST_CHECK_EQUAL(line, "1.000 2.000 3.000 4.000 5.000 ");
-	}
-
+	BOOST_AUTO_TEST_CASE(when_vector_not_empty)
 	{
 		std::stringstream buffer;
 		const std::vector <double> input = {
@@ -160,6 +156,5 @@ BOOST_AUTO_TEST_CASE(Print_Vector)
 		getline(buffer, line);
 		BOOST_CHECK_EQUAL(line, "1.112 2.312 3.200 4.000 5.230 ");
 	}
-}
 
 BOOST_AUTO_TEST_SUITE_END()
