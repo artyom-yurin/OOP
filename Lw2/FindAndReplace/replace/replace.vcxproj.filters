@@ -29,5 +29,8 @@
     <ClCompile Include="replace.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="replace_functions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
