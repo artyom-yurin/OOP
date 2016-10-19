@@ -16,14 +16,12 @@ bool CheckExit(const std::string & word)
 	return word == "...";
 }
 
-bool AddNewWord(std::map<std::string, std::string>& dictionary, const std::string & key)
+bool AddNewWord(std::istream & input, std::ostream & output, std::map<std::string, std::string>& dictionary, const std::string & key)
 {
-	std::string value = "";
-	std::cout << "Введите перевод слова: ";
-	getline(std::cin, value);
+	std::string value = GetWord(input);
 	if (value.empty())
 	{
-		std::cout << "Слово \"" << key << "\" было проигнорировано.\n";
+		output << "Слово \"" << key << "\" было проигнорировано.\n";
 		return false;
 	}
 	std::transform(value.begin(), value.end(), value.begin(), ::tolower);
@@ -31,11 +29,11 @@ bool AddNewWord(std::map<std::string, std::string>& dictionary, const std::strin
 	return true;
 }
 
-bool GetTranslate(const std::map <std::string, std::string> & dictionary, const std::string & word)
+bool GetTranslate(std::ostream & output, const std::map <std::string, std::string> & dictionary, const std::string & word)
 {	
 	if (dictionary.find(word) != dictionary.end())
 	{
-		std::cout << dictionary.find(word)->second << "\n";
+		output << dictionary.find(word)->second << "\n";
 		return true;
 	}
 	else
@@ -44,7 +42,7 @@ bool GetTranslate(const std::map <std::string, std::string> & dictionary, const 
 		{
 			if (element.second == word)
 			{
-				std::cout << element.first << "\n";
+				output << element.first << "\n";
 				return true;
 			}
 		}
