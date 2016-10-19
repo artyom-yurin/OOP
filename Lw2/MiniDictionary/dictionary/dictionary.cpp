@@ -1,14 +1,5 @@
 #include "stdafx.h"
-
-void GetDictionaryFromFile(std::ifstream & input, std::map<std::string, std::string> & dictionary)
-{
-	std::string key = "";
-	std::string value = "";
-	while (getline(input, key, ':') && getline(input, value, '\n'))
-	{
-		dictionary[key] = value;
-	}
-}
+#include "dictionary_functions.h"
 
 int main(int argc, char * argv[])
 {
@@ -22,6 +13,10 @@ int main(int argc, char * argv[])
 		}
 	}
 
-	
-    return 0;
+	while (true)
+	{
+		std::string word = GetWord(std::cin);
+	}
+
+	return 0;
 }
