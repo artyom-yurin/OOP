@@ -11,6 +11,11 @@ void GetDictionaryFromFile(std::ifstream & input, std::map <std::string, std::st
 	}
 }
 
+bool CheckExit(std::string word)
+{
+	return word == "...";
+}
+
 bool GetTranslate(std::map <std::string, std::string> & dictionary, std::string & word)
 {	
 	if (dictionary.find(word) != dictionary.end())

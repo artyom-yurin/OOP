@@ -11,4 +11,6 @@ inline std::string GetWord(std::istream & input)
 	return word;
 }
 
+bool CheckExit(std::string word);
+
 bool GetTranslate(std::map <std::string, std::string> & dictionary, std::string & word);

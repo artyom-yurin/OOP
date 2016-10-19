@@ -14,15 +14,18 @@ int main(int argc, char * argv[])
 			GetDictionaryFromFile(dictionaryFile, dictionary);
 		}
 	}
+
 	while (true)
 	{
 		std::string word = GetWord(std::cin);
-		//TODO: check on exit
+		if (CheckExit(word))
+		{
+			//TODO: Save dictionary
+			return 0;
+		}
 		if (!GetTranslate(dictionary, word))
 		{
 			//TODO: add new word
 		}
 	}
-
-	return 0;
 }
