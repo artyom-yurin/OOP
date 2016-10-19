@@ -3,6 +3,8 @@
 
 int main(int argc, char * argv[])
 {
+	SetConsoleCP(1251);
+	SetConsoleOutputCP(1251);
 	std::map<std::string, std::string> dictionary;
 	if (argc == 2)
 	{
@@ -12,16 +14,11 @@ int main(int argc, char * argv[])
 			GetDictionaryFromFile(dictionaryFile, dictionary);
 		}
 	}
-
 	while (true)
 	{
 		std::string word = GetWord(std::cin);
 		//TODO: check on exit
-		if (CanFindWord(dictionary, word))
-		{
-			//TODO: give translate
-		}
-		else
+		if (!GetTranslate(dictionary, word))
 		{
 			//TODO: add new word
 		}

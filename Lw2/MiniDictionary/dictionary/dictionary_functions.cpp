@@ -11,10 +11,11 @@ void GetDictionaryFromFile(std::ifstream & input, std::map <std::string, std::st
 	}
 }
 
-bool CanFindWord(std::map <std::string, std::string> & dictionary, std::string & word)
+bool GetTranslate(std::map <std::string, std::string> & dictionary, std::string & word)
 {	
 	if (dictionary.find(word) != dictionary.end())
 	{
+		std::cout << dictionary.find(word)->second << "\n";
 		return true;
 	}
 	else
@@ -23,6 +24,7 @@ bool CanFindWord(std::map <std::string, std::string> & dictionary, std::string &
 		{
 			if (element.second == word)
 			{
+				std::cout << element.first << "\n";
 				return true;
 			}
 		}

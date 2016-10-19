@@ -5,9 +5,10 @@ void GetDictionaryFromFile(std::ifstream & input, std::map <std::string, std::st
 inline std::string GetWord(std::istream & input)
 {
 	std::string word = "";
+	std::cout << "¬ведите слово: ";
 	getline(input, word);
-	//TODO: transform to lower case
+	std::transform(word.begin(), word.end(), word.begin(), ::tolower);
 	return word;
 }
 
-bool CanFindWord(std::map <std::string, std::string> & dictionary, std::string & word);
+bool GetTranslate(std::map <std::string, std::string> & dictionary, std::string & word);

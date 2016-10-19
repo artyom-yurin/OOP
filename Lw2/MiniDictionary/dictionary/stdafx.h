@@ -9,3 +9,5 @@
 #include <string>
 #include <map>
 #include <fstream>
+#include <algorithm>
+#include <windows.h>
