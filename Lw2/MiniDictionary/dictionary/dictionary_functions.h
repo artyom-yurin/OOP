@@ -4,7 +4,7 @@ void GetDictionaryFromFile(std::ifstream & input, std::map <std::string, std::st
 
 inline std::string GetWord(std::istream & input)
 {
-	std::string word = "";
+	std::string word = ""; 
 	getline(input, word);
 	std::transform(word.begin(), word.end(), word.begin(), ::tolower);
 	return word;

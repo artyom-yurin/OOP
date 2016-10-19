@@ -20,7 +20,7 @@ bool AddNewWord(std::istream & input, std::ostream & output, std::map<std::strin
 {
 	std::string value = GetWord(input);
 	if (value.empty())
-	{
+	{ 
 		output << "Слово \"" << key << "\" было проигнорировано.\n";
 		return false;
 	}
