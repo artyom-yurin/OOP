@@ -11,18 +11,19 @@ void GetDictionaryFromFile(std::ifstream & input, std::map <std::string, std::st
 	}
 }
 
-bool CheckExit(std::string & word)
+bool CheckExit(const std::string & word)
 {
 	return word == "...";
 }
 
-bool AddNewWord(std::map<std::string, std::string>& dictionary, std::string & key)
+bool AddNewWord(std::map<std::string, std::string>& dictionary, const std::string & key)
 {
 	std::string value = "";
 	std::cout << "Введите перевод слова: ";
 	getline(std::cin, value);
 	if (value.empty())
 	{
+		std::cout << "Слово \"" << key << "\" было проигнорировано.\n";
 		return false;
 	}
 	std::transform(value.begin(), value.end(), value.begin(), ::tolower);
@@ -30,7 +31,7 @@ bool AddNewWord(std::map<std::string, std::string>& dictionary, std::string & ke
 	return true;
 }
 
-bool GetTranslate(std::map <std::string, std::string> & dictionary, std::string & word)
+bool GetTranslate(const std::map <std::string, std::string> & dictionary, const std::string & word)
 {	
 	if (dictionary.find(word) != dictionary.end())
 	{
@@ -49,5 +50,25 @@ bool GetTranslate(std::map <std::string, std::string> & dictionary, std::string 
 		}
 	}
 	return false;
+}
+
+bool SaveAnswer()
+{
+	std::cout << "В словарь были внесены изменения. Введите Y или y для сохранения перед выходом.\n";
+	std::string answer = "";
+	std::cin >> answer;
+	if (answer == "Y" || answer == "y")
+	{
+		return true;
+	}
+	return false;
+}
+
+void SaveDictionaryInFile(const std::map<std::string, std::string>& dictionary, std::ofstream & output)
+{
+	for (auto it = dictionary.begin(); it != dictionary.end(); it++)
+	{
+		output << it->first << ":" << it->second << "\n";
+	}
 }
 

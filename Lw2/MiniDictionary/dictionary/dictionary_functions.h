@@ -11,8 +11,12 @@ inline std::string GetWord(std::istream & input)
 	return word;
 }
 
-bool CheckExit(std::string & word);
+bool CheckExit(const std::string & word);
 
-bool AddNewWord(std::map <std::string, std::string> & dictionary, std::string & key);
+bool AddNewWord(std::map <std::string, std::string> & dictionary, const std::string & key);
 
-bool GetTranslate(std::map <std::string, std::string> & dictionary, std::string & word);
+bool GetTranslate(const std::map <std::string, std::string> & dictionary, const std::string & word);
+
+bool SaveAnswer();
+
+void SaveDictionaryInFile(const std::map <std::string, std::string> & dictionary, std::ofstream & output);

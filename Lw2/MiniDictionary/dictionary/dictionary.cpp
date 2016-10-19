@@ -20,9 +20,34 @@ int main(int argc, char * argv[])
 		std::string word = GetWord(std::cin);
 		if (CheckExit(word))
 		{
-			//TODO: Save dictionary
+			if (NeedSaveDictionary)
+			{
+				if (SaveAnswer())
+				{
+					std::ofstream newDictionaryFile;
+					if (argc == 2)
+					{
+						newDictionaryFile.open(argv[1]);
+					}
+					else
+					{
+						newDictionaryFile.open("dictionary.txt");
+					}
+					SaveDictionaryInFile(dictionary, newDictionaryFile);
+					std::cout << "Изменения были сохранены. До свидания\n";
+				}
+				else
+				{
+					std::cout << "Изменения не были сохранены. До свидания\n";
+				}
+			}
+			else
+			{
+				std::cout << "До свидания\n";
+			}
 			return 0;
 		}
+
 		if (!GetTranslate(dictionary, word))
 		{
 			std::cout << "Неизвестное слово \"" << word << "\".\n";
