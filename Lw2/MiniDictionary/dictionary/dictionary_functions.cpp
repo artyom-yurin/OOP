@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "dictionary_functions.h"
 
-void GetDictionaryFromFile(std::ifstream & input, std::map<std::string, std::string> & dictionary)
+void GetDictionaryFromFile(std::ifstream & input, std::map <std::string, std::string> & dictionary)
 {
 	std::string key = "";
 	std::string value = "";
@@ -9,5 +9,24 @@ void GetDictionaryFromFile(std::ifstream & input, std::map<std::string, std::str
 	{
 		dictionary[key] = value;
 	}
+}
+
+bool CanFindWord(std::map <std::string, std::string> & dictionary, std::string & word)
+{	
+	if (dictionary.find(word) != dictionary.end())
+	{
+		return true;
+	}
+	else
+	{
+		for (auto & element : dictionary)
+		{
+			if (element.second == word)
+			{
+				return true;
+			}
+		}
+	}
+	return false;
 }
 

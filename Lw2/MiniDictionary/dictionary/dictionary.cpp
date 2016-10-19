@@ -16,6 +16,15 @@ int main(int argc, char * argv[])
 	while (true)
 	{
 		std::string word = GetWord(std::cin);
+		//TODO: check on exit
+		if (CanFindWord(dictionary, word))
+		{
+			//TODO: give translate
+		}
+		else
+		{
+			//TODO: add new word
+		}
 	}
 
 	return 0;
