@@ -14,7 +14,7 @@ int main(int argc, char * argv[])
 			GetDictionaryFromFile(dictionaryFile, dictionary);
 		}
 	}
-
+	bool NeedSaveDictionary = false;
 	while (true)
 	{
 		std::string word = GetWord(std::cin);
@@ -25,7 +25,12 @@ int main(int argc, char * argv[])
 		}
 		if (!GetTranslate(dictionary, word))
 		{
-			//TODO: add new word
+			std::cout << "Неизвестное слово \"" << word << "\".\n";
+			if (AddNewWord(dictionary, word))
+			{
+				std::cout << "Слово \"" << word << "\" сохранено в словаре как \"" << dictionary[word] << "\".\n";
+				NeedSaveDictionary = true;
+			}
 		}
 	}
 }

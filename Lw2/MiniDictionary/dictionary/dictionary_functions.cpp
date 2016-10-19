@@ -11,9 +11,23 @@ void GetDictionaryFromFile(std::ifstream & input, std::map <std::string, std::st
 	}
 }
 
-bool CheckExit(std::string word)
+bool CheckExit(std::string & word)
 {
 	return word == "...";
+}
+
+bool AddNewWord(std::map<std::string, std::string>& dictionary, std::string & key)
+{
+	std::string value = "";
+	std::cout << "¬ведите перевод слова: ";
+	getline(std::cin, value);
+	if (value.empty())
+	{
+		return false;
+	}
+	std::transform(value.begin(), value.end(), value.begin(), ::tolower);
+	dictionary[key] = value;
+	return true;
 }
 
 bool GetTranslate(std::map <std::string, std::string> & dictionary, std::string & word)
