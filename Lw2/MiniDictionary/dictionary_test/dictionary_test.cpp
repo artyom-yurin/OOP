@@ -1,4 +1,4 @@
-#include "stdafx.h"
+п»ї#include "stdafx.h"
 #include "../dictionary/dictionary_functions.h"
 #include "../dictionary/dictionary_functions.cpp"
 
@@ -16,7 +16,7 @@ BOOST_AUTO_TEST_SUITE(GetTranslate_function)
 	{
 		std::stringstream buffer;
 		std::map <std::string, std::string> dictionary;
-		dictionary["word"] = "слово";
+		dictionary["word"] = "СЃР»РѕРІРѕ";
 		bool result = GetTranslate(buffer, dictionary, "word");
 		BOOST_CHECK(result);
 		std::string line = "";
@@ -28,8 +28,8 @@ BOOST_AUTO_TEST_SUITE(GetTranslate_function)
 	{
 		std::stringstream buffer;
 		std::map <std::string, std::string> dictionary;
-		dictionary["word"] = "слово";
-		bool result = GetTranslate(buffer, dictionary, "слово");
+		dictionary["word"] = "СЃР»РѕРІРѕ";
+		bool result = GetTranslate(buffer, dictionary, "СЃР»РѕРІРѕ");
 		BOOST_CHECK(result);
 		std::string line = "";
 		getline(buffer, line);
@@ -50,13 +50,13 @@ BOOST_AUTO_TEST_SUITE(AddNewWord_function)
 		BOOST_CHECK(!result);
 		std::string line = "";
 		getline(outBuffer, line);
-		std::string correctLine = "Слово \"word\" было проигнорировано.";
+		std::string correctLine = "РЎР»РѕРІРѕ \"word\" Р±С‹Р»Рѕ РїСЂРѕРёРіРЅРѕСЂРёСЂРѕРІР°РЅРѕ.";
 		BOOST_CHECK_EQUAL(line, correctLine);
 	}
 
 	BOOST_AUTO_TEST_CASE(correct_translation)
 	{
-		std::string translation = "слово";
+		std::string translation = "СЃР»РѕРІРѕ";
 		std::stringstream inBuffer(translation);
 		std::stringstream outBuffer;
 		std::map <std::string, std::string> dictionary;

@@ -1,11 +1,11 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "dictionary_functions.h"
 
 int main(int argc, char * argv[])
 {
 	setlocale(0, ""); 
 	SetConsoleCP(1251);
-	SetConsoleOutputCP(1251); 
+	SetConsoleOutputCP(1251);
 	std::map<std::string, std::string> dictionary;
 	if (argc == 2)
 	{
@@ -18,7 +18,7 @@ int main(int argc, char * argv[])
 	bool NeedSaveDictionary = false;
 	while (true)
 	{
-		std::cout << "Ââåäèòå ñëîâî: ";
+		std::cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ ÑÐ»Ð¾Ð²Ð¾: ";
 		std::string word = GetWord(std::cin);
 		if (CheckExit(word))
 		{
@@ -36,27 +36,27 @@ int main(int argc, char * argv[])
 						newDictionaryFile.open("dictionary.txt");
 					}
 					SaveDictionaryInFile(dictionary, newDictionaryFile);
-					std::cout << "Èçìåíåíèÿ áûëè ñîõðàíåíû. Äî ñâèäàíèÿ\n";
+					std::cout << "Ð˜Ð·Ð¼ÐµÐ½ÐµÐ½Ð¸Ñ Ð±Ñ‹Ð»Ð¸ ÑÐ¾Ñ…Ñ€Ð°Ð½ÐµÐ½Ñ‹. Ð”Ð¾ ÑÐ²Ð¸Ð´Ð°Ð½Ð¸Ñ\n";
 				}
 				else
 				{
-					std::cout << "Èçìåíåíèÿ íå áûëè ñîõðàíåíû. Äî ñâèäàíèÿ\n";
+					std::cout << "Ð˜Ð·Ð¼ÐµÐ½ÐµÐ½Ð¸Ñ Ð½Ðµ Ð±Ñ‹Ð»Ð¸ ÑÐ¾Ñ…Ñ€Ð°Ð½ÐµÐ½Ñ‹. Ð”Ð¾ ÑÐ²Ð¸Ð´Ð°Ð½Ð¸Ñ\n";
 				}
 			}
 			else
 			{
-				std::cout << "Äî ñâèäàíèÿ\n";
+				std::cout << "Ð”Ð¾ ÑÐ²Ð¸Ð´Ð°Ð½Ð¸Ñ\n";
 			}
 			return 0;
 		}
 
 		if (!GetTranslate(std::cout, dictionary, word))
 		{
-			std::cout << "Íåèçâåñòíîå ñëîâî \"" << word << "\".\n";
-			std::cout << "Ââåäèòå ïåðåâîä ñëîâà: ";
+			std::cout << "ÐÐµÐ¸Ð·Ð²ÐµÑÑ‚Ð½Ð¾Ðµ ÑÐ»Ð¾Ð²Ð¾ \"" << word << "\".\n";
+			std::cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð¿ÐµÑ€ÐµÐ²Ð¾Ð´ ÑÐ»Ð¾Ð²Ð°: ";
 			if (AddNewWord(std::cin, std::cout, dictionary, word))
 			{
-				std::cout << "Ñëîâî \"" << word << "\" ñîõðàíåíî â ñëîâàðå êàê \"" << dictionary[word] << "\".\n";
+				std::cout << "Ð¡Ð»Ð¾Ð²Ð¾ \"" << word << "\" ÑÐ¾Ñ…Ñ€Ð°Ð½ÐµÐ½Ð¾ Ð² ÑÐ»Ð¾Ð²Ð°Ñ€Ðµ ÐºÐ°Ðº \"" << dictionary[word] << "\".\n";
 				NeedSaveDictionary = true;
 			}
 		}

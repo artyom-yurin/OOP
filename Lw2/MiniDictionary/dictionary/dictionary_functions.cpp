@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "dictionary_functions.h"
 
 void GetDictionaryFromFile(std::ifstream & input, std::map <std::string, std::string> & dictionary)
@@ -21,7 +21,7 @@ bool AddNewWord(std::istream & input, std::ostream & output, std::map<std::strin
 	std::string value = GetWord(input);
 	if (value.empty())
 	{ 
-		output << "Ñëîâî \"" << key << "\" áûëî ïðîèãíîðèðîâàíî.\n";
+		output << "Ð¡Ð»Ð¾Ð²Ð¾ \"" << key << "\" Ð±Ñ‹Ð»Ð¾ Ð¿Ñ€Ð¾Ð¸Ð³Ð½Ð¾Ñ€Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¾.\n";
 		return false;
 	}
 	std::transform(value.begin(), value.end(), value.begin(), ::tolower);
@@ -37,19 +37,16 @@ bool GetTranslate(std::ostream & output, const std::map <std::string, std::strin
 		output << dictionary.find(word)->second;
 		result = true;
 	}
-	else
+	for (auto & element : dictionary)
 	{
-		for (auto & element : dictionary)
+		if (element.second == word)
 		{
-			if (element.second == word)
+			if (result == true)
 			{
-				if (result == true)
-				{
-					output << ", ";
-				}
-				output << element.first;
-				result = true;
+				output << ", ";
 			}
+			output << element.first;
+			result = true;
 		}
 	}
 	if (result == true)
@@ -61,7 +58,7 @@ bool GetTranslate(std::ostream & output, const std::map <std::string, std::strin
 
 bool SaveAnswer()
 {
-	std::cout << "Â ñëîâàðü áûëè âíåñåíû èçìåíåíèÿ. Ââåäèòå Y èëè y äëÿ ñîõðàíåíèÿ ïåðåä âûõîäîì.\n";
+	std::cout << "Ð’ ÑÐ»Ð¾Ð²Ð°Ñ€ÑŒ Ð±Ñ‹Ð»Ð¸ Ð²Ð½ÐµÑÐµÐ½Ñ‹ Ð¸Ð·Ð¼ÐµÐ½ÐµÐ½Ð¸Ñ. Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Y Ð¸Ð»Ð¸ y Ð´Ð»Ñ ÑÐ¾Ñ…Ñ€Ð°Ð½ÐµÐ½Ð¸Ñ Ð¿ÐµÑ€ÐµÐ´ Ð²Ñ‹Ñ…Ð¾Ð´Ð¾Ð¼.\n";
 	std::string answer = "";
 	std::cin >> answer;
 	if (answer == "Y" || answer == "y")
