@@ -31,10 +31,11 @@ bool AddNewWord(std::istream & input, std::ostream & output, std::map<std::strin
 
 bool GetTranslate(std::ostream & output, const std::map <std::string, std::string> & dictionary, const std::string & word)
 {	
+	bool result = false;
 	if (dictionary.find(word) != dictionary.end())
 	{
-		output << dictionary.find(word)->second << "\n";
-		return true;
+		output << dictionary.find(word)->second;
+		result = true;
 	}
 	else
 	{
@@ -42,12 +43,20 @@ bool GetTranslate(std::ostream & output, const std::map <std::string, std::strin
 		{
 			if (element.second == word)
 			{
-				output << element.first << "\n";
-				return true;
+				if (result == true)
+				{
+					output << ", ";
+				}
+				output << element.first;
+				result = true;
 			}
 		}
 	}
-	return false;
+	if (result == true)
+	{
+		output << "\n";
+	}
+	return result;
 }
 
 bool SaveAnswer()
