@@ -5,7 +5,7 @@ int main(int argc, char * argv[])
 {
 	setlocale(0, ""); 
 	SetConsoleCP(1251);
-	SetConsoleOutputCP(1251);
+	SetConsoleOutputCP(1251); 
 	std::map<std::string, std::string> dictionary;
 	if (argc == 2)
 	{

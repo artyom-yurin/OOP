@@ -25,7 +25,7 @@ bool AddNewWord(std::istream & input, std::ostream & output, std::map<std::strin
 		return false;
 	}
 	std::transform(value.begin(), value.end(), value.begin(), ::tolower);
-	dictionary[key] = value;
+	dictionary[key] = value; 
 	return true;
 }
 
