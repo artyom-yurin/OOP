@@ -10,3 +10,14 @@ inline void PrintSet(std::ostream & output, std::set<int> & printSet)
 	}
 	output << std::endl;
 }
+
+inline bool IsNumber(char * str)
+{
+	for (unsigned i = 0; i < strlen(str); ++i)
+	{
+		if (!isdigit(str[i])) {
+			return false;
+		}
+	}
+	return true;
+}

@@ -10,6 +10,13 @@ int main(int argc, char * argv [])
 		return 1;
 	}
 
+	if (!IsNumber(argv[1]))
+	{
+		std::cout << "Invalid value\n"
+			<< "Upper bound must be number\n";
+		return 1;
+	}
+
 	if ((atoi(argv[1]) > 100000000) || (atoi(argv[1]) < 2))
 	{
 		std::cout << "Invalid value\n"
@@ -19,9 +26,7 @@ int main(int argc, char * argv [])
 
 	int upperBound = atoi(argv[1]);
 
-	std::set<int> primeNumbers;
-
-	//TODO: Get Prime Numbers Set
+	std::set<int> primeNumbers = GeneratePrimeNumbersSet(upperBound);
 
 	PrintSet(std::cout, primeNumbers);
 
