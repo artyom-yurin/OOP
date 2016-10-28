@@ -4,6 +4,7 @@
 int main()
 {
 	TestTurnOnEngine();
+	TestTurnOffEngine();
 
     return 0;
 }

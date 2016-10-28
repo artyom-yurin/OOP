@@ -13,6 +13,7 @@ void TestTurnOnEngine()
 void TestTurnOffEngine()
 {
 	CCar car;
+	assert(!car.TurnOffEngine());
 	car.TurnOnEngine();
 	assert(car.TurnOffEngine());
 	car.TurnOnEngine();

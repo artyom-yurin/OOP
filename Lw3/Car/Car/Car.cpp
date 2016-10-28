@@ -21,18 +21,26 @@ bool CCar::TurnOnEngine()
 
 bool CCar::TurnOffEngine()
 {
+	if ((m_engineOnTurn) && (m_currentSpeed == 0) && (m_currentGear == 0)) 
+	{
+		m_currentDirection = 0;
+		m_engineOnTurn = false;
+		return true;
+	}
 	return false;
 }
 
 
 bool CCar::SetGear(int gear)
 {
+	m_currentGear = gear;
 	return false;
 }
 
 
 bool CCar::SetSpeed(int speed)
 {
+	m_currentSpeed = speed;
 	return false;
 }
 
