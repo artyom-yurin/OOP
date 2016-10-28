@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "../replace/replace_functions.h"
-#include "../replace/replace_functions.cpp"
 
 BOOST_AUTO_TEST_SUITE(GetString_function)
 

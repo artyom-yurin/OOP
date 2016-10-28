@@ -1,6 +1,5 @@
 ﻿#include "stdafx.h"
 #include "../dictionary/dictionary_functions.h"
-#include "../dictionary/dictionary_functions.cpp"
 
 BOOST_AUTO_TEST_SUITE(GetTranslate_function)
 

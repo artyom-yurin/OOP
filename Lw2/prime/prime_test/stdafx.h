@@ -4,6 +4,7 @@
 
 #include <stdio.h>
 #include <tchar.h>
+#include <set>
 
 #define BOOST_TEST_MODULE Tests
 

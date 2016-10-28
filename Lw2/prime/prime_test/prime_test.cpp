@@ -1,6 +1,6 @@
 #include "stdafx.h"
 
-#include "../prime/prime_functions.cpp"
+#include "../prime/prime_functions.h"
 
 BOOST_AUTO_TEST_SUITE(GeneratePrimeNumbersSet_function)
 

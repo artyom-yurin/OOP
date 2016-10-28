@@ -1,7 +1,6 @@
 #include "stdafx.h"
 
 #include "../vector/vector_functions.h"
-#include "../vector/vector_functions.cpp"
 
 
 BOOST_AUTO_TEST_SUITE(GetNumbers_function)
