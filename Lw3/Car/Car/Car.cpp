@@ -33,7 +33,70 @@ bool CCar::TurnOffEngine()
 
 bool CCar::SetGear(int gear)
 {
-	m_currentGear = gear;
+	switch (gear)
+	{
+		case -1:
+		{
+			if ((!m_currentSpeed) && (!m_currentGear || (m_currentGear == 1)))
+			{
+				m_currentGear = gear;
+				m_currentDirection = -1;
+				return true;
+			}
+			break;
+		}
+		case 0:
+		{
+			m_currentGear = gear;
+			return true;
+			break;
+		}
+		case 1:
+		{
+			if ((m_currentSpeed >= 0) && (m_currentSpeed <= 30) && ((m_currentDirection == 0) || (m_currentDirection == 1)))
+			{
+				m_currentGear = gear;
+				return true;
+			}
+			break;
+		}
+		case 2:
+		{
+			if ((m_currentSpeed >= 20) && (m_currentSpeed <= 50) && (m_currentDirection == 1))
+			{
+				m_currentGear = gear;
+				return true;
+			}
+			break;
+		}
+		case 3:
+		{
+			if ((m_currentSpeed >= 30) && (m_currentSpeed <= 60))
+			{
+				m_currentGear = gear;
+				return true;
+			}
+			break;
+		}
+		case 4:
+		{
+			if ((m_currentSpeed >= 40) && (m_currentSpeed <= 90))
+			{
+				m_currentGear = gear;
+				return true;
+			}
+			break;
+		}
+		case 5:
+		{
+			if ((m_currentSpeed >= 50) && (m_currentSpeed <= 150))
+			{
+				m_currentGear = gear;
+				return true;
+			}
+			break;
+		}
+	}
 	return false;
 }
 
@@ -44,7 +107,7 @@ bool CCar::SetSpeed(int speed)
 	{
 		case -1: 
 		{
-			if ((speed > 0) && (speed < 20))
+			if ((speed >= 0) && (speed <= 20))
 			{
 				m_currentSpeed = speed;
 				return true;
@@ -55,6 +118,7 @@ bool CCar::SetSpeed(int speed)
 		{
 			if (!speed)
 			{
+				m_currentDirection = 0;
 				m_currentSpeed = speed;
 				return true;
 			}
@@ -62,8 +126,16 @@ bool CCar::SetSpeed(int speed)
 		}
 		case 1:
 		{
-			if ((speed > 0) && (speed < 30))
+			if ((speed >= 0) && (speed <= 30))
 			{
+				if (speed)
+				{
+					m_currentDirection = 1;
+				}
+				else
+				{
+					m_currentDirection = 0;
+				}
 				m_currentSpeed = speed;
 				return true;
 			}
@@ -71,7 +143,7 @@ bool CCar::SetSpeed(int speed)
 		}
 		case 2:
 		{
-			if ((speed > 20) && (speed < 50))
+			if ((speed >= 20) && (speed <= 50))
 			{
 				m_currentSpeed = speed;
 				return true;
@@ -80,7 +152,7 @@ bool CCar::SetSpeed(int speed)
 		}
 		case 3:
 		{
-			if ((speed > 30) && (speed < 60))
+			if ((speed >= 30) && (speed <= 60))
 			{
 				m_currentSpeed = speed;
 				return true;
@@ -89,7 +161,7 @@ bool CCar::SetSpeed(int speed)
 		}
 		case 4:
 		{
-			if ((speed > 40) && (speed < 90))
+			if ((speed >= 40) && (speed <= 90))
 			{
 				m_currentSpeed = speed;
 				return true;
@@ -98,7 +170,7 @@ bool CCar::SetSpeed(int speed)
 		}
 		case 5:
 		{
-			if ((speed > 50) && (speed < 150))
+			if ((speed >= 50) && (speed <= 150))
 			{
 				m_currentSpeed = speed;
 				return true;

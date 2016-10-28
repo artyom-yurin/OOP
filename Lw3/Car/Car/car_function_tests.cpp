@@ -43,6 +43,8 @@ void TestSetGear()
 	car.SetSpeed(1);
 	assert(!car.SetGear(1));
 	assert(car.SetGear(0));
+	car.SetSpeed(0);
+	assert(car.SetGear(1));
 }
 
 void TestGetInfo()
