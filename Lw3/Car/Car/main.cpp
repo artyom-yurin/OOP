@@ -7,6 +7,7 @@ int main()
 	TestTurnOffEngine();
 	TestSetSpeed();
 	TestSetGear();
+	TestGetInfo();
 
     return 0;
 }

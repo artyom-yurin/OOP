@@ -59,4 +59,14 @@ void TestGetInfo()
 	assert(car.GetSpeed() == 35);
 	assert(car.GetEngineStatus());
 	assert(car.GetDirection() == 1);
+	car.SetSpeed(20);
+	car.SetGear(1);
+	car.SetSpeed(0);
+	car.SetGear(-1);
+	assert(car.SetGear(-1));
+	assert(car.GetGear() == -1);
+	assert(car.GetSpeed() == 0);
+	assert(car.GetEngineStatus());
+	assert(car.GetDirection() == -1);
+
 }
