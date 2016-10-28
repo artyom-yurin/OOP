@@ -5,6 +5,7 @@ int main()
 {
 	TestTurnOnEngine();
 	TestTurnOffEngine();
+	TestSetSpeed();
 
     return 0;
 }

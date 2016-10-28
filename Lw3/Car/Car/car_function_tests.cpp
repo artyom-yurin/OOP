@@ -16,20 +16,19 @@ void TestTurnOffEngine()
 	assert(!car.TurnOffEngine());
 	car.TurnOnEngine();
 	assert(car.TurnOffEngine());
-	car.TurnOnEngine();
-	car.SetSpeed(10);
 	assert(!car.TurnOffEngine());
-	car.SetSpeed(0);
+	car.TurnOnEngine();
 	car.SetGear(1);
+	car.SetSpeed(10);
 	assert(!car.TurnOffEngine());
 }
 
 void TestSetSpeed()
 {
 	CCar car;
-	assert(car.SetSpeed(10));
+	assert(!car.SetSpeed(10));
 	car.SetGear(1);
-	assert(!car.SetSpeed(40));
+	assert(car.SetSpeed(20));
 }
 
 void TestSetGear()
