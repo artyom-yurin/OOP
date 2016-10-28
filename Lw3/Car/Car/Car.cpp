@@ -10,6 +10,11 @@ CCar::~CCar() = default;
 
 bool CCar::TurnOnEngine()
 {
+	if (!m_engineOnTurn)
+	{
+		m_engineOnTurn = true;
+		return true;
+	}
 	return false;
 }
 
