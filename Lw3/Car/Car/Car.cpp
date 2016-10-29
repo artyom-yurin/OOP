@@ -45,7 +45,6 @@ bool CCar::SetGear(int gear)
 				if ((!m_currentSpeed) && (!m_currentGear || (m_currentGear == 1)))
 				{
 					m_currentGear = gear;
-					m_currentDirection = -1;
 					return true;
 				}
 				break;
@@ -58,7 +57,7 @@ bool CCar::SetGear(int gear)
 			}
 			case 1:
 			{
-				if (((m_currentSpeed >= 0) && (m_currentSpeed <= 30) && (m_currentDirection == 1)) || (m_currentSpeed == 0 && ((m_currentDirection = 0) || (m_currentDirection = -1))))
+				if (((m_currentSpeed >= 0) && (m_currentSpeed <= 30) && (m_currentDirection == 1)) || (m_currentSpeed == 0 && ((m_currentDirection == 0) || (m_currentDirection == -1))))
 				{
 					m_currentGear = gear;
 					return true;
@@ -117,6 +116,14 @@ bool CCar::SetSpeed(int speed)
 			{
 				if ((speed >= 0) && (speed <= 20))
 				{
+					if (speed != 0)
+					{
+						m_currentDirection = -1;
+					}
+					else
+					{
+						m_currentDirection = 0;
+					}
 					m_currentSpeed = speed;
 					return true;
 				}
@@ -136,7 +143,7 @@ bool CCar::SetSpeed(int speed)
 			{
 				if ((speed >= 0) && (speed <= 30))
 				{
-					if (speed)
+					if (speed != 0)
 					{
 						m_currentDirection = 1;
 					}

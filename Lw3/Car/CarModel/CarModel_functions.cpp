@@ -80,3 +80,8 @@ bool SetGear(CCar & car, int value)
 {
 	return car.SetGear(value);
 }
+
+bool SetSpeed(CCar & car, int value)
+{
+	return car.SetSpeed(value);
+}
