@@ -38,7 +38,7 @@ int main()
 					{
 						std::cout << "	Gear " << value << " succesfuly installed\n";
 					}
-					else if (!car.GetEngineStatus())
+					else if (!car.IsEngineOn())
 					{
 						std::cout << "	Gear can not be installed\n"
 							<< "	Engine is off\n";
@@ -78,7 +78,7 @@ int main()
 					{
 						std::cout << "	Speed " << value << " succesfuly installed\n";
 					}
-					else if (!car.GetEngineStatus())
+					else if (!car.IsEngineOn())
 					{
 						std::cout << "	Speed can not be installed\n"
 							<< "	Engine is off\n";

@@ -32,12 +32,12 @@ bool CCar::TurnOffEngine()
 
 bool CCar::SetGear(int gear)
 {
+	if (gear == m_currentGear)
+	{
+		return true;
+	}
 	if (m_engineOnTurn)
 	{
-		if (gear == m_currentGear)
-		{
-			return true;
-		}
 		switch (gear)
 		{
 			case -1:
@@ -210,7 +210,7 @@ int CCar::GetGear() const
 }
 
 
-bool CCar::GetEngineStatus() const
+bool CCar::IsEngineOn() const
 {
 	return m_engineOnTurn;
 }

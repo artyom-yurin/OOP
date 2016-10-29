@@ -58,7 +58,7 @@ void TestGetInfo()
 	car.SetSpeed(35);
 	assert(car.GetGear() == 2);
 	assert(car.GetSpeed() == 35);
-	assert(car.GetEngineStatus());
+	assert(car.IsEngineOn());
 	assert(car.GetDirection() == 1);
 	car.SetSpeed(20);
 	car.SetGear(1);
@@ -67,7 +67,7 @@ void TestGetInfo()
 	assert(car.SetGear(-1));
 	assert(car.GetGear() == -1);
 	assert(car.GetSpeed() == 0);
-	assert(car.GetEngineStatus());
-	assert(car.GetDirection() == -1);
+	assert(car.IsEngineOn());
+	assert(car.GetDirection() == 0);
 
 }

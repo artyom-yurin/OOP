@@ -11,7 +11,7 @@ public:
 
 	int GetGear() const;
 
-	bool GetEngineStatus() const;
+	bool IsEngineOn() const;
 
 	int GetDirection() const;
 

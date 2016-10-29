@@ -5,7 +5,7 @@ void GetInfo(std::ostream & output, CCar & car)
 {
 	output << "	Car's info\n";
 	output << "	Engine status: ";
-	if (car.GetEngineStatus())
+	if (car.IsEngineOn())
 	{
 		output << "ON\n";
 	}
@@ -62,7 +62,7 @@ void EngineOff(std::ostream & output, CCar & car)
 	{
 		output << "	Engine have turned off\n";
 	}
-	else if (!car.GetEngineStatus())
+	else if (!car.IsEngineOn())
 	{
 		output << "	Engine has been already turned off\n";
 	}
