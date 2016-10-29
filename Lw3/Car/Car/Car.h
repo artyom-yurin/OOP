@@ -3,9 +3,9 @@
 class CCar
 {
 public:
-	CCar();
+	CCar() = default;
 
-	~CCar();
+	~CCar() = default;
 
 	int GetSpeed() const;
 
@@ -26,6 +26,5 @@ private:
 	bool m_engineOnTurn = false;
 	int m_currentGear = 0;
 	int m_currentSpeed = 0;
-	int m_currentDirection = 0;
 };
 

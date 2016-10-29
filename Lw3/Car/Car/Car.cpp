@@ -2,12 +2,6 @@
 #include "Car.h"
 
 
-CCar::CCar() = default;
-
-
-CCar::~CCar() = default;
-
-
 bool CCar::TurnOnEngine()
 {
 	if (!m_engineOnTurn)
@@ -21,7 +15,7 @@ bool CCar::TurnOnEngine()
 
 bool CCar::TurnOffEngine()
 {
-	if ((m_engineOnTurn) && (m_currentDirection == 0) && (m_currentGear == 0)) 
+	if ((m_engineOnTurn) && (m_currentSpeed == 0) && (m_currentGear == 0)) 
 	{
 		m_engineOnTurn = false;
 		return true;
@@ -42,7 +36,7 @@ bool CCar::SetGear(int gear)
 		{
 			case -1:
 			{
-				if ((!m_currentSpeed) && (!m_currentGear || (m_currentGear == 1)))
+				if ((m_currentSpeed == 0) && ((m_currentGear == 0) || (m_currentGear == 1)))
 				{
 					m_currentGear = gear;
 					return true;
@@ -57,7 +51,7 @@ bool CCar::SetGear(int gear)
 			}
 			case 1:
 			{
-				if (((m_currentSpeed >= 0) && (m_currentSpeed <= 30) && (m_currentDirection == 1)) || (m_currentSpeed == 0 && ((m_currentDirection == 0) || (m_currentDirection == -1))))
+				if (((m_currentSpeed >= 0) && (m_currentSpeed <= 30)))
 				{
 					m_currentGear = gear;
 					return true;
@@ -66,7 +60,7 @@ bool CCar::SetGear(int gear)
 			}
 			case 2:
 			{
-				if ((m_currentSpeed >= 20) && (m_currentSpeed <= 50) && (m_currentDirection == 1))
+				if ((m_currentSpeed >= 20) && (m_currentSpeed <= 50))
 				{
 					m_currentGear = gear;
 					return true;
@@ -116,24 +110,15 @@ bool CCar::SetSpeed(int speed)
 			{
 				if ((speed >= 0) && (speed <= 20))
 				{
-					if (speed != 0)
-					{
-						m_currentDirection = -1;
-					}
-					else
-					{
-						m_currentDirection = 0;
-					}
-					m_currentSpeed = speed;
+					m_currentSpeed = -speed;
 					return true;
 				}
 				break;
 			}
 			case 0:
 			{
-				if (!speed)
+				if (speed == 0)
 				{
-					m_currentDirection = 0;
 					m_currentSpeed = speed;
 					return true;
 				}
@@ -143,14 +128,6 @@ bool CCar::SetSpeed(int speed)
 			{
 				if ((speed >= 0) && (speed <= 30))
 				{
-					if (speed != 0)
-					{
-						m_currentDirection = 1;
-					}
-					else
-					{
-						m_currentDirection = 0;
-					}
 					m_currentSpeed = speed;
 					return true;
 				}
@@ -200,6 +177,10 @@ bool CCar::SetSpeed(int speed)
 
 int CCar::GetSpeed() const
 {
+	if (m_currentSpeed < 0)
+	{
+		return -m_currentSpeed;
+	}
 	return m_currentSpeed;
 }
 
@@ -218,5 +199,16 @@ bool CCar::IsEngineOn() const
 
 int CCar::GetDirection() const
 {
-	return m_currentDirection;
+	if (m_currentSpeed > 0)
+	{
+		return 1;
+	}
+	else if (m_currentSpeed < 0)
+	{
+		return -1;
+	}
+	else
+	{
+		return 0;
+	}
 }
