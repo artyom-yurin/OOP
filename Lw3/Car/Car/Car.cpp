@@ -47,68 +47,23 @@ bool CCar::SetGear(int gear)
 	}
 	if (m_engineOnTurn)
 	{
-		switch (gear)
+		if (gear == 0)
 		{
-			case -1:
+			m_currentGear = 0;
+			return true;
+		}
+		else if (gear == -1)
+		{
+			if ((m_currentGear == 0 || m_currentGear == 1) && (m_currentSpeed == 0))
 			{
-				if ((m_currentSpeed == 0) && ((m_currentGear == 0) || (m_currentGear == 1)))
-				{
-					m_currentGear = gear;
-					return true;
-				}
-				break;
-			}
-			case 0:
-			{
-				m_currentGear = gear;
+				m_currentGear = -1;
 				return true;
-				break;
 			}
-			case 1:
-			{
-				if (((m_currentSpeed >= 0) && (m_currentSpeed <= 30)))
-				{
-					m_currentGear = gear;
-					return true;
-				}
-				break;
-			}
-			case 2:
-			{
-				if ((m_currentSpeed >= 20) && (m_currentSpeed <= 50))
-				{
-					m_currentGear = gear;
-					return true;
-				}
-				break;
-			}
-			case 3:
-			{
-				if ((m_currentSpeed >= 30) && (m_currentSpeed <= 60))
-				{
-					m_currentGear = gear;
-					return true;
-				}
-				break;
-			}
-			case 4:
-			{
-				if ((m_currentSpeed >= 40) && (m_currentSpeed <= 90))
-				{
-					m_currentGear = gear;
-					return true;
-				}
-				break;
-			}
-			case 5:
-			{
-				if ((m_currentSpeed >= 50) && (m_currentSpeed <= 150))
-				{
-					m_currentGear = gear;
-					return true;
-				}
-				break;
-			}
+		}
+		else if (IsSpeedInGear(gear, m_currentSpeed))
+		{
+			m_currentGear = gear;
+			return true;
 		}
 	}
 	return false;
