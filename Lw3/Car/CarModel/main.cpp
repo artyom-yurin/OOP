@@ -36,21 +36,21 @@ int main()
 				{
 					if (SetGear(car, value))
 					{
-						std::cout << "	Gear " << value << " succesfuly installed\n";
+						std::cout << "	Gear " << value << " succesfuly set\n";
 					}
 					else if (!car.IsEngineOn())
 					{
-						std::cout << "	Gear can not be installed\n"
+						std::cout << "	Gear can not be set\n"
 							<< "	Engine is off\n";
 					}
-					else if ((car.GetDirection() == -1) && (value > 0) || ((car.GetDirection() == 1) && (value < 0)))
+					else if ((car.GetDirection() == "reverse") && (value > 0) || ((car.GetDirection() == "forward") && (value < 0)))
 					{
-						std::cout << "	Gear can not be installed\n"
+						std::cout << "	Gear can not be set\n"
 							<< "	Car moves in opposite direction\n";
 					}
 					else
 					{
-						std::cout << "	Gear can not be installed\n"
+						std::cout << "	Gear can not be set\n"
 							<< "	Wrong speed\n";
 					}
 				}
@@ -76,16 +76,16 @@ int main()
 				{
 					if (SetSpeed(car, value))
 					{
-						std::cout << "	Speed " << value << " succesfuly installed\n";
+						std::cout << "	Speed " << value << " succesfuly set\n";
 					}
 					else if (!car.IsEngineOn())
 					{
-						std::cout << "	Speed can not be installed\n"
+						std::cout << "	Speed can not be set\n"
 							<< "	Engine is off\n";
 					}
 					else
 					{
-						std::cout << "	Speed can not be installed\n"
+						std::cout << "	Speed can not be set\n"
 							<< "	Wrong gear\n";
 					}
 				}

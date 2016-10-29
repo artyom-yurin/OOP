@@ -13,7 +13,7 @@ public:
 
 	bool IsEngineOn() const;
 
-	int GetDirection() const;
+	std::string GetDirection() const;
 
 	bool TurnOnEngine();
 
