@@ -4,13 +4,14 @@
 
 int main()
 {
+	CCar car;
 	std::cout << "Welcome to the car emulator\n";
 	while (true)
 	{
 		std::string command = GetCommand(std::cin);
 		if (command == "info")
 		{
-			//TODO: get info
+			GetInfo(std::cout, car);
 		}
 		else if (command == "engineon")
 		{

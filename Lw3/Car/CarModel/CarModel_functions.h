@@ -1,5 +1,7 @@
 #pragma once
 
+#include "..\Car\Car.h"
+
 inline std::string GetCommand(std::istream & input)
 {
 	std::string command = "";
@@ -7,3 +9,5 @@ inline std::string GetCommand(std::istream & input)
 	std::transform(command.begin(), command.end(), command.begin(), ::tolower);
 	return command;
 }
+
+void GetInfo(std::ostream & output, CCar & car);
