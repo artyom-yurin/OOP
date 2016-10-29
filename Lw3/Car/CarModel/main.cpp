@@ -32,24 +32,30 @@ int main()
 			if (GetValue(std::cin, value))
 			{
 				std::cout << "Answer:\n";
-
-				if (SetGear(car, value))
+				if ((value >= -1) && (value <= 5))
 				{
-					std::cout << "	Gear " << value << " succesfuly installed\n";
-				}
-				else if (!car.GetEngineStatus())
-				{
-					std::cout << "	Gear can not be installed\n"
-						<< "	Engine is off\n";
-				}
-				else if ((car.GetDirection() == -1) && (value > 0) || ((car.GetDirection() == 1) && (value < 0)))
-				{
-					std::cout << "	Gear can not be installed\n"
-						<< "	Car moves in opposite direction\n";
+					if (SetGear(car, value))
+					{
+						std::cout << "	Gear " << value << " succesfuly installed\n";
+					}
+					else if (!car.GetEngineStatus())
+					{
+						std::cout << "	Gear can not be installed\n"
+							<< "	Engine is off\n";
+					}
+					else if ((car.GetDirection() == -1) && (value > 0) || ((car.GetDirection() == 1) && (value < 0)))
+					{
+						std::cout << "	Gear can not be installed\n"
+							<< "	Car moves in opposite direction\n";
+					}
+					else
+					{
+						std::cout << "	Wrong speed\n";
+					}
 				}
 				else
 				{
-					std::cout << "	Wrong speed\n";
+					std::cout << "	Gear must be -1 to 5\n";
 				}
 			}
 			else
