@@ -8,14 +8,16 @@ int main()
 	std::cout << "Welcome to the car emulator\n";
 	while (true)
 	{
+		std::cout << "\nEnter command: ";
 		std::string command = GetCommand(std::cin);
+		std::cout << "Answer:\n";
 		if (command == "info")
 		{
 			GetInfo(std::cout, car);
 		}
 		else if (command == "engineon")
 		{
-			//TODO: turn on engine
+			EngineOn(std::cout, car);
 		}
 		else if (command == "engineoff")
 		{

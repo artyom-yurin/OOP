@@ -3,8 +3,8 @@
 
 void GetInfo(std::ostream & output, CCar & car)
 {
-	output << "Car's info\n";
-	output << "Engine status: ";
+	output << "	Car's info\n";
+	output << "	Engine status: ";
 	if (car.GetEngineStatus())
 	{
 		output << "ON\n";
@@ -13,7 +13,7 @@ void GetInfo(std::ostream & output, CCar & car)
 	{
 		output << "OFF\n";
 	}
-	output << "Current gear: ";
+	output << "	Current gear: ";
 	int gear = car.GetGear();
 	if (gear == -1)
 	{
@@ -27,8 +27,8 @@ void GetInfo(std::ostream & output, CCar & car)
 	{
 		output << gear << "\n";
 	}
-	output << "Current speed: " << car.GetSpeed() << "\n";
-	output << "Current Direction: "; 
+	output << "	Current speed: " << car.GetSpeed() << "\n";
+	output << "	Current Direction: "; 
 	int direction = car.GetDirection();
 	if (direction == -1)
 	{
@@ -41,5 +41,17 @@ void GetInfo(std::ostream & output, CCar & car)
 	else
 	{
 		output << "stand\n";
+	}
+}
+
+void EngineOn(std::ostream & output, CCar & car)
+{
+	if (car.TurnOnEngine())
+	{
+		output << "	Engine have turned on\n";
+	}
+	else
+	{
+		output << "	Engine has been already turned on\n";
 	}
 }
