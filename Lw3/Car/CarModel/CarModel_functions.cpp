@@ -55,3 +55,23 @@ void EngineOn(std::ostream & output, CCar & car)
 		output << "	Engine has been already turned on\n";
 	}
 }
+
+void EngineOff(std::ostream & output, CCar & car)
+{
+	if (car.TurnOffEngine())
+	{
+		output << "	Engine have turned off\n";
+	}
+	else if (!car.GetEngineStatus())
+	{
+		output << "	Engine has been already turned off\n";
+	}
+	else if (car.GetGear() != 0)
+	{
+		output << "	Gear must be neutral\n";
+	}
+	else
+	{
+		output << "	Car must stand\n";
+	}
+}

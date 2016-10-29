@@ -21,7 +21,7 @@ int main()
 		}
 		else if (command == "engineoff")
 		{
-			//TODO: turn off engine
+			EngineOff(std::cout, car);
 		}
 		else if (command == "setgear")
 		{
@@ -33,12 +33,12 @@ int main()
 		}
 		else if (command == "exit")
 		{
-			std::cout << "Good bye\n";
+			std::cout << "	Good bye\n";
 			return 0;
 		}
 		else
 		{
-			std::cout << "Unknown command.\n";
+			std::cout << "	Unknown command.\n";
 		}
 	}
 }

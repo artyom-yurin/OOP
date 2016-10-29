@@ -21,9 +21,8 @@ bool CCar::TurnOnEngine()
 
 bool CCar::TurnOffEngine()
 {
-	if ((m_engineOnTurn) && (m_currentSpeed == 0) && (m_currentGear == 0)) 
+	if ((m_engineOnTurn) && (m_currentDirection == 0) && (m_currentGear == 0)) 
 	{
-		m_currentDirection = 0;
 		m_engineOnTurn = false;
 		return true;
 	}

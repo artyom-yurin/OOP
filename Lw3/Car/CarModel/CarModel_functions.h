@@ -13,3 +13,5 @@ inline std::string GetCommand(std::istream & input)
 void GetInfo(std::ostream & output, CCar & car);
 
 void EngineOn(std::ostream & output, CCar & car);
+
+void EngineOff(std::ostream & output, CCar & car);
