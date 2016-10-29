@@ -32,72 +32,75 @@ bool CCar::TurnOffEngine()
 
 bool CCar::SetGear(int gear)
 {
-	if (gear == m_currentGear)
+	if (m_engineOnTurn)
 	{
-		return true;
-	}
-	switch (gear)
-	{
-		case -1:
+		if (gear == m_currentGear)
 		{
-			if ((!m_currentSpeed) && (!m_currentGear || (m_currentGear == 1)))
-			{
-				m_currentGear = gear;
-				m_currentDirection = -1;
-				return true;
-			}
-			break;
-		}
-		case 0:
-		{
-			m_currentGear = gear;
 			return true;
-			break;
 		}
-		case 1:
+		switch (gear)
 		{
-			if ((m_currentSpeed >= 0) && (m_currentSpeed <= 30) && ((m_currentDirection == 0) || (m_currentDirection == 1)))
+			case -1:
+			{
+				if ((!m_currentSpeed) && (!m_currentGear || (m_currentGear == 1)))
+				{
+					m_currentGear = gear;
+					m_currentDirection = -1;
+					return true;
+				}
+				break;
+			}
+			case 0:
 			{
 				m_currentGear = gear;
 				return true;
+				break;
 			}
-			break;
-		}
-		case 2:
-		{
-			if ((m_currentSpeed >= 20) && (m_currentSpeed <= 50) && (m_currentDirection == 1))
+			case 1:
 			{
-				m_currentGear = gear;
-				return true;
+				if (((m_currentSpeed >= 0) && (m_currentSpeed <= 30) && (m_currentDirection == 1)) || (m_currentSpeed == 0 && ((m_currentDirection = 0) || (m_currentDirection = -1))))
+				{
+					m_currentGear = gear;
+					return true;
+				}
+				break;
 			}
-			break;
-		}
-		case 3:
-		{
-			if ((m_currentSpeed >= 30) && (m_currentSpeed <= 60))
+			case 2:
 			{
-				m_currentGear = gear;
-				return true;
+				if ((m_currentSpeed >= 20) && (m_currentSpeed <= 50) && (m_currentDirection == 1))
+				{
+					m_currentGear = gear;
+					return true;
+				}
+				break;
 			}
-			break;
-		}
-		case 4:
-		{
-			if ((m_currentSpeed >= 40) && (m_currentSpeed <= 90))
+			case 3:
 			{
-				m_currentGear = gear;
-				return true;
+				if ((m_currentSpeed >= 30) && (m_currentSpeed <= 60))
+				{
+					m_currentGear = gear;
+					return true;
+				}
+				break;
 			}
-			break;
-		}
-		case 5:
-		{
-			if ((m_currentSpeed >= 50) && (m_currentSpeed <= 150))
+			case 4:
 			{
-				m_currentGear = gear;
-				return true;
+				if ((m_currentSpeed >= 40) && (m_currentSpeed <= 90))
+				{
+					m_currentGear = gear;
+					return true;
+				}
+				break;
 			}
-			break;
+			case 5:
+			{
+				if ((m_currentSpeed >= 50) && (m_currentSpeed <= 150))
+				{
+					m_currentGear = gear;
+					return true;
+				}
+				break;
+			}
 		}
 	}
 	return false;
@@ -106,79 +109,82 @@ bool CCar::SetGear(int gear)
 
 bool CCar::SetSpeed(int speed)
 {
-	switch (m_currentGear)
+	if (m_engineOnTurn)
 	{
-		case -1: 
+		switch (m_currentGear)
 		{
-			if ((speed >= 0) && (speed <= 20))
+			case -1:
 			{
-				m_currentSpeed = speed;
-				return true;
-			}
-			break;
-		}
-		case 0:
-		{
-			if (!speed)
-			{
-				m_currentDirection = 0;
-				m_currentSpeed = speed;
-				return true;
-			}
-			break;
-		}
-		case 1:
-		{
-			if ((speed >= 0) && (speed <= 30))
-			{
-				if (speed)
+				if ((speed >= 0) && (speed <= 20))
 				{
-					m_currentDirection = 1;
+					m_currentSpeed = speed;
+					return true;
 				}
-				else
+				break;
+			}
+			case 0:
+			{
+				if (!speed)
 				{
 					m_currentDirection = 0;
+					m_currentSpeed = speed;
+					return true;
 				}
-				m_currentSpeed = speed;
-				return true;
+				break;
 			}
-			break;
-		}
-		case 2:
-		{
-			if ((speed >= 20) && (speed <= 50))
+			case 1:
 			{
-				m_currentSpeed = speed;
-				return true;
+				if ((speed >= 0) && (speed <= 30))
+				{
+					if (speed)
+					{
+						m_currentDirection = 1;
+					}
+					else
+					{
+						m_currentDirection = 0;
+					}
+					m_currentSpeed = speed;
+					return true;
+				}
+				break;
 			}
-			break;
-		}
-		case 3:
-		{
-			if ((speed >= 30) && (speed <= 60))
+			case 2:
 			{
-				m_currentSpeed = speed;
-				return true;
+				if ((speed >= 20) && (speed <= 50))
+				{
+					m_currentSpeed = speed;
+					return true;
+				}
+				break;
 			}
-			break;
-		}
-		case 4:
-		{
-			if ((speed >= 40) && (speed <= 90))
+			case 3:
 			{
-				m_currentSpeed = speed;
-				return true;
+				if ((speed >= 30) && (speed <= 60))
+				{
+					m_currentSpeed = speed;
+					return true;
+				}
+				break;
 			}
-			break;
-		}
-		case 5:
-		{
-			if ((speed >= 50) && (speed <= 150))
+			case 4:
 			{
-				m_currentSpeed = speed;
-				return true;
+				if ((speed >= 40) && (speed <= 90))
+				{
+					m_currentSpeed = speed;
+					return true;
+				}
+				break;
 			}
-			break;
+			case 5:
+			{
+				if ((speed >= 50) && (speed <= 150))
+				{
+					m_currentSpeed = speed;
+					return true;
+				}
+				break;
+			}
 		}
 	}
 	return false;

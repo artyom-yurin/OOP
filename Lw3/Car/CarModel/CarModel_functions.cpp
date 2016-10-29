@@ -75,3 +75,8 @@ void EngineOff(std::ostream & output, CCar & car)
 		output << "	Car must stand\n";
 	}
 }
+
+bool SetGear(CCar & car, int value)
+{
+	return car.SetGear(value);
+}

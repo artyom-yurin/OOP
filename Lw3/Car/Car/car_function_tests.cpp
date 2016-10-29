@@ -27,6 +27,7 @@ void TestSetSpeed()
 {
 	CCar car;
 	assert(!car.SetSpeed(10));
+	car.TurnOnEngine();
 	car.SetGear(1);
 	assert(car.SetSpeed(20));
 }
