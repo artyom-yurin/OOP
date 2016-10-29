@@ -1,6 +1,21 @@
 #include "stdafx.h"
 #include "Car.h"
 
+bool IsInRange(int value, int startValue, int finishValue)
+{
+	return ((finishValue >= value) && (startValue <= value));
+}
+
+bool IsSpeedInGear(int gear, int speed)
+{
+	return ((gear == -1) && (IsInRange(speed, 0, 20))) ||
+		((gear == 0) && (speed == 0)) ||
+		((gear == 1) && (IsInRange(speed, 0, 30))) ||
+		((gear == 2) && (IsInRange(speed, 20, 50))) ||
+		((gear == 3) && (IsInRange(speed, 30, 60))) ||
+		((gear == 4) && (IsInRange(speed, 40, 90))) ||
+		((gear == 5) && (IsInRange(speed, 50, 150)));
+}
 
 bool CCar::TurnOnEngine()
 {
@@ -102,74 +117,14 @@ bool CCar::SetGear(int gear)
 
 bool CCar::SetSpeed(int speed)
 {
-	if (m_engineOnTurn)
+	if (m_engineOnTurn && IsSpeedInGear(m_currentGear, speed))
 	{
-		switch (m_currentGear)
+		if (m_currentGear == -1)
 		{
-			case -1:
-			{
-				if ((speed >= 0) && (speed <= 20))
-				{
-					m_currentSpeed = -speed;
-					return true;
-				}
-				break;
-			}
-			case 0:
-			{
-				if (speed == 0)
-				{
-					m_currentSpeed = speed;
-					return true;
-				}
-				break;
-			}
-			case 1:
-			{
-				if ((speed >= 0) && (speed <= 30))
-				{
-					m_currentSpeed = speed;
-					return true;
-				}
-				break;
-			}
-			case 2:
-			{
-				if ((speed >= 20) && (speed <= 50))
-				{
-					m_currentSpeed = speed;
-					return true;
-				}
-				break;
-			}
-			case 3:
-			{
-				if ((speed >= 30) && (speed <= 60))
-				{
-					m_currentSpeed = speed;
-					return true;
-				}
-				break;
-			}
-			case 4:
-			{
-				if ((speed >= 40) && (speed <= 90))
-				{
-					m_currentSpeed = speed;
-					return true;
-				}
-				break;
-			}
-			case 5:
-			{
-				if ((speed >= 50) && (speed <= 150))
-				{
-					m_currentSpeed = speed;
-					return true;
-				}
-				break;
-			}
+			speed = -speed;
 		}
+		m_currentSpeed = speed;
+		return true;
 	}
 	return false;
 }
