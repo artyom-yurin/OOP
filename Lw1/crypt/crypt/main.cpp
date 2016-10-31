@@ -5,20 +5,28 @@
 
 using namespace std;
 
-enum class Mode {Crypt, Decrypt, Unknown};
+const int MIN_NUMBER = 0;
+const int MAX_NUMBER = 255;
+
+enum class Mode {
+	Crypt,
+	Decrypt,
+	Unknown
+};
 
 bool IsNumber(char * str)
 {
 	for (size_t i = 0; i < strlen(str); ++i)
 	{
-		if (!isdigit(str[i])) {
+		if (!isdigit(str[i])) 
+		{
 			return false;
 		}
 	}
 	return true;
 }
 
- uint8_t MixBitsCrypt(const uint8_t byte)
+uint8_t MixBitsCrypt(const uint8_t byte)
 {
 	 uint8_t result = 0;
 	 result |= (byte & 0b10000000 >> 2);
@@ -124,7 +132,7 @@ int main(int argc, char * argv [])
 		return 1;
 	}
 
-	if (!((atoi(argv[4]) >= 0) && (atoi(argv[4]) <= 255)))
+	if (!((atoi(argv[4]) >= MIN_NUMBER) && (atoi(argv[4]) <= MAX_NUMBER)))
 	{
 		cout << "Key must be for 0 to 255\n";
 		return 1;
