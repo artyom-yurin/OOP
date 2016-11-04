@@ -13,21 +13,14 @@ int main(int argc, char * argv[])
 		return 1;
 	}
 
-	std::string subjectString = GetString(std::cin);
-
+	std::string subjectString;
 	std::string searchString = argv[1];
+	std::string replaceString = argv[2];
 
-	if (!searchString.empty())
+	while (std::getline(std::cin, subjectString) && !subjectString.empty())
 	{
-		std::string replaceString = argv[2];
-
 		subjectString = FindAndReplace(subjectString, searchString, replaceString);
-	}
-
-	if (!PrintString(std::cout, subjectString))
-	{
-		std::cout << "Failed to save data on disk\n";
-		return 1;
+		std::cout << subjectString << "\n";
 	}
 
     return 0;

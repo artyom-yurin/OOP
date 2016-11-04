@@ -5,48 +5,41 @@
 #include <boost/test/output/compiler_log_formatter.hpp>
 #include <boost/algorithm/string/replace.hpp>
 
-
-
-BOOST_AUTO_TEST_SUITE(GetString_function)
-
-	BOOST_AUTO_TEST_CASE(getting_string)
-	{
-		std::stringstream input("My name is Artem");
-		std::string line = GetString(input);
-		std::string correctLine = "My name is Artem";
-		BOOST_CHECK_EQUAL(line, correctLine);
-	}
-
-BOOST_AUTO_TEST_SUITE_END()
-
 BOOST_AUTO_TEST_SUITE(FindAndReplace_function)
 
-	BOOST_AUTO_TEST_CASE(when_found_substring_replace_it)
+	BOOST_AUTO_TEST_CASE(when_search_substring_empty)
+	{
+		std::string line = "Hello, name. name is great.";
+		std::string replace = "Bob";
+		std::string search = "";
+		BOOST_CHECK_EQUAL(FindAndReplace(line, search, replace), line);
+	}
+
+	BOOST_AUTO_TEST_CASE(when_search_substring_not_search_in_string)
+	{
+		std::string line = "Hello, name. name is great.";
+		std::string replace = "Mary";
+		std::string search = "Bob";
+		BOOST_CHECK_EQUAL(FindAndReplace(line, search, replace), line);
+	}
+
+	BOOST_AUTO_TEST_CASE(when_search_substring_is_part_replace_substirng)
+	{
+		std::string line = "12345";
+		std::string replace = "1234";
+		std::string search = "234";
+		BOOST_CHECK_EQUAL(FindAndReplace(line, search, replace), "112345");
+	}
+
+	BOOST_AUTO_TEST_CASE(when_search_substring_search_in_string)
 	{
 		std::string line = "Hello, name. name is great.";
 		std::string replace = "Bob";
 		std::string search = "name";
-		line = FindAndReplace(line, search, replace);
-		std::string correctLine = "Hello, Bob. Bob is great.";
-		BOOST_CHECK_EQUAL(line, correctLine);
+		BOOST_CHECK_EQUAL(FindAndReplace(line, search, replace), "Hello, Bob. Bob is great.");
 	}
 
 BOOST_AUTO_TEST_SUITE_END()
-
-BOOST_AUTO_TEST_SUITE(PrintString_function)
-
-	BOOST_AUTO_TEST_CASE(print_string)
-	{
-		std::stringstream buffer;
-		std::string input = "Hello";
-		PrintString(buffer, input);
-		std::string line;
-		getline(buffer, line);
-		BOOST_CHECK_EQUAL(line, input);
-	}
-
-BOOST_AUTO_TEST_SUITE_END()
-
 
 class SpecLogFormatter :
 	public boost::unit_test::output::compiler_log_formatter
