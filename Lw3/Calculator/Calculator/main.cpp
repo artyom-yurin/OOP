@@ -12,12 +12,23 @@ struct CalcFixture
 
 BOOST_FIXTURE_TEST_SUITE(Calc, CalcFixture)
 
-	BOOST_AUTO_TEST_CASE(variable_declaration)
+	BOOST_AUTO_TEST_CASE(variable_declarated)
 	{
 		BOOST_CHECK(calc.Var("a"));
 		BOOST_CHECK(!calc.Var("a"));
 		std::map <std::string, double> variables = calc.GetVariables();
 		BOOST_CHECK_EQUAL(variables["a"], 0);
+	}
+
+	BOOST_AUTO_TEST_CASE(assign_value_to_variable)
+	{
+		calc.Var("a");
+		calc.Var("b");
+		BOOST_CHECK(!calc.Let("a", "c"));
+		BOOST_CHECK(calc.Let("b", 12));
+		BOOST_CHECK(calc.Let("a", "b"));
+		std::map <std::string, double> variables = calc.GetVariables();
+		BOOST_CHECK_EQUAL(variables["a"], variables["b"]);
 	}
 
 BOOST_AUTO_TEST_SUITE_END()
