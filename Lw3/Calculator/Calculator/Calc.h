@@ -15,8 +15,12 @@ public:
 
 	bool Let(std::string name, double value);
 
+	bool Fn(std::string functionName, std::string name);
+
+	std::map <std::string, double*> GetFunctions() const;
+
 private:
 	std::map <std::string, double> m_variables;
-	std::map <std::string, double> m_functions;
+	std::map <std::string, double*> m_functions;
 };
 

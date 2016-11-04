@@ -31,6 +31,16 @@ BOOST_FIXTURE_TEST_SUITE(Calc, CalcFixture)
 		BOOST_CHECK_EQUAL(variables["a"], variables["b"]);
 	}
 
+	BOOST_AUTO_TEST_CASE(assign_value_to_function)
+	{
+		calc.Var("d");
+		BOOST_CHECK(calc.Fn("a", "d"));
+		calc.Let("d", 10);
+		std::map <std::string, double*> functions = calc.GetFunctions();
+		std::map <std::string, double> variables = calc.GetVariables();
+		BOOST_CHECK_EQUAL(*functions["a"], variables["d"]);
+	}
+
 BOOST_AUTO_TEST_SUITE_END()
 
 class SpecLogFormatter :
