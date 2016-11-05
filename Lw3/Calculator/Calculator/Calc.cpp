@@ -20,8 +20,9 @@ std::map<std::string, double> CCalc::GetVariables() const
 
 bool CCalc::Let(std::string firstName, std::string secondName)
 {
-	if (m_variables.find(firstName) != m_variables.end())
+	if (m_functions.find(firstName) == m_functions.end())
 	{
+		m_variables[firstName] = 0;
 		if (m_variables.find(secondName) != m_variables.end())
 		{
 			m_variables[firstName] = m_variables[secondName];
@@ -30,18 +31,18 @@ bool CCalc::Let(std::string firstName, std::string secondName)
 		std::cout << "Variable with name \"" << secondName << "\" have not declarated\n";
 		return false;
 	}
-	std::cout << "Variable with name \"" << firstName << "\" have not declarated\n";
+	std::cout << "\"" << firstName << "\" is function\n";
 	return false;
 }
 
 bool CCalc::Let(std::string name, double value)
 {
-	if (m_variables.find(name) != m_variables.end())
+	if (m_functions.find(name) == m_functions.end())
 	{
 		m_variables[name] = value;
 		return true;
 	}
-	std::cout << "Variable with name \"" << name << "\"have not declarated\n";
+	std::cout << "\"" << name << "\" is function\n";
 	return false;
 }
 
