@@ -87,11 +87,7 @@ bool CCar::SetSpeed(int speed)
 
 int CCar::GetSpeed() const
 {
-	if (m_currentSpeed < 0)
-	{
-		return -m_currentSpeed;
-	}
-	return m_currentSpeed;
+	return abs(m_currentSpeed);
 }
 
 

@@ -35,7 +35,7 @@ void EngineOn(std::ostream & output, CCar & car)
 {
 	if (car.TurnOnEngine())
 	{
-		output << "	Engine have turned on\n";
+		output << "	Engine has been turned on\n";
 	}
 	else
 	{
@@ -47,7 +47,7 @@ void EngineOff(std::ostream & output, CCar & car)
 {
 	if (car.TurnOffEngine())
 	{
-		output << "	Engine have turned off\n";
+		output << "	Engine has been turned off\n";
 	}
 	else if (!car.IsEngineOn())
 	{
