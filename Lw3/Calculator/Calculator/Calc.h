@@ -17,6 +17,8 @@ public:
 
 	bool Fn(std::string functionName, std::string name);
 
+	double Get(std::string name) const;
+
 	std::map <std::string, double*> GetFunctions() const;
 
 private:

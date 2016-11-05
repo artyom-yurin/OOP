@@ -41,6 +41,15 @@ BOOST_FIXTURE_TEST_SUITE(Calc, CalcFixture)
 		BOOST_CHECK_EQUAL(*functions["a"], variables["d"]);
 	}
 
+	BOOST_AUTO_TEST_CASE(get_function_or_variable)
+	{
+		calc.Var("a");
+		calc.Fn("f", "a");
+		calc.Let("a", 10);
+		BOOST_CHECK_EQUAL(calc.Get("a"), 10);
+		BOOST_CHECK_EQUAL(calc.Get("f"), 10);
+	}
+
 BOOST_AUTO_TEST_SUITE_END()
 
 class SpecLogFormatter :

@@ -65,6 +65,24 @@ bool CCalc::Fn(std::string functionName, std::string name)
 	return false;
 }
 
+double CCalc::Get(std::string name) const
+{
+	double result = 0.0;
+
+	if (m_variables.find(name) != m_variables.end())
+	{
+		result = m_variables.find(name)->second;
+	}
+	else if (m_functions.find(name) != m_functions.end())
+	{
+		result = *(m_functions.find(name)->second);
+	}
+
+	return result;
+}
+
+
+
 std::map<std::string, double*> CCalc::GetFunctions() const
 {
 	return m_functions;
