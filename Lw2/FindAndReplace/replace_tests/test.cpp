@@ -7,7 +7,7 @@
 
 BOOST_AUTO_TEST_SUITE(FindAndReplace_function)
 
-	BOOST_AUTO_TEST_CASE(when_search_substring_empty)
+	BOOST_AUTO_TEST_CASE(does_not_replace_if_the_search_string_is_empty)
 	{
 		std::string line = "Hello, name. name is great.";
 		std::string replace = "Bob";
@@ -15,7 +15,7 @@ BOOST_AUTO_TEST_SUITE(FindAndReplace_function)
 		BOOST_CHECK_EQUAL(FindAndReplace(line, search, replace), line);
 	}
 
-	BOOST_AUTO_TEST_CASE(when_search_substring_not_search_in_string)
+	BOOST_AUTO_TEST_CASE(does_not_replace_if_the_search_string_is_not_found_in_the_text)
 	{
 		std::string line = "Hello, name. name is great.";
 		std::string replace = "Mary";
@@ -23,7 +23,7 @@ BOOST_AUTO_TEST_SUITE(FindAndReplace_function)
 		BOOST_CHECK_EQUAL(FindAndReplace(line, search, replace), line);
 	}
 
-	BOOST_AUTO_TEST_CASE(when_search_substring_is_part_replace_substirng)
+	BOOST_AUTO_TEST_CASE(does_not_replace_the_inside_of_the_replaced_text)
 	{
 		std::string line = "12345";
 		std::string replace = "1234";
@@ -31,7 +31,7 @@ BOOST_AUTO_TEST_SUITE(FindAndReplace_function)
 		BOOST_CHECK_EQUAL(FindAndReplace(line, search, replace), "112345");
 	}
 
-	BOOST_AUTO_TEST_CASE(when_search_substring_search_in_string)
+	BOOST_AUTO_TEST_CASE(replaces_all_occurrences_of_the_search_string_to_the_string_replacer)
 	{
 		std::string line = "Hello, name. name is great.";
 		std::string replace = "Bob";
