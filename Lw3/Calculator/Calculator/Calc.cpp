@@ -66,6 +66,12 @@ bool CCalc::Fn(std::string functionName, std::string name)
 	return false;
 }
 
+bool CCalc::Fn(std::string functionName, std::string firstName, Sign sign, std::string secondName)
+{
+
+	return false;
+}
+
 double CCalc::Get(std::string name) const
 {
 	double result = 0.0;

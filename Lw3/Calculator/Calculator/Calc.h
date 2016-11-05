@@ -1,5 +1,11 @@
 #pragma once
-
+enum class Sign
+{
+	plus,
+	minus,
+	factor,
+	divider
+};
 class CCalc
 {
 public:
@@ -16,6 +22,8 @@ public:
 	bool Let(std::string name, double value);
 
 	bool Fn(std::string functionName, std::string name);
+
+	bool Fn(std::string functionName, std::string firstName, Sign sign, std::string secondName);
 
 	double Get(std::string name) const;
 

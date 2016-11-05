@@ -6,7 +6,7 @@ int main()
 {
 	CCar car;
 	std::cout << "Welcome to the car emulator\n";
-	while (true)
+	while (!std::cin.eof())
 	{
 		std::cout << "\nEnter command: ";
 		std::string command = GetCommand(std::cin);
@@ -106,16 +106,16 @@ int main()
 					<< "Invalid value\n";
 			}
 		}
-		else if (command == "exit")
+		else if (std::cin.eof())
 		{
 			std::cout << "Answer:\n";
 			std::cout << "	Good bye\n";
-			return 0;
 		}
 		else
 		{
 			std::cout << "	Unknown command.\n";
 		}
 	}
+	return 0;
 }
 
