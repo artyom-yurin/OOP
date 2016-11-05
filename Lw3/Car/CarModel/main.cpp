@@ -43,7 +43,7 @@ int main()
 						std::cout << "	Gear can not be set\n"
 							<< "	Engine is off\n";
 					}
-					else if ((car.GetDirection() == "reverse") && (value > 0) || ((car.GetDirection() == "forward") && (value < 0)))
+					else if ((car.GetDirection() == Direction::reverse) && (value > 0) || ((car.GetDirection() == Direction::forward) && (value < 0)))
 					{
 						std::cout << "	Gear can not be set\n"
 							<< "	Car moves in opposite direction\n";

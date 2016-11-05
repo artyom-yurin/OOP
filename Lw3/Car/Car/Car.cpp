@@ -102,18 +102,18 @@ bool CCar::IsEngineOn() const
 }
 
 
-std::string CCar::GetDirection() const
+Direction CCar::GetDirection() const
 {
 	if (m_currentSpeed > 0)
 	{
-		return "forward";
+		return Direction::forward;
 	}
 	else if (m_currentSpeed < 0)
 	{
-		return "reverse";
+		return Direction::reverse;
 	}
 	else
 	{
-		return "stand";
+		return Direction::stand;
 	}
 }

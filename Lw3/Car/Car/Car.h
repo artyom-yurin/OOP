@@ -1,5 +1,12 @@
 #pragma once
 
+enum class Direction
+{
+	reverse,
+	stand,
+	forward
+};
+
 class CCar
 {
 public:
@@ -13,7 +20,7 @@ public:
 
 	bool IsEngineOn() const;
 
-	std::string GetDirection() const;
+	Direction GetDirection() const;
 
 	bool TurnOnEngine();
 

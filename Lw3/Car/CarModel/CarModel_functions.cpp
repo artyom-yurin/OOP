@@ -28,7 +28,17 @@ void GetInfo(std::ostream & output, CCar & car)
 		output << gear << "\n";
 	}
 	output << "	Current speed: " << car.GetSpeed() << "\n";
-	output << "	Current Direction: " << car.GetDirection() << "\n";
+	output << "	Current Direction: " << GetDirection(car) << "\n";
+}
+
+std::string GetDirection(CCar & car)
+{
+	switch (car.GetDirection())
+	{
+	case Direction::reverse: return "reverse";
+	case Direction::forward: return "forward";
+	case Direction::stand: return "stand";
+	}
 }
 
 void EngineOn(std::ostream & output, CCar & car)
