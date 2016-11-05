@@ -9,7 +9,6 @@ bool IsInRange(int value, int startValue, int finishValue)
 bool IsSpeedInGear(int gear, int speed)
 {
 	return ((gear == -1) && (IsInRange(speed, 0, 20))) ||
-		((gear == 0) && (speed == 0)) ||
 		((gear == 1) && (IsInRange(speed, 0, 30))) ||
 		((gear == 2) && (IsInRange(speed, 20, 50))) ||
 		((gear == 3) && (IsInRange(speed, 30, 60))) ||
@@ -72,7 +71,7 @@ bool CCar::SetGear(int gear)
 
 bool CCar::SetSpeed(int speed)
 {
-	if (m_engineOnTurn && IsSpeedInGear(m_currentGear, speed))
+	if (m_engineOnTurn && (IsSpeedInGear(m_currentGear, speed) || (m_currentGear == 0 && abs(m_currentSpeed) >= speed)))
 	{
 		if (m_currentGear == -1)
 		{
