@@ -17,8 +17,9 @@ int main(int argc, char * argv[])
 	std::string searchString = argv[1];
 	std::string replaceString = argv[2];
 
-	while (std::getline(std::cin, subjectString) && !subjectString.empty())
+	while (!std::cin.eof())
 	{
+		std::getline(std::cin, subjectString);
 		subjectString = FindAndReplace(subjectString, searchString, replaceString);
 		std::cout << subjectString << "\n";
 	}
