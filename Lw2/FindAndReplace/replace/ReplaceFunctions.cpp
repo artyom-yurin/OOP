@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "replace_functions.h"
+#include "ReplaceFunctions.h"
 
 std::string FindAndReplace(const std::string & subject, const std::string & search, const std::string & replace)
 {

@@ -21,7 +21,7 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="replace_functions.h">
+    <ClInclude Include="ReplaceFunctions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -29,7 +29,7 @@
     <ClCompile Include="replace.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="replace_functions.cpp">
+    <ClCompile Include="ReplaceFunctions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
