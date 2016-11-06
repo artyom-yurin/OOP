@@ -33,7 +33,7 @@ void PrintVector(std::ostream & output, const std::vector <double> & numbers)
 
 double GetMultiplier(const std::vector <double> & numbers)
 {
-	auto minMax = GetMaxMinElement(numbers);
+	auto minMax = std::minmax_element(numbers.begin(), numbers.end());
 	double result = *minMax.second;
 
 	if (*minMax.first != 0)

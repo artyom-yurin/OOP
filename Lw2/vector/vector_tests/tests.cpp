@@ -56,34 +56,6 @@ BOOST_AUTO_TEST_SUITE(GetNumbers_function)
 
 BOOST_AUTO_TEST_SUITE_END()
 
-BOOST_AUTO_TEST_SUITE(GetMinAndMax_function)
-	
-	BOOST_AUTO_TEST_CASE(should_find_int_min_and_max)
-	{
-		const std::vector <double> input = {
-			1, 2, 3, 4, 5
-		};
-		auto result = GetMaxMinElement(input);
-		double correctMin = 1;
-		double correctMax = 5;
-		BOOST_CHECK_EQUAL(*result.first, correctMin);
-		BOOST_CHECK_EQUAL(*result.second, correctMax);
-	}
-
-	BOOST_AUTO_TEST_CASE(should_find_float_min_and_max)
-	{
-		const std::vector <double> input = {
-			0.12, 2.3, 3.1, 2.45
-		};
-		auto result = GetMaxMinElement(input);
-		double correctMin = 0.12;
-		double correctMax = 3.1;
-		BOOST_CHECK_EQUAL(*result.first, correctMin);
-		BOOST_CHECK_EQUAL(*result.second, correctMax);
-	}
-
-BOOST_AUTO_TEST_SUITE_END()
-
 BOOST_AUTO_TEST_SUITE(GetMultiplier_function)
 
 	BOOST_AUTO_TEST_CASE(when_min_equal_zero)

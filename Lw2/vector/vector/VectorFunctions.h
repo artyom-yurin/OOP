@@ -2,11 +2,6 @@
 
 std::vector <double> GetNumbers(std::istream & input);
 
-inline auto GetMaxMinElement(const std::vector <double> & numbers)
-{
-	return std::minmax_element(numbers.begin(), numbers.end());
-}
-
 double GetMultiplier(const std::vector <double> & numbers);
 
 void ProcessVector(std::vector <double> & numbers);
