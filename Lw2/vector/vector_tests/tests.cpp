@@ -1,6 +1,6 @@
 #include "stdafx.h"
 
-#include "../vector/vector_functions.h"
+#include "../vector/VectorFunctions.h"
 #include <boost/test/included/unit_test.hpp>
 
 #include <boost/test/output/compiler_log_formatter.hpp>
