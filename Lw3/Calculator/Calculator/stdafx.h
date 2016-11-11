@@ -4,9 +4,9 @@
 
 #include <stdio.h>
 #include <tchar.h>
-#include <map>
-#include <iostream>
-#include <string>
+
+#include "Index.h"
+#include "Variable.h"
 
 #define BOOST_TEST_INCLUDED
 #define BOOST_TEST_NO_MAIN
