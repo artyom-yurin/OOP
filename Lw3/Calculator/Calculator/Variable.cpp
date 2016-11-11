@@ -1,12 +1,12 @@
 #include "stdafx.h"
 #include "Variable.h"
 
-CVariable::CVariable(double & value)
+CVariable::CVariable(double value)
 {
 	m_value = value;
 }
 
-void CVariable::SetValue(double & value)
+void CVariable::SetValue(double value)
 {
 	m_value = value;
 }
