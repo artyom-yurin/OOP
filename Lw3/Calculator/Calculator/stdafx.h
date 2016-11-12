@@ -7,6 +7,8 @@
 
 #include <memory>
 #include <vector>
+#include <map>
+#include <string>
 
 #define BOOST_TEST_INCLUDED
 #define BOOST_TEST_NO_MAIN

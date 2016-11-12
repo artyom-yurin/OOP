@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Function.h"
+#include "Variable.h"
 
 CFunction::CFunction(const std::shared_ptr<CIndex> index)
 {
@@ -47,14 +48,23 @@ std::shared_ptr<CFunction> CFunction::Create(std::shared_ptr<CIndex> firstIndex,
 	return std::shared_ptr<CFunction>(new CFunction(firstIndex, sign, secondIndex));
 }
 
+void CFunction::AddDependentVariables(std::vector<std::shared_ptr<CVariable>> & dependentVariables)
+{
+	m_dependentVariables = dependentVariables;
+}
+
+std::vector<std::shared_ptr<CVariable>> CFunction::GetDependentVariables()
+{
+	return m_dependentVariables;
+}
+
 void CFunction::Refresh()
 {
 	if (m_secondIndex == nullptr)
 	{
 		m_value = m_firstIndex->GetResult();
-		return;
 	}
-	if (m_sign == Sign::plus)
+	else if (m_sign == Sign::plus)
 	{
 		m_value = m_firstIndex->GetResult() + m_secondIndex->GetResult();
 	}

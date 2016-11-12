@@ -2,6 +2,7 @@
 #include "Index.h"
 #include "Variable.h"
 #include "Function.h"
+#include "Calc.h"
 #include <boost/test/included/unit_test.hpp>
 
 #include <boost/test/output/compiler_log_formatter.hpp>
@@ -78,6 +79,31 @@ BOOST_FIXTURE_TEST_SUITE(Function, FunctionFixture)
 		}
 
 	BOOST_AUTO_TEST_SUITE_END()
+
+BOOST_AUTO_TEST_SUITE_END()
+
+struct CalcFixture
+{
+	CCalc calc;
+};
+
+BOOST_FIXTURE_TEST_SUITE(Calculator, CalcFixture)
+
+	BOOST_AUTO_TEST_CASE(no_default_variables)
+	{
+		BOOST_CHECK(calc.GetVariables().empty());
+	}
+
+	BOOST_AUTO_TEST_CASE(no_default_functions)
+	{
+		BOOST_CHECK(calc.GetFunctions().empty());
+	}
+
+	BOOST_AUTO_TEST_CASE(can_declare_variable)
+	{
+		calc.Var("var");
+		BOOST_CHECK_EQUAL(calc.GetVariables()["var"]->GetResult(), 0);
+	}
 
 BOOST_AUTO_TEST_SUITE_END()
 

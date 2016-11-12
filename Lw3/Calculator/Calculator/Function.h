@@ -2,6 +2,8 @@
 
 #include "Index.h"
 
+class CVariable;
+
 enum class Sign
 {
 	plus,
@@ -19,6 +21,10 @@ public:
 
 	~CFunction() = default;
 
+	void AddDependentVariables(std::vector<std::shared_ptr<CVariable>> & dependentVariables);
+
+	std::vector<std::shared_ptr<CVariable>> GetDependentVariables();
+
 	void Refresh();
 private:
 	CFunction(const std::shared_ptr<CIndex> index);
@@ -30,5 +36,7 @@ private:
 	Sign m_sign;
 
 	std::shared_ptr<CIndex> m_secondIndex = nullptr;
+
+	std::vector<std::shared_ptr<CVariable>> m_dependentVariables;
 };
 

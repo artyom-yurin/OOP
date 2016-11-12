@@ -1,4 +1,5 @@
 #pragma once
+
 class CIndex
 {
 public:
@@ -9,5 +10,6 @@ public:
 	double GetResult() const;
 
 protected:
+
 	double m_value = 0.0;
 };
