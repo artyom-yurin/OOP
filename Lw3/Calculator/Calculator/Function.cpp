@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Function.h"
 
-CFunction::CFunction(const std::shared_ptr<CIndex> & index)
+CFunction::CFunction(const std::shared_ptr<CIndex> index)
 {
 	m_value = index->GetResult();
 	m_firstIndex = index;

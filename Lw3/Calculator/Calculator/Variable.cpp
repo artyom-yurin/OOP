@@ -14,6 +14,14 @@ std::shared_ptr<CVariable> CVariable::Create(double value)
 void CVariable::SetValue(double value)
 {
 	m_value = value;
+	for (std::shared_ptr<CFunction> function : functions)
+	{
+		function->Refresh();
+	}
+}
+
+void CVariable::AddFunction(std::shared_ptr<CFunction> & pFunction)
+{
 }
 
 CVariable::CVariable(double value)

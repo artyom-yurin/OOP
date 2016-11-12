@@ -1,5 +1,6 @@
 #pragma once
 #include "Index.h"
+#include "Function.h"
 
 class CVariable : public CIndex
 {
@@ -13,7 +14,12 @@ public:
 
 	void SetValue(double value);
 
+	void AddFunction(std::shared_ptr<CFunction> & pFunction);
+
 private:
 	CVariable() = default;
+
 	CVariable(double value);
+	
+	std::vector<std::shared_ptr<CFunction>> functions;
 };
