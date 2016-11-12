@@ -105,6 +105,31 @@ BOOST_FIXTURE_TEST_SUITE(Calculator, CalcFixture)
 		BOOST_CHECK_EQUAL(calc.GetVariables()["var"]->GetResult(), 0);
 	}
 
+	BOOST_AUTO_TEST_CASE(can_declare_variable_with_default_value)
+	{
+		calc.Let("var", 10);
+		BOOST_CHECK_EQUAL(calc.GetVariables()["var"]->GetResult(), 10);
+	}
+
+	struct declareted_variable_ : CalcFixture
+	{
+		declareted_variable_()
+		{
+			calc.Var("var");
+		}
+	};
+
+	BOOST_FIXTURE_TEST_SUITE(declareted_variable, declareted_variable_)
+
+		BOOST_AUTO_TEST_CASE(can_set_value)
+		{
+			BOOST_CHECK_EQUAL(calc.GetVariables()["var"]->GetResult(), 0);
+			calc.Let("var", 10);
+			BOOST_CHECK_EQUAL(calc.GetVariables()["var"]->GetResult(), 10);
+		}
+
+	BOOST_AUTO_TEST_SUITE_END()
+
 BOOST_AUTO_TEST_SUITE_END()
 
 class SpecLogFormatter :
