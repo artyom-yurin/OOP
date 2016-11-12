@@ -4,11 +4,16 @@
 class CVariable : public CIndex
 {
 public:
-	CVariable() = default;
+	
+	static std::shared_ptr<CVariable> Create();
 
-	CVariable(double value);
+	static std::shared_ptr<CVariable> Create(double value);
 
 	~CVariable() = default;
 
 	void SetValue(double value);
+
+private:
+	CVariable() = default;
+	CVariable(double value);
 };

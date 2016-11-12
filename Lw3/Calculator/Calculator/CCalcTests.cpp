@@ -9,21 +9,75 @@
 
 struct VariableFixture
 {
-	CVariable variable;
+	std::shared_ptr<CVariable> pVariable = CVariable::Create();
 };
 
 BOOST_FIXTURE_TEST_SUITE(Variable, VariableFixture)
 
-	BOOST_AUTO_TEST_CASE(default_value_zero)
+	BOOST_AUTO_TEST_CASE(default_value_0)
 	{
-		BOOST_CHECK_EQUAL(variable.GetResult(), 0);
+		BOOST_CHECK_EQUAL(pVariable->GetResult(), 0);
 	}
 
 	BOOST_AUTO_TEST_CASE(can_set_new_value)
 	{
-		variable.SetValue(10.0);
-		BOOST_CHECK_EQUAL(variable.GetResult(), 10);
+		pVariable->SetValue(10.0);
+		BOOST_CHECK_EQUAL(pVariable->GetResult(), 10);
 	}
+
+	struct when_default_value_set_
+	{
+		std::shared_ptr<CVariable> pVariable = CVariable::Create(10);
+	};
+
+	BOOST_FIXTURE_TEST_SUITE(when_default_value_set, when_default_value_set_)
+
+		BOOST_AUTO_TEST_CASE(default_value_10)
+		{
+			BOOST_CHECK_EQUAL(pVariable->GetResult(), 10);
+		}
+
+	BOOST_AUTO_TEST_SUITE_END()
+
+BOOST_AUTO_TEST_SUITE_END()
+
+struct FunctionFixture : VariableFixture
+{
+	std::shared_ptr<CFunction> pFunction = CFunction::Create(pVariable);
+};
+
+BOOST_FIXTURE_TEST_SUITE(Function, FunctionFixture)
+
+	BOOST_AUTO_TEST_CASE(value_equal_variable_value)
+	{
+		BOOST_CHECK_EQUAL(pFunction->GetResult(), pVariable->GetResult());
+		pVariable->SetValue(100);
+		pFunction->Refresh();
+		BOOST_CHECK_EQUAL(pFunction->GetResult(), pVariable->GetResult());
+	}
+
+	struct when_function_equal_expression_
+	{
+		std::shared_ptr<CVariable> pVariable = CVariable::Create(10);
+		std::shared_ptr<CVariable> p2Variable = CVariable::Create(30);
+		std::shared_ptr<CFunction> pFunction = CFunction::Create(pVariable, Sign::plus, p2Variable);
+	};
+
+	BOOST_FIXTURE_TEST_SUITE(when_function_equal_expression, when_function_equal_expression_)
+
+		BOOST_AUTO_TEST_CASE(value_equal_expression_value)
+		{
+			BOOST_CHECK_EQUAL(pFunction->GetResult(), pVariable->GetResult() + p2Variable->GetResult());
+		}
+
+		BOOST_AUTO_TEST_CASE(zero_can_not_be_divided)
+		{
+			p2Variable->SetValue(0);
+			pFunction = CFunction::Create(pVariable, Sign::divider, p2Variable);
+			BOOST_CHECK_EQUAL(pFunction->GetResult(), pVariable->GetResult());
+		}
+
+	BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE_END()
 
