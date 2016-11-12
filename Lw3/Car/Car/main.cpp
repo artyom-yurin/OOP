@@ -93,8 +93,21 @@ BOOST_FIXTURE_TEST_SUITE(Car, CarFixture)
 
 			BOOST_AUTO_TEST_CASE(can_set_speed_0_to_30)
 			{
-				car.SetSpeed(30);
+				BOOST_CHECK(car.SetSpeed(30));
 				BOOST_CHECK_EQUAL(car.GetSpeed(), 30);
+			}
+			
+			BOOST_AUTO_TEST_CASE(can_not_set_speed_outside_0_to_30)
+			{
+				BOOST_CHECK(!car.SetSpeed(40));
+			}
+
+			BOOST_AUTO_TEST_CASE(can_not_set_gear_without_necessary_speed)
+			{
+				BOOST_CHECK(!car.SetGear(2));
+				BOOST_CHECK(!car.SetGear(3));
+				BOOST_CHECK(!car.SetGear(4));
+				BOOST_CHECK(!car.SetGear(5));
 			}
 
 			BOOST_AUTO_TEST_CASE(can_set_gear_2_when_speed_20)
