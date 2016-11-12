@@ -1,6 +1,17 @@
 #include "stdafx.h"
 #include "CarModel_functions.h"
 
+std::string GetDirection(CCar & car)
+{
+	switch (car.GetDirection())
+	{
+	case Direction::reverse: return "reverse";
+	case Direction::forward: return "forward";
+	case Direction::stand: return "stand";
+	default: return "";
+	}
+}
+
 void GetInfo(std::ostream & output, CCar & car)
 {
 	output << "	Car's info\n";
@@ -29,16 +40,6 @@ void GetInfo(std::ostream & output, CCar & car)
 	}
 	output << "	Current speed: " << car.GetSpeed() << "\n";
 	output << "	Current Direction: " << GetDirection(car) << "\n";
-}
-
-std::string GetDirection(CCar & car)
-{
-	switch (car.GetDirection())
-	{
-	case Direction::reverse: return "reverse";
-	case Direction::forward: return "forward";
-	case Direction::stand: return "stand";
-	}
 }
 
 void EngineOn(std::ostream & output, CCar & car)

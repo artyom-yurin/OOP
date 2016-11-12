@@ -8,12 +8,16 @@ bool IsInRange(int value, int startValue, int finishValue)
 
 bool IsSpeedInGear(int gear, int speed)
 {
-	return ((gear == -1) && (IsInRange(speed, 0, 20))) ||
-		((gear == 1) && (IsInRange(speed, 0, 30))) ||
-		((gear == 2) && (IsInRange(speed, 20, 50))) ||
-		((gear == 3) && (IsInRange(speed, 30, 60))) ||
-		((gear == 4) && (IsInRange(speed, 40, 90))) ||
-		((gear == 5) && (IsInRange(speed, 50, 150)));
+	auto IsSpeedInRange = [=](int expectedGear, int minSpeed, int maxSpeed) {
+		return IsInRange(speed, minSpeed, maxSpeed) && (gear == expectedGear);
+	};
+
+	return IsSpeedInRange(-1, 0, 20) ||
+		IsSpeedInRange(1, 0, 30) ||
+		IsSpeedInRange(2, 20, 50) ||
+		IsSpeedInRange(3, 30, 60) ||
+		IsSpeedInRange(4, 40, 90) ||
+		IsSpeedInRange(5, 50, 150);
 }
 
 bool CCar::TurnOnEngine()
