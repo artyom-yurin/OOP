@@ -24,12 +24,25 @@ void CCalc::Let(std::string name, double value)
 	}
 }
 
-std::map<std::string, std::shared_ptr<CVariable>> CCalc::GetVariables()
+std::shared_ptr<CIndex> CCalc::GetIndex(std::string name)
+{
+	if (m_functions.find(name) != m_functions.end())
+	{
+		return m_functions[name];
+	}
+	else if (m_functions.find(name) != m_functions.end())
+	{
+		return m_variables[name];
+	}
+	return nullptr;
+}
+
+std::map<std::string, std::shared_ptr<CVariable>> CCalc::GetVariables() const
 {
 	return m_variables;
 }
 
-std::map<std::string, std::shared_ptr<CFunction>> CCalc::GetFunctions()
+std::map<std::string, std::shared_ptr<CFunction>> CCalc::GetFunctions() const
 {
 	return m_functions;
 }
