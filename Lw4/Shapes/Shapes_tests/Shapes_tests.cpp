@@ -11,8 +11,8 @@ void CheckCoordinates(SPoint const & currentCoordinates, SPoint const & correctC
 struct TriangleFixture
 {
 	const SPoint vertex1 = { 1, 1 };
-	const SPoint vertex2 = { -2, 4 };
-	const SPoint vertex3 = { -2, -2 };
+	const SPoint vertex2 = { 1, 4 };
+	const SPoint vertex3 = { 5, 1 };
 	const std::string outlineColor = "000000";
 	const std::string fillColor = "FFFFFF";
 	const CTriangle triangle;
@@ -50,12 +50,17 @@ BOOST_FIXTURE_TEST_SUITE(Triangle, TriangleFixture)
 
 	BOOST_AUTO_TEST_CASE(can_find_perimeter)
 	{
-		BOOST_CHECK_EQUAL(triangle.GetPerimeter(), 14.486);
+		BOOST_CHECK_EQUAL(triangle.GetPerimeter(), 12);
 	}
 
 	BOOST_AUTO_TEST_CASE(can_find_area)
 	{
-		BOOST_CHECK_EQUAL(triangle.GetArea(), 9.002);
+		BOOST_CHECK_EQUAL(triangle.GetArea(), 6);
+	}
+
+	BOOST_AUTO_TEST_CASE(can_convert_to_string)
+	{
+		BOOST_CHECK_EQUAL(triangle.ToString(), "triangle Vertex 1 (1.00, 1.00) Vertex 2 (1.00, 4.00) Vertex 3 (5.00, 1.00) Perimetr = 12.00 Area = 6.00 Outline color = #000000 Fill color = #FFFFFF");
 	}
 
 BOOST_AUTO_TEST_SUITE_END()
