@@ -8,9 +8,9 @@ CTriangle::CTriangle(SPoint const & vertex1, SPoint const & vertex2, SPoint cons
 	, m_outlineColor(outlineColor)
 	, m_fillColor(fillColor)
 {
-	m_firstSide = std::round(1000 * std::hypot(m_vertex1.x - m_vertex2.x, m_vertex1.y - m_vertex2.y)) / 1000;
-	m_secondSide = std::round(1000 * std::hypot(m_vertex1.x - m_vertex3.x, m_vertex1.y - m_vertex3.y)) / 1000;
-	m_thirdSide = std::round(1000 * std::hypot(m_vertex3.x - m_vertex2.x, m_vertex3.y - m_vertex2.y)) / 1000;
+	m_firstSide = std::round(1000 * hypot(m_vertex1.x - m_vertex2.x, m_vertex1.y - m_vertex2.y)) / 1000;
+	m_secondSide = std::round(1000 * hypot(m_vertex1.x - m_vertex3.x, m_vertex1.y - m_vertex3.y)) / 1000;
+	m_thirdSide = std::round(1000 * hypot(m_vertex3.x - m_vertex2.x, m_vertex3.y - m_vertex2.y)) / 1000;
 }
 
 SPoint CTriangle::GetVertex1() const
@@ -40,7 +40,8 @@ std::string CTriangle::GetOutlineColor() const
 
 double CTriangle::GetArea() const
 {
-	return 0.0;
+	double perimeterHalf = CTriangle::GetPerimeter() * 0.5;
+	return std::round(1000 * sqrt(perimeterHalf * (perimeterHalf - m_firstSide) * (perimeterHalf - m_secondSide) * (perimeterHalf - m_thirdSide))) / 1000;
 }
 
 double CTriangle::GetPerimeter() const
