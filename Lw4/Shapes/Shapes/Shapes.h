@@ -38,5 +38,8 @@ private:
 	SPoint m_vertex3;
 	std::string m_outlineColor;
 	std::string m_fillColor;
+	double m_firstSide;
+	double m_secondSide;
+	double m_thirdSide;
 };
 

@@ -48,4 +48,9 @@ BOOST_FIXTURE_TEST_SUITE(Triangle, TriangleFixture)
 		BOOST_CHECK_EQUAL(triangle.GetFillColor(), fillColor);
 	}
 
+	BOOST_AUTO_TEST_CASE(can_find_perimeter)
+	{
+		BOOST_CHECK_EQUAL(triangle.GetPerimeter(), 14.486);
+	}
+
 BOOST_AUTO_TEST_SUITE_END()
