@@ -13,6 +13,7 @@ int main()
 		getline(std::cin, command);
 		buffer << command;
 		buffer >> command;
+		std::cout << "\n";
 		if (command == "rectangle")
 		{
 			SPoint vertex;
@@ -140,7 +141,40 @@ int main()
 		}
 		else if (command == "line")
 		{
-
+			SPoint startPoint;
+			SPoint endPoint;
+			std::string outlineColor;
+			if ((buffer >> startPoint.x) && (buffer >> startPoint.y))
+			{
+				if ((buffer >> endPoint.x) && (buffer >> endPoint.y))
+				{
+					if ((buffer >> outlineColor))
+					{
+						if (CorrectColor(outlineColor))
+						{
+							shapes.push_back(std::make_shared<CLineSegment>(startPoint, endPoint, outlineColor));
+							std::cout << "Line was created\n";
+						}
+						else
+						{
+							std::cout << "Invalid color\n"
+								<< "Use 16 hexadecimal code\n";
+						}
+					}
+					else
+					{
+						std::cout << "Error color value\n";
+					}
+				}
+				else
+				{
+					std::cout << "Error end point value\n";
+				}
+			}
+			else
+			{
+				std::cout << "Error start point value\n";
+			}
 		}
 		else if (command == "help")
 		{
@@ -169,6 +203,7 @@ int main()
 			std::cout << "Unknown command\n"
 				<< "Enter \"help\" for assistance\n";
 		}
+		std::cout << "\n";
 	}
     return 0;
 }
