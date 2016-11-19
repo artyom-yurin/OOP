@@ -126,3 +126,54 @@ BOOST_FIXTURE_TEST_SUITE(Rectangle, RectangleFixture)
 	}
 
 BOOST_AUTO_TEST_SUITE_END()
+
+struct CircleFixture
+{
+	const SPoint center = { 0, 0 };
+	const double radius = 10;
+	const std::string outlineColor = "000000";
+	const std::string fillColor = "FFFFFF";
+	CCircle circle;
+	CircleFixture()
+		: circle(center, radius, outlineColor, fillColor)
+	{}
+};
+
+BOOST_FIXTURE_TEST_SUITE(Circle, CircleFixture)
+
+	BOOST_AUTO_TEST_CASE(has_center)
+	{
+		CheckCoordinates(circle.GetCenter(), center);
+	}
+
+	BOOST_AUTO_TEST_CASE(has_radius)
+	{
+		BOOST_CHECK_EQUAL(circle.GetRadius(), radius);
+	}
+
+	BOOST_AUTO_TEST_CASE(has_outline_color)
+	{
+		BOOST_CHECK_EQUAL(circle.GetOutlineColor(), outlineColor);
+	}
+
+	BOOST_AUTO_TEST_CASE(has_fill_color)
+	{
+		BOOST_CHECK_EQUAL(circle.GetFillColor(), fillColor);
+	}
+
+	BOOST_AUTO_TEST_CASE(can_find_perimeter)
+	{
+		BOOST_CHECK_EQUAL(static_cast<int>(circle.GetPerimeter()), 62);
+	}
+
+	BOOST_AUTO_TEST_CASE(can_find_area)
+	{
+		BOOST_CHECK_EQUAL(static_cast<int>(circle.GetArea()), 314);
+	}
+
+	BOOST_AUTO_TEST_CASE(can_convert_to_string)
+	{
+		BOOST_CHECK_EQUAL(circle.ToString(), "circle Center (0.00, 0.00) Radius = 10.00 Perimetr = 62.83 Area = 314.16 Outline color = #000000 Fill color = #FFFFFF");
+	}
+
+BOOST_AUTO_TEST_SUITE_END()
