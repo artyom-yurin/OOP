@@ -163,7 +163,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Shapes\Shapes.cpp" />
+    <ClCompile Include="..\Shapes\ShapesFunctions.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ShapesFunctions_tests.cpp" />
     <ClCompile Include="Shapes_tests.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

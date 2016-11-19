@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <tchar.h>
 #include <iomanip>  
+#include <vector>
 
 #define BOOST_TEST_INCLUDED
 #define BOOST_TEST_NO_MAIN
