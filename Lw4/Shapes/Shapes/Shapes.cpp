@@ -66,3 +66,58 @@ std::string CTriangle::ToString() const
 
 	return buffer.str();
 }
+
+CRectangle::CRectangle(SPoint const & leftTopVertex, double const & width, double const & height, std::string const & outlineColor, std::string const & fillColor)
+	:m_leftTopVertex(leftTopVertex),
+	m_width(width),
+	m_height(height),
+	m_outlineColor(outlineColor),
+	m_fillColor(fillColor)
+{
+	m_rightBottomVertex = {m_leftTopVertex.x + m_width, m_leftTopVertex.y + m_height};
+}
+
+SPoint CRectangle::GetLeftTop() const
+{
+	return m_leftTopVertex;
+}
+
+SPoint CRectangle::GetRightBottom() const
+{
+	return m_rightBottomVertex;
+}
+
+double CRectangle::GetWidth() const
+{
+	return m_width;
+}
+
+double CRectangle::GetHeight() const
+{
+	return m_height;
+}
+
+std::string CRectangle::GetFillColor() const
+{
+	return m_fillColor;
+}
+
+std::string CRectangle::GetOutlineColor() const
+{
+	return m_outlineColor;
+}
+
+double CRectangle::GetArea() const
+{
+	return 0.0;
+}
+
+double CRectangle::GetPerimeter() const
+{
+	return 0.0;
+}
+
+std::string CRectangle::ToString() const
+{
+	return std::string();
+}

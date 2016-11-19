@@ -64,3 +64,50 @@ BOOST_FIXTURE_TEST_SUITE(Triangle, TriangleFixture)
 	}
 
 BOOST_AUTO_TEST_SUITE_END()
+
+struct RectangleFixture
+{
+	const SPoint leftTopVertex = { 0, 0 };
+	const double width = 10;
+	const double height = 20;
+	const std::string outlineColor = "000000";
+	const std::string fillColor = "FFFFFF";
+	CRectangle rectangle;
+	RectangleFixture()
+		: rectangle(leftTopVertex, width, height, outlineColor, fillColor)
+	{}
+};
+
+BOOST_FIXTURE_TEST_SUITE(Rectangle, RectangleFixture)
+
+	BOOST_AUTO_TEST_CASE(has_left_top_vertex)
+	{
+		CheckCoordinates(rectangle.GetLeftTop(), leftTopVertex);
+	}
+
+	BOOST_AUTO_TEST_CASE(has_right_bottom_vertex)
+	{
+		CheckCoordinates(rectangle.GetRightBottom(), {leftTopVertex.x + width, leftTopVertex.y + height});
+	}
+
+	BOOST_AUTO_TEST_CASE(has_width)
+	{
+		BOOST_CHECK_EQUAL(rectangle.GetWidth(), width);
+	}
+
+	BOOST_AUTO_TEST_CASE(has_height)
+	{
+		BOOST_CHECK_EQUAL(rectangle.GetHeight(), height);
+	}
+
+	BOOST_AUTO_TEST_CASE(has_outline_color)
+	{
+		BOOST_CHECK_EQUAL(rectangle.GetOutlineColor(), outlineColor);
+	}
+
+	BOOST_AUTO_TEST_CASE(has_fill_color)
+	{
+		BOOST_CHECK_EQUAL(rectangle.GetFillColor(), fillColor);
+	}
+
+BOOST_AUTO_TEST_SUITE_END()
