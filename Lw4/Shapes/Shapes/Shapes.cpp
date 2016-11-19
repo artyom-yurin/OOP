@@ -109,15 +109,29 @@ std::string CRectangle::GetOutlineColor() const
 
 double CRectangle::GetArea() const
 {
-	return 0.0;
+	return m_width * m_height;
 }
 
 double CRectangle::GetPerimeter() const
 {
-	return 0.0;
+	return 2 * (m_width + m_height);
 }
 
 std::string CRectangle::ToString() const
 {
-	return std::string();
+	std::stringstream buffer;
+
+	buffer << std::fixed << std::setprecision(2);
+
+	buffer << "rectangle "
+		<< "Left top vertex (" << m_leftTopVertex.x << ", " << m_leftTopVertex.y << ") "
+		<< "Right bottom vertex (" << m_rightBottomVertex.x << ", " << m_rightBottomVertex.y << ") "
+		<< "Width = " << m_width << " "
+		<< "Height = " << m_height << " "
+		<< "Perimetr = " << CRectangle::GetPerimeter() << " "
+		<< "Area = " << CRectangle::GetArea() << " "
+		<< "Outline color = #" << CRectangle::GetOutlineColor() << " "
+		<< "Fill color = #" << CRectangle::GetFillColor();
+
+	return buffer.str();
 }

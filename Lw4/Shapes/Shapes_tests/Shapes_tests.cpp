@@ -110,4 +110,19 @@ BOOST_FIXTURE_TEST_SUITE(Rectangle, RectangleFixture)
 		BOOST_CHECK_EQUAL(rectangle.GetFillColor(), fillColor);
 	}
 
+	BOOST_AUTO_TEST_CASE(can_find_perimeter)
+	{
+		BOOST_CHECK_EQUAL(rectangle.GetPerimeter(), 60);
+	}
+
+	BOOST_AUTO_TEST_CASE(can_find_area)
+	{
+		BOOST_CHECK_EQUAL(rectangle.GetArea(), 200);
+	}
+
+	BOOST_AUTO_TEST_CASE(can_convert_to_string)
+	{
+		BOOST_CHECK_EQUAL(rectangle.ToString(), "rectangle Left top vertex (0.00, 0.00) Right bottom vertex (10.00, 20.00) Width = 10.00 Height = 20.00 Perimetr = 60.00 Area = 200.00 Outline color = #000000 Fill color = #FFFFFF");
+	}
+
 BOOST_AUTO_TEST_SUITE_END()
