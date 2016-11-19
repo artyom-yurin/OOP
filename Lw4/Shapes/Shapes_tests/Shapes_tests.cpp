@@ -177,3 +177,48 @@ BOOST_FIXTURE_TEST_SUITE(Circle, CircleFixture)
 	}
 
 BOOST_AUTO_TEST_SUITE_END()
+
+struct LineSegmentFixture
+{
+	const SPoint startPoint = { 0, 0 };
+	const SPoint endPoint = { 1, 1 };
+	const std::string outlineColor = "000000";
+	CLineSegment line;
+	LineSegmentFixture()
+		: line(startPoint, endPoint, outlineColor)
+	{}
+};
+
+BOOST_FIXTURE_TEST_SUITE(LineSegment, LineSegmentFixture)
+
+	BOOST_AUTO_TEST_CASE(has_start_point)
+	{
+		CheckCoordinates(line.GetStartPoint(), startPoint);
+	}
+
+	BOOST_AUTO_TEST_CASE(has_end_point)
+	{
+		CheckCoordinates(line.GetEndPoint(), endPoint);
+	}
+
+	BOOST_AUTO_TEST_CASE(has_outline_color)
+	{
+		BOOST_CHECK_EQUAL(line.GetOutlineColor(), outlineColor);
+	}
+
+	BOOST_AUTO_TEST_CASE(can_find_perimeter)
+	{
+		BOOST_CHECK_EQUAL(static_cast<int>(line.GetPerimeter()), 1);
+	}
+
+	BOOST_AUTO_TEST_CASE(can_find_area)
+	{
+		BOOST_CHECK_EQUAL(line.GetArea(), 0);
+	}
+
+	BOOST_AUTO_TEST_CASE(can_convert_to_string)
+	{
+		BOOST_CHECK_EQUAL(line.ToString(), "line Start point (0.00, 0.00) End point (1.00, 1.00) Perimetr = 1.41 Area = 0.00 Outline color = #000000");
+	}
+
+BOOST_AUTO_TEST_SUITE_END()
