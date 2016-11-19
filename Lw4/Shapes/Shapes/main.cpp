@@ -56,11 +56,87 @@ int main()
 		}
 		else if (command == "triangle")
 		{
-
+			SPoint vertex1;
+			SPoint vertex2;
+			SPoint vertex3;
+			std::string outlineColor;
+			std::string fillColor;
+			if ((buffer >> vertex1.x) && (buffer >> vertex1.y))
+			{
+				if ((buffer >> vertex2.x) && (buffer >> vertex2.y))
+				{
+					if ((buffer >> vertex3.x) && (buffer >> vertex3.y))
+					{
+						if ((buffer >> outlineColor) && (buffer >> fillColor))
+						{
+							if (CorrectColor(outlineColor) && CorrectColor(fillColor))
+							{
+								shapes.push_back(std::make_shared<CTriangle>(vertex1, vertex2, vertex3, outlineColor, fillColor));
+								std::cout << "Triangle was created\n";
+							}
+							else
+							{
+								std::cout << "Invalid color\n"
+									<< "Use 16 hexadecimal code\n";
+							}
+						}
+						else
+						{
+							std::cout << "Error color value\n";
+						}
+					}
+					else
+					{
+						std::cout << "Error vertex 3 value\n";
+					}
+				}
+				else
+				{
+					std::cout << "Error vertex 2 value\n";
+				}
+			}
+			else
+			{
+				std::cout << "Error vertex 1 value\n";
+			}
 		}
 		else if (command == "circle")
 		{
-
+			SPoint center;
+			double radius;
+			std::string outlineColor;
+			std::string fillColor;
+			if ((buffer >> center.x) && (buffer >> center.y))
+			{
+				if (buffer >> radius)
+				{
+					if ((buffer >> outlineColor) && (buffer >> fillColor))
+					{
+						if (CorrectColor(outlineColor) && CorrectColor(fillColor))
+						{
+							shapes.push_back(std::make_shared<CCircle>(center, radius, outlineColor, fillColor));
+							std::cout << "Circle was created\n";
+						}
+						else
+						{
+							std::cout << "Invalid color\n"
+								<< "Use 16 hexadecimal code\n";
+						}
+					}
+					else
+					{
+						std::cout << "Error color value\n";
+					}
+				}
+				else
+				{
+					std::cout << "Error radius value\n";
+				}
+			}
+			else
+			{
+				std::cout << "Error center value\n";
+			}
 		}
 		else if (command == "line")
 		{
