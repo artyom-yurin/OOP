@@ -67,5 +67,19 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 		VerifyRational(-CRational(-3, 5), 3, 5);
 	}
 
+	BOOST_AUTO_TEST_CASE(has_binary_addition_operation)
+	{
+		VerifyRational(CRational(1, 2) + CRational(1, 6), 2, 3);
+		VerifyRational(CRational(1, 2) + 1, 3, 2);
+		VerifyRational(1 + CRational(1, 2), 3, 2);
+	}
+
+	BOOST_AUTO_TEST_CASE(has_binary_subtraction_operation)
+	{
+		VerifyRational(CRational(1, 2) - CRational(1, 6), 1, 3);
+		VerifyRational(CRational(1, 2) - 1, -1, 2);
+		VerifyRational(1 - CRational(1, 2), 1, 2);
+	}
+
 BOOST_AUTO_TEST_SUITE_END()
 
