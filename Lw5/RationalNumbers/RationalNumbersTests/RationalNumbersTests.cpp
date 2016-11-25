@@ -95,5 +95,21 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 		VerifyRational(CRational(1, 2) -= CRational(0, 6), 1, 2);
 	}
 
+	BOOST_AUTO_TEST_CASE(has_binary_multiplication_operation)
+	{
+		VerifyRational(CRational(1, 2) * CRational(2, 3), 1, 3);
+		VerifyRational(CRational(1, 2) * (-3), -3, 2);
+		VerifyRational(7 * CRational(2, 3), 14, 3);
+	}
+
+	BOOST_AUTO_TEST_CASE(has_division_operation)
+	{
+		VerifyRational(CRational(1, 2) / CRational(2, 3), 3, 4);
+		VerifyRational(CRational(1, 2) / 5, 1, 10);
+		VerifyRational(7 / CRational(2, 3), 21, 2);
+		BOOST_REQUIRE_THROW(CRational(2, 3) / 0, std::invalid_argument);
+		BOOST_REQUIRE_THROW(CRational(2, 3) / CRational(0, 1), std::invalid_argument);
+	}
+
 BOOST_AUTO_TEST_SUITE_END()
 

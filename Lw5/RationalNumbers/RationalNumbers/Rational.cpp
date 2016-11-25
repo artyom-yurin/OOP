@@ -110,3 +110,17 @@ const CRational operator-(const CRational & lhs, const CRational & rhs)
 	int denominator = lhs.GetDenominator() * rhs.GetDenominator();
 	return CRational(numerator, denominator);
 }
+
+const CRational operator*(const CRational & lhs, const CRational & rhs)
+{
+	int numerator = lhs.GetNumerator() * rhs.GetNumerator();
+	int denominator = lhs.GetDenominator() * rhs.GetDenominator();
+	return CRational(numerator, denominator);
+}
+
+const CRational operator/(const CRational & lhs, const CRational & rhs)
+{
+	int numerator = lhs.GetNumerator() * rhs.GetDenominator();
+	int denominator = lhs.GetDenominator() * rhs.GetNumerator();
+	return CRational(numerator, denominator);
+}
