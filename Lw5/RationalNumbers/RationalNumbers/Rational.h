@@ -20,6 +20,10 @@ public:
 
 	const CRational operator-() const;
 
+	const CRational operator+=(const CRational & summand);
+
+	const CRational operator-=(const CRational & subtrahend);
+
 private:
 	int m_numerator;
 

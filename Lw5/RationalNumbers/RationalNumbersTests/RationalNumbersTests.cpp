@@ -81,5 +81,21 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 		VerifyRational(1 - CRational(1, 2), 1, 2);
 	}
 
+	BOOST_AUTO_TEST_CASE(has_adding_assignment_operator)
+	{
+		VerifyRational(CRational(1, 2) += CRational(1, 6), 2, 3);
+		VerifyRational(CRational(1, 2) += 1, 3, 2);
+		VerifyRational(CRational(1, 2) += CRational(0, 6), 1, 2);
+	}
+
+	BOOST_AUTO_TEST_CASE(has_subtracting_assignment_operator)
+	{
+		CRational ratNum(3, 1415);
+		VerifyRational(ratNum -= ratNum, 0, 1);
+
+		VerifyRational(CRational(1, 2) -= CRational(1, 6), 1, 3);
+		VerifyRational(CRational(1, 2) -= 1, -1, 2);
+	}
+
 BOOST_AUTO_TEST_SUITE_END()
 

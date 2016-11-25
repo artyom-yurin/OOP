@@ -42,6 +42,28 @@ const CRational CRational::operator-() const
 	return CRational(-m_numerator, m_denominator);
 }
 
+const CRational CRational::operator+=(const CRational & summand)
+{
+	if (summand.GetNumerator())
+	{
+		int numerator = GetNumerator() * summand.GetDenominator() + summand.GetNumerator() * GetDenominator();
+		int denominator = GetDenominator() * summand.GetDenominator();
+		Assign(numerator, denominator);
+	}
+	return *this;
+}
+
+const CRational CRational::operator-=(const CRational & subtrahend)
+{
+	if (subtrahend.GetNumerator())
+	{
+		int numerator = GetNumerator() * subtrahend.GetDenominator() - subtrahend.GetNumerator() * GetDenominator();
+		int denominator = GetDenominator() * subtrahend.GetDenominator();
+		Assign(numerator, denominator);
+	}
+	return *this;
+}
+
 void CRational::Assign(int numerator, int denominator)
 {
 	if (denominator == 0)
