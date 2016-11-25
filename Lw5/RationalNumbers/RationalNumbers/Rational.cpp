@@ -32,6 +32,16 @@ double CRational::ToDouble() const
 	return static_cast<double>(m_numerator) / m_denominator;
 }
 
+const CRational CRational::operator+() const
+{
+	return *this;
+}
+
+const CRational CRational::operator-() const
+{
+	return CRational(-m_numerator, m_denominator);
+}
+
 void CRational::Assign(int numerator, int denominator)
 {
 	if (denominator == 0)

@@ -16,6 +16,10 @@ public:
 
 	double ToDouble() const;
 
+	const CRational operator+() const;
+
+	const CRational operator-() const;
+
 private:
 	int m_numerator;
 

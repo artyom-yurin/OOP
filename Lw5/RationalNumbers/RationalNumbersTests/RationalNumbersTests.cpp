@@ -55,5 +55,17 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 		BOOST_CHECK_EQUAL(r.ToDouble(), 0.6);
 	}
 
+	BOOST_AUTO_TEST_CASE(has_unary_plus_that_return_itself)
+	{
+		VerifyRational(+CRational(3, 5), 3, 5);
+		VerifyRational(+CRational(-3, 5), -3, 5);
+	}
+
+	BOOST_AUTO_TEST_CASE(has_unary_minus_that_negates_itself)
+	{
+		VerifyRational(-CRational(3, 5), -3, 5);
+		VerifyRational(-CRational(-3, 5), 3, 5);
+	}
+
 BOOST_AUTO_TEST_SUITE_END()
 
