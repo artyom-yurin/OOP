@@ -27,6 +27,11 @@ int CRational::GetDenominator() const
 	return m_denominator;
 }
 
+double CRational::ToDouble() const
+{
+	return static_cast<double>(m_numerator) / m_denominator;
+}
+
 void CRational::Assign(int numerator, int denominator)
 {
 	if (denominator == 0)

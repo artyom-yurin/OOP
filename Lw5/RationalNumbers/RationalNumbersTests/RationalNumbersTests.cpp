@@ -49,5 +49,11 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 		BOOST_REQUIRE_THROW(CRational(1, 0), std::invalid_argument);
 	}
 
+	BOOST_AUTO_TEST_CASE(rational_can_be_converted_to_double)
+	{
+		CRational r(3, 5);
+		BOOST_CHECK_EQUAL(r.ToDouble(), 0.6);
+	}
+
 BOOST_AUTO_TEST_SUITE_END()
 

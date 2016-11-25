@@ -14,6 +14,8 @@ public:
 
 	int GetDenominator() const;
 
+	double ToDouble() const;
+
 private:
 	int m_numerator;
 
