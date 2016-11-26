@@ -25,6 +25,18 @@ void VerifyOutput(const CRational & r, const std::string & expectedString)
 	BOOST_CHECK_EQUAL(output.str(), expectedString);
 }
 
+void VerifyInput(const std::string & inputString, int expectedNumerator, int expectedDenominator, bool IsError)
+{
+	std::istringstream input(inputString);
+	CRational r;
+	input >> r;
+	BOOST_CHECK_EQUAL(input.fail(), IsError);
+	if (!IsError)
+	{
+		VerifyRational(r, expectedNumerator, expectedDenominator);
+	}
+}
+
 BOOST_AUTO_TEST_SUITE(Rational_number)
 	BOOST_AUTO_TEST_CASE(is_0_by_default)
 	{
@@ -193,6 +205,13 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 		VerifyOutput(CRational(), "0/1");
 
 		VerifyOutput(CRational(5), "5/1");
+	}
+
+	BOOST_AUTO_TEST_CASE(can_be_read_from_istream)
+	{
+		VerifyInput("7/15", 7, 15, false);
+		VerifyInput("1/-1", -1, 1, false);
+		VerifyInput("7.15", 7, 15, true);
 	}
 
 BOOST_AUTO_TEST_SUITE_END()

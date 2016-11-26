@@ -56,4 +56,5 @@ const bool operator<=(const CRational & lhs, const CRational & rhs);
 const bool operator>=(const CRational & lhs, const CRational & rhs);
 const bool operator>(const CRational & lhs, const CRational & rhs);
 
-std::ostream & operator<<(std::ostream & stream, const CRational & counter);
+std::ostream & operator<<(std::ostream & stream, const CRational & value);
+std::istream & operator>>(std::istream & stream, CRational & value);

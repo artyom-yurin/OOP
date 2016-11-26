@@ -173,6 +173,27 @@ std::ostream & operator<<(std::ostream & output, const CRational & value)
 	return output;
 }
 
+std::istream & operator>>(std::istream & stream, CRational & value)
+{
+	int numerator = 0;
+	int	denominator = 1;
+	if (
+		(stream >> numerator) &&
+		(stream.get() == '/') && 
+		(stream >> denominator)
+		)
+	{
+		value = CRational(numerator, denominator);
+	}
+	else
+	{
+		stream.setstate(std::ios_base::failbit);
+	}
+
+	return stream;
+}
+
+
 
 const bool operator!=(const CRational & lhs, const CRational & rhs)
 {
