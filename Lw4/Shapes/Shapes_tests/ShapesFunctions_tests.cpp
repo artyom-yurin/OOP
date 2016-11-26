@@ -32,7 +32,7 @@ BOOST_FIXTURE_TEST_SUITE(VectorFunction, VectorShapeFixture)
 
 	BOOST_AUTO_TEST_CASE(get_shape_with_min_perimetr_value)
 	{
-		std::shared_ptr<IShape> shape = GetSmallPerimetrShape(shapes);
+		std::shared_ptr<IShape> shape = GetSmallPerimeterShape(shapes);
 		BOOST_CHECK_EQUAL(shape->ToString(), "triangle Vertex 1 (0.00, 0.00) Vertex 2 (-1.00, 1.00) Vertex 3 (-1.00, -1.00) Perimetr = 4.83 Area = 1.00 Outline color = #FFFFFF Fill color = #000000");
 	}
 

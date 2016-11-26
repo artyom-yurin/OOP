@@ -4,32 +4,18 @@
 
 std::shared_ptr<IShape> GetLargeAreaShape(std::vector<std::shared_ptr<IShape>> const & shapes)
 {
-	std::shared_ptr<IShape> result = nullptr;
-
-	for (std::shared_ptr<IShape> shape : shapes)
-	{
-		if ((result == nullptr) || (shape->GetArea() > result->GetArea()))
-		{
-			result = shape;
-		}
-	}
-
-	return result;
+	auto maxArea = std::max_element(shapes.cbegin(), shapes.cend(), [](const auto & arg1, const auto & arg2) {
+		return arg1->GetArea() < arg2->GetArea();
+	});
+	return *maxArea;
 }
 
-std::shared_ptr<IShape> GetSmallPerimetrShape(std::vector<std::shared_ptr<IShape>> const & shapes)
+std::shared_ptr<IShape> GetSmallPerimeterShape(std::vector<std::shared_ptr<IShape>> const & shapes)
 {
-	std::shared_ptr<IShape> result = nullptr;
-
-	for (std::shared_ptr<IShape> shape : shapes)
-	{
-		if ((result == nullptr) || (shape->GetPerimeter() < result->GetPerimeter()))
-		{
-			result = shape;
-		}
-	}
-
-	return result;
+	auto minPerimeter = std::min_element(shapes.cbegin(), shapes.cend(), [](const auto & arg1, const auto & arg2) {
+		return arg1->GetPerimeter() < arg2->GetPerimeter();
+	});
+	return *minPerimeter;
 }
 
 bool CorrectColor(std::string const & color)

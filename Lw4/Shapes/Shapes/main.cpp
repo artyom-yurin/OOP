@@ -190,7 +190,7 @@ int main()
 			{
 				std::cout << "Shape with large area: " << GetLargeAreaShape(shapes)->ToString() << "\n"
 					<< "\n"
-					<< "Shape with small perimetr: " << GetSmallPerimetrShape(shapes)->ToString() << "\n";
+					<< "Shape with small perimetr: " << GetSmallPerimeterShape(shapes)->ToString() << "\n";
 			}
 			else
 			{
