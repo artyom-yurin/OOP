@@ -3,18 +3,15 @@
 
 #define _USE_MATH_DEFINES
 #include <math.h>
+#include <tuple>
 
 CTriangle::CTriangle(SPoint const & vertex1, SPoint const & vertex2, SPoint const & vertex3, std::string const & outlineColor, std::string const & fillColor)
-	:m_vertex1(vertex1)
+	: m_vertex1(vertex1)
 	, m_vertex2(vertex2)
 	, m_vertex3(vertex3)
 	, m_outlineColor(outlineColor)
 	, m_fillColor(fillColor)
-{
-	m_firstSide = hypot(m_vertex1.x - m_vertex2.x, m_vertex1.y - m_vertex2.y);
-	m_secondSide = hypot(m_vertex1.x - m_vertex3.x, m_vertex1.y - m_vertex3.y);
-	m_thirdSide = hypot(m_vertex3.x - m_vertex2.x, m_vertex3.y - m_vertex2.y);
-}
+{}
 
 SPoint CTriangle::GetVertex1() const
 {
@@ -43,13 +40,21 @@ std::string CTriangle::GetOutlineColor() const
 
 double CTriangle::GetArea() const
 {
+	double firstSide;
+	double secondSide;
+	double thirdSide;
+	std::tie(firstSide, secondSide, thirdSide) = GetSides();
 	double perimeterHalf = CTriangle::GetPerimeter() * 0.5;
-	return std::round(100 * sqrt(perimeterHalf * (perimeterHalf - m_firstSide) * (perimeterHalf - m_secondSide) * (perimeterHalf - m_thirdSide))) / 100;
+	return std::round(100 * sqrt(perimeterHalf * (perimeterHalf - firstSide) * (perimeterHalf - secondSide) * (perimeterHalf - thirdSide))) / 100;
 }
 
 double CTriangle::GetPerimeter() const
 {
-	return m_firstSide + m_secondSide + m_thirdSide;
+	double firstSide;
+	double secondSide;
+	double thirdSide;
+	std::tie(firstSide, secondSide, thirdSide) = GetSides();
+	return firstSide + secondSide + thirdSide;
 }
 
 std::string CTriangle::ToString() const
@@ -70,15 +75,21 @@ std::string CTriangle::ToString() const
 	return buffer.str();
 }
 
+std::tuple<double, double, double> CTriangle::GetSides() const
+{
+	double firstSide = hypot(m_vertex1.x - m_vertex2.x, m_vertex1.y - m_vertex2.y);
+	double secondSide = hypot(m_vertex1.x - m_vertex3.x, m_vertex1.y - m_vertex3.y);
+	double thirdSide = hypot(m_vertex3.x - m_vertex2.x, m_vertex3.y - m_vertex2.y);
+	return std::make_tuple(firstSide, secondSide, thirdSide);
+}
+
 CRectangle::CRectangle(SPoint const & leftTopVertex, double const & width, double const & height, std::string const & outlineColor, std::string const & fillColor)
 	:m_leftTopVertex(leftTopVertex),
 	m_width(width),
 	m_height(height),
 	m_outlineColor(outlineColor),
 	m_fillColor(fillColor)
-{
-	m_rightBottomVertex = {m_leftTopVertex.x + m_width, m_leftTopVertex.y + m_height};
-}
+{}
 
 SPoint CRectangle::GetLeftTop() const
 {
@@ -87,7 +98,7 @@ SPoint CRectangle::GetLeftTop() const
 
 SPoint CRectangle::GetRightBottom() const
 {
-	return m_rightBottomVertex;
+	return {m_leftTopVertex.x + m_width, m_leftTopVertex.y + m_height};
 }
 
 double CRectangle::GetWidth() const
@@ -128,7 +139,7 @@ std::string CRectangle::ToString() const
 
 	buffer << "rectangle "
 		<< "Left top vertex (" << m_leftTopVertex.x << ", " << m_leftTopVertex.y << ") "
-		<< "Right bottom vertex (" << m_rightBottomVertex.x << ", " << m_rightBottomVertex.y << ") "
+		<< "Right bottom vertex (" << GetRightBottom().x << ", " << GetRightBottom().y << ") "
 		<< "Width = " << m_width << " "
 		<< "Height = " << m_height << " "
 		<< "Perimetr = " << CRectangle::GetPerimeter() << " "

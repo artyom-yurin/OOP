@@ -33,14 +33,12 @@ public:
 	std::string ToString() const override;
 
 private:
+	std::tuple<double, double, double> GetSides() const;
 	SPoint m_vertex1;
 	SPoint m_vertex2;
 	SPoint m_vertex3;
 	std::string m_outlineColor;
 	std::string m_fillColor;
-	double m_firstSide;
-	double m_secondSide;
-	double m_thirdSide;
 };
 
 class CRectangle
@@ -70,7 +68,6 @@ public:
 	std::string ToString() const override;
 private:
 	SPoint m_leftTopVertex;
-	SPoint m_rightBottomVertex;
 	double m_width;
 	double m_height;
 	std::string m_outlineColor;
