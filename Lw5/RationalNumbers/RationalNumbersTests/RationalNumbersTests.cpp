@@ -214,10 +214,26 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 
 	BOOST_AUTO_TEST_CASE(rational_can_be_converted_to_compound_fraction)
 	{
-		CRational r(9, 4);
-		std::pair<int, CRational> compoundRational = r.ToCompoundFraction();
-		BOOST_CHECK_EQUAL(compoundRational.first, 2);
-		VerifyRational(compoundRational.second, 1, 4);
+		{
+			CRational r(9, 4);
+			std::pair<int, CRational> compoundRational = r.ToCompoundFraction();
+			BOOST_CHECK_EQUAL(compoundRational.first, 2);
+			VerifyRational(compoundRational.second, 1, 4);
+		}
+
+		{
+			CRational r(-8, 3);
+			std::pair<int, CRational> compoundRational = r.ToCompoundFraction();
+			BOOST_CHECK_EQUAL(compoundRational.first, -2);
+			VerifyRational(compoundRational.second, -2, 3);
+		}
+
+		{
+			CRational r(5, 6);
+			std::pair<int, CRational> compoundRational = r.ToCompoundFraction();
+			BOOST_CHECK_EQUAL(compoundRational.first, 0);
+			VerifyRational(compoundRational.second, 5, 6);
+		}
 	}
 
 BOOST_AUTO_TEST_SUITE_END()
