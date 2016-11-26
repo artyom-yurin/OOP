@@ -41,7 +41,7 @@ bool CorrectColor(std::string const & color)
 
 	for (char symbol : color)
 	{
-		if (!((symbol <= 'F' && symbol >= 'A') || (symbol <= '9' && symbol >= '0')))
+		if (!((symbol <= 'F' && symbol >= 'A') || (symbol <= 'f' && symbol >= 'a') || (symbol <= '9' && symbol >= '0')))
 		{
 			return false;
 		}
