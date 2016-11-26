@@ -25,18 +25,6 @@ void VerifyOutput(const CRational & r, const std::string & expectedString)
 	BOOST_CHECK_EQUAL(output.str(), expectedString);
 }
 
-void VerifyInput(const std::string & inputString, int expectedNumerator, int expectedDenominator, bool IsError)
-{
-	std::istringstream input(inputString);
-	CRational r;
-	input >> r;
-	BOOST_CHECK_EQUAL(input.fail(), IsError);
-	if (!IsError)
-	{
-		VerifyRational(r, expectedNumerator, expectedDenominator);
-	}
-}
-
 BOOST_AUTO_TEST_SUITE(Rational_number)
 	BOOST_AUTO_TEST_CASE(is_0_by_default)
 	{
@@ -209,9 +197,27 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 
 	BOOST_AUTO_TEST_CASE(can_be_read_from_istream)
 	{
-		VerifyInput("7/15", 7, 15, false);
-		VerifyInput("1/-1", -1, 1, false);
-		VerifyInput("7.15", 7, 15, true);
+		{
+			std::istringstream input("7/15");
+			CRational r;
+			input >> r;
+			VerifyRational(r, 7, 15);
+		}
+		
+		{
+			std::istringstream input("7.15");
+			CRational r;
+			input >> r;
+			BOOST_CHECK_EQUAL(input.fail(), true);
+		}
+	}
+
+	BOOST_AUTO_TEST_CASE(rational_can_be_converted_to_compound_fraction)
+	{
+		CRational r(9, 4);
+		std::pair<int, CRational> compoundRational = r.ToCompoundFraction();
+		BOOST_CHECK_EQUAL(compoundRational.first, 2);
+		VerifyRational(compoundRational.second, 1, 4);
 	}
 
 BOOST_AUTO_TEST_SUITE_END()
