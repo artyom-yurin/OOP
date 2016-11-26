@@ -140,3 +140,15 @@ const CRational operator/(const CRational & lhs, const CRational & rhs)
 	int denominator = lhs.GetDenominator() * rhs.GetNumerator();
 	return CRational(numerator, denominator);
 }
+
+const bool operator == (const CRational & lhs, const CRational & rhs)
+{
+	return (lhs.GetNumerator() == rhs.GetNumerator() &&
+		lhs.GetDenominator() == rhs.GetDenominator());
+}
+
+const bool operator != (const CRational & lhs, const CRational & rhs)
+{
+	return (lhs.GetNumerator() != rhs.GetNumerator() ||
+		lhs.GetDenominator() != rhs.GetDenominator());
+}

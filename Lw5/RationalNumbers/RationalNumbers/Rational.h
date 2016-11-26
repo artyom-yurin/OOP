@@ -44,3 +44,6 @@ const CRational operator+(const CRational & lhs, const CRational & rhs);
 const CRational operator-(const CRational & lhs, const CRational & rhs);
 const CRational operator*(const CRational & lhs, const CRational & rhs);
 const CRational operator/(const CRational & lhs, const CRational & rhs);
+
+const bool operator !=(const CRational & lhs, const CRational & rhs);
+const bool operator ==(const CRational & lhs, const CRational & rhs);
