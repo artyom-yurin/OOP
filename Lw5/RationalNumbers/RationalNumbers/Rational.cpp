@@ -64,6 +64,22 @@ const CRational CRational::operator-=(const CRational & subtrahend)
 	return *this;
 }
 
+const CRational CRational::operator*=(const CRational & factor)
+{
+	int numerator = GetNumerator() * factor.GetNumerator();
+	int denominator = GetDenominator() * factor.GetDenominator();
+	Assign(numerator, denominator);
+	return *this;
+}
+
+const CRational CRational::operator/=(const CRational & divider)
+{
+	int numerator = GetNumerator() * divider.GetDenominator();
+	int denominator = GetDenominator() * divider.GetNumerator();
+	Assign(numerator, denominator);
+	return *this;
+}
+
 void CRational::Assign(int numerator, int denominator)
 {
 	if (denominator == 0)

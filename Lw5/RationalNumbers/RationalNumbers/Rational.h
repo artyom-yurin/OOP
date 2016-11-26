@@ -24,6 +24,10 @@ public:
 
 	const CRational operator-=(const CRational & subtrahend);
 
+	const CRational operator*=(const CRational & factor);
+
+	const CRational operator/=(const CRational & divider);
+
 private:
 	int m_numerator;
 

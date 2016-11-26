@@ -111,5 +111,18 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 		BOOST_REQUIRE_THROW(CRational(2, 3) / CRational(0, 1), std::invalid_argument);
 	}
 
+	BOOST_AUTO_TEST_CASE(has_multiply_assignment_operator)
+	{
+		VerifyRational(CRational(1, 2) *= CRational(2, 3), 1, 3);
+		VerifyRational(CRational(1, 2) *= 3, 3, 2);
+	}
+
+	BOOST_AUTO_TEST_CASE(has_division_assignment_operator)
+	{
+		VerifyRational(CRational(1, 2) /= CRational(2, 3), 3, 4);
+		VerifyRational(CRational(3, 4) /= CRational(3, 8), 2, 1);
+		VerifyRational(CRational(1, 2) /= 3, 1, 6);
+		BOOST_REQUIRE_THROW(CRational(2, 3) /= 0, std::invalid_argument);
+	}
 BOOST_AUTO_TEST_SUITE_END()
 
