@@ -4,12 +4,14 @@
 
 CRational::CRational()
 {
-	Assign(0, 1);
+	m_numerator = 0;
+	m_denominator = 1;
 }
 
 CRational::CRational(int value)
 {
-	Assign(value, 1);
+	m_numerator = value;
+	m_denominator = 1;
 }
 
 CRational::CRational(int numerator, int denominator)
