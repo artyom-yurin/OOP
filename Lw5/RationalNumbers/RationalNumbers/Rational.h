@@ -1,4 +1,7 @@
 #pragma once
+
+#include <iostream>
+
 class CRational
 {
 public:
@@ -52,3 +55,5 @@ const bool operator<(const CRational & lhs, const CRational & rhs);
 const bool operator<=(const CRational & lhs, const CRational & rhs);
 const bool operator>=(const CRational & lhs, const CRational & rhs);
 const bool operator>(const CRational & lhs, const CRational & rhs);
+
+std::ostream & operator<<(std::ostream & stream, const CRational & counter);

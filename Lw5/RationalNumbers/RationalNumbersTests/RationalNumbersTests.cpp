@@ -18,6 +18,13 @@ void VerifyRational(const CRational & r, int expectedNumerator, int expectedDeno
 	BOOST_CHECK_EQUAL(r.GetDenominator(), expectedDenominator);
 }
 
+void VerifyOutput(const CRational & r, const std::string & expectedString)
+{
+	std::ostringstream output;
+	output << r;
+	BOOST_CHECK_EQUAL(output.str(), expectedString);
+}
+
 BOOST_AUTO_TEST_SUITE(Rational_number)
 	BOOST_AUTO_TEST_CASE(is_0_by_default)
 	{
@@ -178,6 +185,15 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 		}
 
 	BOOST_AUTO_TEST_SUITE_END()
+
+	BOOST_AUTO_TEST_CASE(can_be_printed_to_ostream)
+	{
+		VerifyOutput(CRational(7, 15), "7/15");
+
+		VerifyOutput(CRational(), "0/1");
+
+		VerifyOutput(CRational(5), "5/1");
+	}
 
 BOOST_AUTO_TEST_SUITE_END()
 

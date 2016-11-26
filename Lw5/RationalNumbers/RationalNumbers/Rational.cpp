@@ -167,6 +167,13 @@ const bool operator>(const CRational & lhs, const CRational & rhs)
 	return (lhs.GetNumerator() * rhs.GetDenominator() > rhs.GetNumerator() * lhs.GetDenominator());
 }
 
+std::ostream & operator<<(std::ostream & output, const CRational & value)
+{
+	output << value.GetNumerator() << "/" << value.GetDenominator();
+	return output;
+}
+
+
 const bool operator!=(const CRational & lhs, const CRational & rhs)
 {
 	return (lhs.GetNumerator() != rhs.GetNumerator() ||
