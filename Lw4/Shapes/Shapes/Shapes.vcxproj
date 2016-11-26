@@ -150,8 +150,6 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="IShape.cpp" />
-    <ClCompile Include="ISolidShape.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Shapes.cpp" />
     <ClCompile Include="ShapesFunctions.cpp" />
