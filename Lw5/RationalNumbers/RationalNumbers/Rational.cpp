@@ -141,13 +141,33 @@ const CRational operator/(const CRational & lhs, const CRational & rhs)
 	return CRational(numerator, denominator);
 }
 
-const bool operator == (const CRational & lhs, const CRational & rhs)
+const bool operator==(const CRational & lhs, const CRational & rhs)
 {
 	return (lhs.GetNumerator() == rhs.GetNumerator() &&
 		lhs.GetDenominator() == rhs.GetDenominator());
 }
 
-const bool operator != (const CRational & lhs, const CRational & rhs)
+const bool operator<(const CRational & lhs, const CRational & rhs)
+{
+	return (lhs.GetNumerator() * rhs.GetDenominator() < rhs.GetNumerator() * lhs.GetDenominator());
+}
+
+const bool operator<=(const CRational & lhs, const CRational & rhs)
+{
+	return (lhs.GetNumerator() * rhs.GetDenominator() <= rhs.GetNumerator() * lhs.GetDenominator());
+}
+
+const bool operator>=(const CRational & lhs, const CRational & rhs)
+{
+	return (lhs.GetNumerator() * rhs.GetDenominator() >= rhs.GetNumerator() * lhs.GetDenominator());
+}
+
+const bool operator>(const CRational & lhs, const CRational & rhs)
+{
+	return (lhs.GetNumerator() * rhs.GetDenominator() > rhs.GetNumerator() * lhs.GetDenominator());
+}
+
+const bool operator!=(const CRational & lhs, const CRational & rhs)
 {
 	return (lhs.GetNumerator() != rhs.GetNumerator() ||
 		lhs.GetDenominator() != rhs.GetDenominator());
