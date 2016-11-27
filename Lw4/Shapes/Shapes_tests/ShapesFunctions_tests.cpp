@@ -1,6 +1,9 @@
 #include "stdafx.h"
 
-#include "../Shapes/Shapes.h"
+#include "../Shapes/Triangle.h"
+#include "../Shapes/Circle.h"
+#include "../Shapes/Rectangle.h"
+#include "../Shapes/LineSegment.h"
 #include "../Shapes/ShapesFunctions.h"
 
 #define _VARIADIC_MAX
@@ -21,6 +24,7 @@ struct VectorShapeFixture
 		shapes.push_back(std::make_shared<CRectangle>(center, width, height, "FFFFFF", "000000"));
 	}
 };
+
 
 BOOST_FIXTURE_TEST_SUITE(VectorFunction, VectorShapeFixture)
 

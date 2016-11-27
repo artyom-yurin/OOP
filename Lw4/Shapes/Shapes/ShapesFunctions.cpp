@@ -1,5 +1,8 @@
 #include "stdafx.h"
-#include "Shapes.h"
+#include "Triangle.h"
+#include "Circle.h"
+#include "LineSegment.h"
+#include "Rectangle.h"
 #include "ShapesFunctions.h"
 
 std::shared_ptr<IShape> GetLargeAreaShape(std::vector<std::shared_ptr<IShape>> const & shapes)

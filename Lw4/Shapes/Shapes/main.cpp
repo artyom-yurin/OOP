@@ -1,5 +1,8 @@
 #include "stdafx.h"
-#include "Shapes.h"
+#include "Circle.h"
+#include "LineSegment.h"
+#include "Rectangle.h"
+#include "Triangle.h"
 #include "ShapesFunctions.h"
 
 int main()

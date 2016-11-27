@@ -162,8 +162,11 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Shapes\Shapes.cpp" />
+    <ClCompile Include="..\Shapes\Circle.cpp" />
+    <ClCompile Include="..\Shapes\LineSegment.cpp" />
+    <ClCompile Include="..\Shapes\Rectangle.cpp" />
     <ClCompile Include="..\Shapes\ShapesFunctions.cpp" />
+    <ClCompile Include="..\Shapes\Triangle.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ShapesFunctions_tests.cpp" />
     <ClCompile Include="Shapes_tests.cpp" />

@@ -4,7 +4,8 @@
 
 #include <stdio.h>
 #include <tchar.h>
-#include <iomanip>  
+#include <iomanip> 
+#include <iostream>
 #include <vector>
 
 #define BOOST_TEST_INCLUDED

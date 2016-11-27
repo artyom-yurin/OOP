@@ -1,6 +1,9 @@
 #include "stdafx.h"
 
-#include "..\Shapes\Shapes.h"
+#include "../Shapes/Triangle.h"
+#include "../Shapes/Circle.h"
+#include "../Shapes/Rectangle.h"
+#include "../Shapes/LineSegment.h"
 
 void CheckCoordinates(SPoint const & currentCoordinates, SPoint const & correctCoordinates)
 {
