@@ -19,7 +19,9 @@ public:
 
 	double GetPerimeter() const override;
 
-	std::string ToString() const override;
+	std::string GetName() const override;
+
+	std::string GetSpecialInfo() const override;
 
 private:
 	std::tuple<double, double, double> GetSides() const;

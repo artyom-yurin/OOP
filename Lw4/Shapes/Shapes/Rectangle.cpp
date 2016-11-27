@@ -18,7 +18,7 @@ SPoint CRectangle::GetLeftTop() const
 
 SPoint CRectangle::GetRightBottom() const
 {
-	return{ m_leftTopVertex.x + m_width, m_leftTopVertex.y + m_height };
+	return{m_leftTopVertex.x + m_width, m_leftTopVertex.y + m_height};
 }
 
 double CRectangle::GetWidth() const
@@ -41,21 +41,29 @@ double CRectangle::GetPerimeter() const
 	return 2 * (m_width + m_height);
 }
 
-std::string CRectangle::ToString() const
+std::string CRectangle::GetName() const
+{
+	return "rectangle";
+}
+
+std::string CRectangle::GetSpecialInfo() const
 {
 	std::stringstream buffer;
-
 	buffer << std::fixed << std::setprecision(2);
-
-	buffer << "rectangle "
-		<< "Left top vertex (" << m_leftTopVertex.x << ", " << m_leftTopVertex.y << ") "
-		<< "Right bottom vertex (" << GetRightBottom().x << ", " << GetRightBottom().y << ") "
-		<< "Width = " << m_width << " "
-		<< "Height = " << m_height << " "
-		<< "Perimetr = " << CRectangle::GetPerimeter() << " "
-		<< "Area = " << CRectangle::GetArea() << " "
-		<< "Outline color = #" << CRectangle::GetOutlineColor() << " "
-		<< "Fill color = #" << CRectangle::GetFillColor();
+	buffer << "Left top point ("
+		<< m_leftTopVertex.x
+		<< ", "
+		<< m_leftTopVertex.y
+		<< ") Right bottom point("
+		<< GetRightBottom().x
+		<< ", "
+		<< GetRightBottom().y
+		<< ") Width = "
+		<< m_width
+		<< " Height = "
+		<< m_height
+		<< " Fill color = #"
+		<< m_fillColor;
 
 	return buffer.str();
 }

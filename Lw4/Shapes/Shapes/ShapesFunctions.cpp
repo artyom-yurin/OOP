@@ -5,6 +5,24 @@
 #include "Rectangle.h"
 #include "ShapesFunctions.h"
 
+std::string ToString(std::shared_ptr<IShape> const & shape)
+{
+	std::stringstream buffer;
+
+	buffer << std::fixed << std::setprecision(2);
+
+	buffer << shape->GetName() << " "
+		<< shape->GetSpecialInfo() << " "
+		<< "Area = " 
+		<< shape->GetArea() << " "
+		<< "Perimeter = "
+		<< shape->GetPerimeter() << " "
+		<< "Outline color = #"
+		<< shape->GetOutlineColor();
+
+	return buffer.str();
+}
+
 std::shared_ptr<IShape> GetLargeAreaShape(std::vector<std::shared_ptr<IShape>> const & shapes)
 {
 	auto maxArea = std::max_element(shapes.cbegin(), shapes.cend(), [](const auto & arg1, const auto & arg2) {

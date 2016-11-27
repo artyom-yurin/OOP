@@ -31,13 +31,13 @@ BOOST_FIXTURE_TEST_SUITE(VectorFunction, VectorShapeFixture)
 	BOOST_AUTO_TEST_CASE(get_shape_with_max_area_value)
 	{
 		std::shared_ptr<IShape> shape = GetLargeAreaShape(shapes);
-		BOOST_CHECK_EQUAL(shape->ToString(), "circle Center (0.00, 0.00) Radius = 30.00 Perimetr = 188.50 Area = 2827.43 Outline color = #FFFFFF Fill color = #000000");
+		BOOST_CHECK_EQUAL(ToString(shape), "circle Center (0.00, 0.00) Radius = 30.00 Fill color = #000000 Area = 2827.43 Perimeter = 188.50 Outline color = #FFFFFF");
 	}
 
 	BOOST_AUTO_TEST_CASE(get_shape_with_min_perimetr_value)
 	{
 		std::shared_ptr<IShape> shape = GetSmallPerimeterShape(shapes);
-		BOOST_CHECK_EQUAL(shape->ToString(), "triangle Vertex 1 (0.00, 0.00) Vertex 2 (-1.00, 1.00) Vertex 3 (-1.00, -1.00) Perimetr = 4.83 Area = 1.00 Outline color = #FFFFFF Fill color = #000000");
+		BOOST_CHECK_EQUAL(ToString(shape), "triangle Vertex 1 (0.00, 0.00) Vertex 2 (-1.00, 1.00) Vertex 3 (-1.00, -1.00) Fill color = #000000 Area = 1.00 Perimeter = 4.83 Outline color = #FFFFFF");
 	}
 
 BOOST_AUTO_TEST_SUITE_END()

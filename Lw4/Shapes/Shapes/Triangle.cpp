@@ -46,20 +46,20 @@ double CTriangle::GetPerimeter() const
 	return firstSide + secondSide + thirdSide;
 }
 
-std::string CTriangle::ToString() const
+std::string CTriangle::GetName() const
+{
+	return "triangle";
+}
+
+std::string CTriangle::GetSpecialInfo() const
 {
 	std::stringstream buffer;
-
 	buffer << std::fixed << std::setprecision(2);
-
-	buffer << "triangle "
-		<< "Vertex 1 (" << m_vertex1.x << ", " << m_vertex1.y << ") "
+	buffer << "Vertex 1 (" << m_vertex1.x << ", " << m_vertex1.y << ") "
 		<< "Vertex 2 (" << m_vertex2.x << ", " << m_vertex2.y << ") "
 		<< "Vertex 3 (" << m_vertex3.x << ", " << m_vertex3.y << ") "
-		<< "Perimetr = " << CTriangle::GetPerimeter() << " "
-		<< "Area = " << CTriangle::GetArea() << " "
-		<< "Outline color = #" << CTriangle::GetOutlineColor() << " "
-		<< "Fill color = #" << CTriangle::GetFillColor();
+		<< "Fill color = #"
+		<< m_fillColor;
 
 	return buffer.str();
 }

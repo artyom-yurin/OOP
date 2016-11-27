@@ -32,19 +32,24 @@ double CCircle::GetPerimeter() const
 	return M_PI * 2 * m_radius;
 }
 
-std::string CCircle::ToString() const
+std::string CCircle::GetName() const
+{
+	return "circle";
+}
+
+std::string CCircle::GetSpecialInfo() const
 {
 	std::stringstream buffer;
-
 	buffer << std::fixed << std::setprecision(2);
-
-	buffer << "circle "
-		<< "Center (" << m_center.x << ", " << m_center.y << ") "
-		<< "Radius = " << m_radius << " "
-		<< "Perimetr = " << CCircle::GetPerimeter() << " "
-		<< "Area = " << CCircle::GetArea() << " "
-		<< "Outline color = #" << CCircle::GetOutlineColor() << " "
-		<< "Fill color = #" << CCircle::GetFillColor();
+	buffer << "Center (" 
+		<< m_center.x 
+		<< ", " 
+		<< m_center.y 
+		<< ") "
+		<< "Radius = "
+		<< m_radius
+		<< " Fill color = #"
+		<< m_fillColor;
 
 	return buffer.str();
 }

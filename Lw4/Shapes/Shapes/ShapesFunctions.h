@@ -13,3 +13,5 @@ void TriangleCommand(std::istream & stream, std::vector<std::shared_ptr<IShape>>
 void CircleCommand(std::istream & stream, std::vector<std::shared_ptr<IShape>> & shapes);
 
 void LineCommand(std::istream & stream, std::vector<std::shared_ptr<IShape>> & shapes);
+
+std::string ToString(std::shared_ptr<IShape> const & shape);

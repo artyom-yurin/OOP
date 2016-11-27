@@ -45,9 +45,9 @@ int main()
 		{
 			if (!shapes.empty())
 			{
-				std::cout << "Shape with large area: " << GetLargeAreaShape(shapes)->ToString() << "\n"
+				std::cout << "Shape with large area: " << ToString(GetLargeAreaShape(shapes)) << "\n"
 					<< "\n"
-					<< "Shape with small perimetr: " << GetSmallPerimeterShape(shapes)->ToString() << "\n";
+					<< "Shape with small perimetr: " << ToString(GetSmallPerimeterShape(shapes)) << "\n";
 			}
 			else
 			{

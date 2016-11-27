@@ -18,7 +18,9 @@ public:
 
 	double GetPerimeter() const override;
 
-	std::string ToString() const override;
+	std::string GetName() const override;
+
+	std::string GetSpecialInfo() const override;
 private:
 	SPoint m_center;
 	double m_radius;

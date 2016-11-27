@@ -28,18 +28,24 @@ double CLineSegment::GetPerimeter() const
 	return hypot(m_endPoint.x - m_startPoint.x, m_endPoint.y - m_startPoint.y);
 }
 
-std::string CLineSegment::ToString() const
+std::string CLineSegment::GetName() const
+{
+	return "line";
+}
+
+std::string CLineSegment::GetSpecialInfo() const
 {
 	std::stringstream buffer;
-
 	buffer << std::fixed << std::setprecision(2);
-
-	buffer << "line "
-		<< "Start point (" << m_startPoint.x << ", " << m_startPoint.y << ") "
-		<< "End point (" << m_endPoint.x << ", " << m_endPoint.y << ") "
-		<< "Perimetr = " << CLineSegment::GetPerimeter() << " "
-		<< "Area = " << CLineSegment::GetArea() << " "
-		<< "Outline color = #" << CLineSegment::GetOutlineColor();
+	buffer << "Start point ("
+		<< m_startPoint.x
+		<< ", "
+		<< m_startPoint.y
+		<< ") End point ("
+		<< m_endPoint.x
+		<< ", "
+		<< m_endPoint.y
+		<< ")";
 
 	return buffer.str();
 }

@@ -61,11 +61,15 @@ BOOST_FIXTURE_TEST_SUITE(Triangle, TriangleFixture)
 		BOOST_CHECK_EQUAL(triangle.GetArea(), 6);
 	}
 
-	BOOST_AUTO_TEST_CASE(can_be_converted_to_string)
+	BOOST_AUTO_TEST_CASE(can_get_name)
 	{
-		BOOST_CHECK_EQUAL(triangle.ToString(), "triangle Vertex 1 (1.00, 1.00) Vertex 2 (1.00, 4.00) Vertex 3 (5.00, 1.00) Perimetr = 12.00 Area = 6.00 Outline color = #000000 Fill color = #FFFFFF");
+		BOOST_CHECK_EQUAL(triangle.GetName(), "triangle");
 	}
 
+	BOOST_AUTO_TEST_CASE(can_get_special_info)
+	{
+		BOOST_CHECK_EQUAL(triangle.GetSpecialInfo(), "Vertex 1 (1.00, 1.00) Vertex 2 (1.00, 4.00) Vertex 3 (5.00, 1.00) Fill color = #FFFFFF");
+	}
 BOOST_AUTO_TEST_SUITE_END()
 
 struct RectangleFixture
@@ -123,9 +127,14 @@ BOOST_FIXTURE_TEST_SUITE(Rectangle, RectangleFixture)
 		BOOST_CHECK_EQUAL(rectangle.GetArea(), 200);
 	}
 
-	BOOST_AUTO_TEST_CASE(can_be_converted_to_string)
+	BOOST_AUTO_TEST_CASE(can_get_name)
 	{
-		BOOST_CHECK_EQUAL(rectangle.ToString(), "rectangle Left top vertex (0.00, 0.00) Right bottom vertex (10.00, 20.00) Width = 10.00 Height = 20.00 Perimetr = 60.00 Area = 200.00 Outline color = #000000 Fill color = #FFFFFF");
+		BOOST_CHECK_EQUAL(rectangle.GetName(), "rectangle");
+	}
+
+	BOOST_AUTO_TEST_CASE(can_get_special_info)
+	{
+		BOOST_CHECK_EQUAL(rectangle.GetSpecialInfo(), "Left top point (0.00, 0.00) Right bottom point(10.00, 20.00) Width = 10.00 Height = 20.00 Fill color = #FFFFFF");
 	}
 
 BOOST_AUTO_TEST_SUITE_END()
@@ -174,9 +183,14 @@ BOOST_FIXTURE_TEST_SUITE(Circle, CircleFixture)
 		BOOST_CHECK_EQUAL(static_cast<int>(circle.GetArea()), 314);
 	}
 
-	BOOST_AUTO_TEST_CASE(can_be_converted_to_string)
+	BOOST_AUTO_TEST_CASE(can_get_name)
 	{
-		BOOST_CHECK_EQUAL(circle.ToString(), "circle Center (0.00, 0.00) Radius = 10.00 Perimetr = 62.83 Area = 314.16 Outline color = #000000 Fill color = #FFFFFF");
+		BOOST_CHECK_EQUAL(circle.GetName(), "circle");
+	}
+
+	BOOST_AUTO_TEST_CASE(can_get_special_info)
+	{
+		BOOST_CHECK_EQUAL(circle.GetSpecialInfo(), "Center (0.00, 0.00) Radius = 10.00 Fill color = #FFFFFF");
 	}
 
 BOOST_AUTO_TEST_SUITE_END()
@@ -219,9 +233,14 @@ BOOST_FIXTURE_TEST_SUITE(LineSegment, LineSegmentFixture)
 		BOOST_CHECK_EQUAL(line.GetArea(), 0);
 	}
 
-	BOOST_AUTO_TEST_CASE(can_be_converted_to_string)
+	BOOST_AUTO_TEST_CASE(can_get_name)
 	{
-		BOOST_CHECK_EQUAL(line.ToString(), "line Start point (0.00, 0.00) End point (1.00, 1.00) Perimetr = 1.41 Area = 0.00 Outline color = #000000");
+		BOOST_CHECK_EQUAL(line.GetName(), "line");
+	}
+
+	BOOST_AUTO_TEST_CASE(can_get_special_info)
+	{
+		BOOST_CHECK_EQUAL(line.GetSpecialInfo(), "Start point (0.00, 0.00) End point (1.00, 1.00)");
 	}
 
 BOOST_AUTO_TEST_SUITE_END()
