@@ -5,10 +5,11 @@
 CRectangle::CRectangle(SPoint const & leftTopVertex, double const & width, double const & height, std::string const & outlineColor, std::string const & fillColor)
 	:m_leftTopVertex(leftTopVertex),
 	m_width(width),
-	m_height(height),
-	m_outlineColor(outlineColor),
-	m_fillColor(fillColor)
-{}
+	m_height(height)
+{
+	m_fillColor = fillColor;
+	m_outlineColor = outlineColor;
+}
 
 SPoint CRectangle::GetLeftTop() const
 {
@@ -28,16 +29,6 @@ double CRectangle::GetWidth() const
 double CRectangle::GetHeight() const
 {
 	return m_height;
-}
-
-std::string CRectangle::GetFillColor() const
-{
-	return m_fillColor;
-}
-
-std::string CRectangle::GetOutlineColor() const
-{
-	return m_outlineColor;
 }
 
 double CRectangle::GetArea() const

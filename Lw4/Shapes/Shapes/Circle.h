@@ -1,9 +1,9 @@
 #pragma once
 
-#include "ISolidShape.h"
+#include "SolidShape.h"
 
 class CCircle
-	: public ISolidShape
+	: public CSolidShape
 {
 public:
 	CCircle(SPoint const & center, double const & radius, std::string const & outlineColor, std::string const & fillColor);
@@ -14,10 +14,6 @@ public:
 
 	double GetRadius() const;
 
-	std::string GetFillColor() const override;
-
-	std::string GetOutlineColor() const override;
-
 	double GetArea() const override;
 
 	double GetPerimeter() const override;
@@ -26,6 +22,4 @@ public:
 private:
 	SPoint m_center;
 	double m_radius;
-	std::string m_outlineColor;
-	std::string m_fillColor;
 };

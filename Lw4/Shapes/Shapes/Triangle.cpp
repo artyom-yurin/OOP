@@ -7,9 +7,10 @@ CTriangle::CTriangle(SPoint const & vertex1, SPoint const & vertex2, SPoint cons
 	: m_vertex1(vertex1)
 	, m_vertex2(vertex2)
 	, m_vertex3(vertex3)
-	, m_outlineColor(outlineColor)
-	, m_fillColor(fillColor)
-{}
+{
+	m_fillColor = fillColor;
+	m_outlineColor = outlineColor;
+}
 
 SPoint CTriangle::GetVertex1() const
 {
@@ -24,16 +25,6 @@ SPoint CTriangle::GetVertex2() const
 SPoint CTriangle::GetVertex3() const
 {
 	return m_vertex3;
-}
-
-std::string CTriangle::GetFillColor() const
-{
-	return m_fillColor;
-}
-
-std::string CTriangle::GetOutlineColor() const
-{
-	return m_outlineColor;
 }
 
 double CTriangle::GetArea() const

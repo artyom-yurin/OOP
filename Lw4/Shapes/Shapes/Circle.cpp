@@ -6,10 +6,11 @@
 
 CCircle::CCircle(SPoint const & center, double const & radius, std::string const & outlineColor, std::string const & fillColor)
 	: m_center(center),
-	m_radius(radius),
-	m_fillColor(fillColor),
-	m_outlineColor(outlineColor)
-{}
+	m_radius(radius)
+{
+	m_fillColor = fillColor;
+	m_outlineColor = outlineColor;
+}
 
 SPoint CCircle::GetCenter() const
 {
@@ -19,16 +20,6 @@ SPoint CCircle::GetCenter() const
 double CCircle::GetRadius() const
 {
 	return m_radius;
-}
-
-std::string CCircle::GetFillColor() const
-{
-	return m_fillColor;
-}
-
-std::string CCircle::GetOutlineColor() const
-{
-	return m_outlineColor;
 }
 
 double CCircle::GetArea() const

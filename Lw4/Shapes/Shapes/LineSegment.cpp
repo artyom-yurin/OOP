@@ -3,9 +3,10 @@
 
 CLineSegment::CLineSegment(SPoint const & startPoint, SPoint const & endPoint, std::string const & outlineColor)
 	: m_startPoint(startPoint),
-	m_endPoint(endPoint),
-	m_outlineColor(outlineColor)
-{}
+	m_endPoint(endPoint)
+{
+	m_outlineColor = outlineColor;
+}
 
 SPoint CLineSegment::GetStartPoint() const
 {
@@ -15,11 +16,6 @@ SPoint CLineSegment::GetStartPoint() const
 SPoint CLineSegment::GetEndPoint() const
 {
 	return m_endPoint;
-}
-
-std::string CLineSegment::GetOutlineColor() const
-{
-	return m_outlineColor;
 }
 
 double CLineSegment::GetArea() const
