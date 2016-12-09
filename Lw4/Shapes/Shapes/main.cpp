@@ -7,7 +7,7 @@
 
 int main()
 {
-	std::vector<std::shared_ptr<IShape>> shapes;
+	std::vector<std::shared_ptr<CShape>> shapes;
 	while (!std::cin.eof())
 	{
 		std::stringstream buffer;

@@ -4,13 +4,15 @@
 #include "ISolidShape.h"
 
 class CSolidShape
-	: public virtual ISolidShape
-	, public virtual CShape
+	: public ISolidShape
+	, public CShape
 {
 public:
 	CSolidShape() = default;
 
 	virtual ~CSolidShape() = default;
+
+	std::string GetOutlineColor() const override;
 
 	std::string GetFillColor() const override;
 protected:

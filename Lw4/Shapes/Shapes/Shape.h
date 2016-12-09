@@ -3,7 +3,7 @@
 #include "IShape.h"
 
 class CShape
-	: public virtual IShape
+	: public IShape
 {
 public:
 	CShape() = default;

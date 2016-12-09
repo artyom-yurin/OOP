@@ -5,7 +5,7 @@
 #include "Rectangle.h"
 #include "ShapesFunctions.h"
 
-std::string ToString(std::shared_ptr<IShape> const & shape)
+std::string ToString(std::shared_ptr<CShape> const & shape)
 {
 	std::stringstream buffer;
 
@@ -23,7 +23,7 @@ std::string ToString(std::shared_ptr<IShape> const & shape)
 	return buffer.str();
 }
 
-std::shared_ptr<IShape> GetLargeAreaShape(std::vector<std::shared_ptr<IShape>> const & shapes)
+std::shared_ptr<CShape> GetLargeAreaShape(std::vector<std::shared_ptr<CShape>> const & shapes)
 {
 	auto maxArea = std::max_element(shapes.cbegin(), shapes.cend(), [](const auto & arg1, const auto & arg2) {
 		return arg1->GetArea() < arg2->GetArea();
@@ -31,7 +31,7 @@ std::shared_ptr<IShape> GetLargeAreaShape(std::vector<std::shared_ptr<IShape>> c
 	return *maxArea;
 }
 
-std::shared_ptr<IShape> GetSmallPerimeterShape(std::vector<std::shared_ptr<IShape>> const & shapes)
+std::shared_ptr<CShape> GetSmallPerimeterShape(std::vector<std::shared_ptr<CShape>> const & shapes)
 {
 	auto minPerimeter = std::min_element(shapes.cbegin(), shapes.cend(), [](const auto & arg1, const auto & arg2) {
 		return arg1->GetPerimeter() < arg2->GetPerimeter();
@@ -57,7 +57,7 @@ bool CorrectColor(std::string const & color)
 	return true;
 }
 
-void RectangleCommand(std::istream & stream, std::vector<std::shared_ptr<IShape>> & shapes)
+void RectangleCommand(std::istream & stream, std::vector<std::shared_ptr<CShape>> & shapes)
 {
 	SPoint vertex;
 	double width;
@@ -97,7 +97,7 @@ void RectangleCommand(std::istream & stream, std::vector<std::shared_ptr<IShape>
 	}
 }
 
-void TriangleCommand(std::istream & stream, std::vector<std::shared_ptr<IShape>>& shapes)
+void TriangleCommand(std::istream & stream, std::vector<std::shared_ptr<CShape>>& shapes)
 {
 	SPoint vertex1;
 	SPoint vertex2;
@@ -144,7 +144,7 @@ void TriangleCommand(std::istream & stream, std::vector<std::shared_ptr<IShape>>
 	}
 }
 
-void CircleCommand(std::istream & stream, std::vector<std::shared_ptr<IShape>>& shapes)
+void CircleCommand(std::istream & stream, std::vector<std::shared_ptr<CShape>>& shapes)
 {
 	SPoint center;
 	double radius;
@@ -183,7 +183,7 @@ void CircleCommand(std::istream & stream, std::vector<std::shared_ptr<IShape>>& 
 	}
 }
 
-void LineCommand(std::istream & stream, std::vector<std::shared_ptr<IShape>>& shapes)
+void LineCommand(std::istream & stream, std::vector<std::shared_ptr<CShape>>& shapes)
 {
 	SPoint startPoint;
 	SPoint endPoint;
