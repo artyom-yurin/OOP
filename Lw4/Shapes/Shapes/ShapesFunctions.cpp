@@ -25,6 +25,10 @@ std::string ToString(std::shared_ptr<IShape> const & shape)
 
 std::shared_ptr<IShape> GetLargeAreaShape(std::vector<std::shared_ptr<IShape>> const & shapes)
 {
+	if (shapes.empty())
+	{
+		throw std::invalid_argument("vector shapes can not be empty");
+	}
 	auto maxArea = std::max_element(shapes.cbegin(), shapes.cend(), [](const auto & arg1, const auto & arg2) {
 		return arg1->GetArea() < arg2->GetArea();
 	});
@@ -33,6 +37,10 @@ std::shared_ptr<IShape> GetLargeAreaShape(std::vector<std::shared_ptr<IShape>> c
 
 std::shared_ptr<IShape> GetSmallPerimeterShape(std::vector<std::shared_ptr<IShape>> const & shapes)
 {
+	if (shapes.empty())
+	{
+		throw std::invalid_argument("vector shapes can not be empty");
+	}
 	auto minPerimeter = std::min_element(shapes.cbegin(), shapes.cend(), [](const auto & arg1, const auto & arg2) {
 		return arg1->GetPerimeter() < arg2->GetPerimeter();
 	});

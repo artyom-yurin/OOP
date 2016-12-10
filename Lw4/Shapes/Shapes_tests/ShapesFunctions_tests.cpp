@@ -25,9 +25,28 @@ struct VectorShapeFixture
 	}
 };
 
-
 BOOST_FIXTURE_TEST_SUITE(VectorFunction, VectorShapeFixture)
 
+	BOOST_AUTO_TEST_CASE(not_process_empty_vector)
+	{
+		std::vector<std::shared_ptr<IShape>> emptyVector;
+		try
+		{
+			GetLargeAreaShape(emptyVector);
+		}
+		catch(std::invalid_argument const & e)
+		{
+			BOOST_CHECK_EQUAL(e.what(), "vector shapes can not be empty");
+		}
+		try
+		{
+			GetSmallPerimeterShape(emptyVector);
+		}
+		catch (std::invalid_argument const & e)
+		{
+			BOOST_CHECK_EQUAL(e.what(), "vector shapes can not be empty");
+		}
+	}
 	BOOST_AUTO_TEST_CASE(get_shape_with_max_area_value)
 	{
 		std::shared_ptr<IShape> shape = GetLargeAreaShape(shapes);
