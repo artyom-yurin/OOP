@@ -26,6 +26,12 @@ struct VectorShapeFixture
 };
 
 BOOST_FIXTURE_TEST_SUITE(VectorFunction, VectorShapeFixture)
+	
+	BOOST_AUTO_TEST_CASE(color_check)
+	{	
+		BOOST_CHECK(IsColorCorrect("FF00ff"));
+		BOOST_CHECK(!IsColorCorrect("FF00fG"));
+	}
 
 	BOOST_AUTO_TEST_CASE(not_process_empty_vector)
 	{

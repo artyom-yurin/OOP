@@ -53,16 +53,11 @@ bool IsColorCorrect(std::string const & color)
 	{
 		return false;
 	}
-
-	for (char symbol : color)
-	{
-		if (!((symbol <= 'F' && symbol >= 'A') || (symbol <= 'f' && symbol >= 'a') || (symbol <= '9' && symbol >= '0')))
-		{
-			return false;
-		}
-	}
-
-	return true;
+	return std::all_of(color.cbegin(), color.cend(), [](char symbol) {
+		return (symbol >= 'A' && symbol <= 'F') ||
+			(symbol >= 'a' && symbol <= 'f') || 
+			(symbol >= '0' && symbol <= '9');
+	});
 }
 
 void RectangleCommand(std::istream & stream, std::vector<std::shared_ptr<IShape>> & shapes)
