@@ -74,34 +74,28 @@ void RectangleCommand(std::istream & stream, std::vector<std::shared_ptr<IShape>
 	std::string fillColor;
 	if ((stream >> vertex.x) && (stream >> vertex.y))
 	{
-		if ((stream >> width) && (stream >> height))
-		{
-			if ((stream >> outlineColor) && (stream >> fillColor))
-			{
-				if (IsColorCorrect(outlineColor) && IsColorCorrect(fillColor))
-				{
-					shapes.push_back(std::make_shared<CRectangle>(vertex, width, height, outlineColor, fillColor));
-					std::cout << "Rectangle was created\n";
-				}
-				else
-				{
-					std::cout << "Invalid color\n"
-						<< "Use 16 hexadecimal code\n";
-				}
-			}
-			else
-			{
-				std::cout << "Error color value\n";
-			}
-		}
-		else
-		{
-			std::cout << "Error size value\n";
-		}
+		std::cout << "Error vertex value\n";
+		return;
+	}
+	if ((stream >> width) && (stream >> height))
+	{
+		std::cout << "Error size value\n";
+		return;
+	}
+	if ((stream >> outlineColor) && (stream >> fillColor))
+	{
+		std::cout << "Error color value\n";
+		return;
+	}
+	if (IsColorCorrect(outlineColor) && IsColorCorrect(fillColor))
+	{
+		shapes.push_back(std::make_shared<CRectangle>(vertex, width, height, outlineColor, fillColor));
+		std::cout << "Rectangle was created\n";
 	}
 	else
 	{
-		std::cout << "Error vertex value\n";
+		std::cout << "Invalid color\n"
+			<< "Use 16 hexadecimal code\n";
 	}
 }
 
@@ -114,41 +108,33 @@ void TriangleCommand(std::istream & stream, std::vector<std::shared_ptr<IShape>>
 	std::string fillColor;
 	if ((stream >> vertex1.x) && (stream >> vertex1.y))
 	{
-		if ((stream >> vertex2.x) && (stream >> vertex2.y))
-		{
-			if ((stream >> vertex3.x) && (stream >> vertex3.y))
-			{
-				if ((stream >> outlineColor) && (stream >> fillColor))
-				{
-					if (IsColorCorrect(outlineColor) && IsColorCorrect(fillColor))
-					{
-						shapes.push_back(std::make_shared<CTriangle>(vertex1, vertex2, vertex3, outlineColor, fillColor));
-						std::cout << "Triangle was created\n";
-					}
-					else
-					{
-						std::cout << "Invalid color\n"
-							<< "Use 16 hexadecimal code\n";
-					}
-				}
-				else
-				{
-					std::cout << "Error color value\n";
-				}
-			}
-			else
-			{
-				std::cout << "Error vertex 3 value\n";
-			}
-		}
-		else
-		{
-			std::cout << "Error vertex 2 value\n";
-		}
+		std::cout << "Error vertex 1 value\n";
+		return;
+	}
+	if ((stream >> vertex2.x) && (stream >> vertex2.y))
+	{
+		std::cout << "Error vertex 2 value\n";
+		return;
+	}
+	if ((stream >> vertex3.x) && (stream >> vertex3.y))
+	{
+		std::cout << "Error vertex 3 value\n";
+		return;
+	}
+	if ((stream >> outlineColor) && (stream >> fillColor))
+	{
+		std::cout << "Error color value\n";
+		return;
+	}
+	if (IsColorCorrect(outlineColor) && IsColorCorrect(fillColor))
+	{
+		shapes.push_back(std::make_shared<CTriangle>(vertex1, vertex2, vertex3, outlineColor, fillColor));
+		std::cout << "Triangle was created\n";
 	}
 	else
 	{
-		std::cout << "Error vertex 1 value\n";
+		std::cout << "Invalid color\n"
+			<< "Use 16 hexadecimal code\n";
 	}
 }
 
@@ -160,34 +146,28 @@ void CircleCommand(std::istream & stream, std::vector<std::shared_ptr<IShape>>& 
 	std::string fillColor;
 	if ((stream >> center.x) && (stream >> center.y))
 	{
-		if (stream >> radius)
-		{
-			if ((stream >> outlineColor) && (stream >> fillColor))
-			{
-				if (IsColorCorrect(outlineColor) && IsColorCorrect(fillColor))
-				{
-					shapes.push_back(std::make_shared<CCircle>(center, radius, outlineColor, fillColor));
-					std::cout << "Circle was created\n";
-				}
-				else
-				{
-					std::cout << "Invalid color\n"
-						<< "Use 16 hexadecimal code\n";
-				}
-			}
-			else
-			{
-				std::cout << "Error color value\n";
-			}
-		}
-		else
-		{
-			std::cout << "Error radius value\n";
-		}
+		std::cout << "Error center value\n";
+		return;
+	}
+	if (stream >> radius)
+	{
+		std::cout << "Error radius value\n";
+		return;
+	}
+	if ((stream >> outlineColor) && (stream >> fillColor))
+	{
+		std::cout << "Error color value\n";
+		return;
+	}
+	if (IsColorCorrect(outlineColor) && IsColorCorrect(fillColor))
+	{
+		shapes.push_back(std::make_shared<CCircle>(center, radius, outlineColor, fillColor));
+		std::cout << "Circle was created\n";
 	}
 	else
 	{
-		std::cout << "Error center value\n";
+		std::cout << "Invalid color\n"
+			<< "Use 16 hexadecimal code\n";
 	}
 }
 
@@ -198,33 +178,27 @@ void LineCommand(std::istream & stream, std::vector<std::shared_ptr<IShape>>& sh
 	std::string outlineColor;
 	if ((stream >> startPoint.x) && (stream >> startPoint.y))
 	{
-		if ((stream >> endPoint.x) && (stream >> endPoint.y))
-		{
-			if ((stream >> outlineColor))
-			{
-				if (IsColorCorrect(outlineColor))
-				{
-					shapes.push_back(std::make_shared<CLineSegment>(startPoint, endPoint, outlineColor));
-					std::cout << "Line was created\n";
-				}
-				else
-				{
-					std::cout << "Invalid color\n"
-						<< "Use 16 hexadecimal code\n";
-				}
-			}
-			else
-			{
-				std::cout << "Error color value\n";
-			}
-		}
-		else
-		{
-			std::cout << "Error end point value\n";
-		}
+		std::cout << "Error start point value\n";
+		return;
+	}
+	if ((stream >> endPoint.x) && (stream >> endPoint.y))
+	{
+		std::cout << "Error end point value\n";
+		return;
+	}
+	if ((stream >> outlineColor))
+	{
+		std::cout << "Error color value\n";
+		return;
+	}
+	if (IsColorCorrect(outlineColor))
+	{
+		shapes.push_back(std::make_shared<CLineSegment>(startPoint, endPoint, outlineColor));
+		std::cout << "Line was created\n";
 	}
 	else
 	{
-		std::cout << "Error start point value\n";
+		std::cout << "Invalid color\n"
+			<< "Use 16 hexadecimal code\n";
 	}
 }
