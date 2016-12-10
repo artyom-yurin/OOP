@@ -5,7 +5,7 @@
 #include "Rectangle.h"
 #include "ShapesFunctions.h"
 
-std::string ToString(std::shared_ptr<CShape> const & shape)
+std::string ToString(std::shared_ptr<IShape> const & shape)
 {
 	std::stringstream buffer;
 
@@ -23,7 +23,7 @@ std::string ToString(std::shared_ptr<CShape> const & shape)
 	return buffer.str();
 }
 
-std::shared_ptr<CShape> GetLargeAreaShape(std::vector<std::shared_ptr<CShape>> const & shapes)
+std::shared_ptr<IShape> GetLargeAreaShape(std::vector<std::shared_ptr<IShape>> const & shapes)
 {
 	auto maxArea = std::max_element(shapes.cbegin(), shapes.cend(), [](const auto & arg1, const auto & arg2) {
 		return arg1->GetArea() < arg2->GetArea();
@@ -31,7 +31,7 @@ std::shared_ptr<CShape> GetLargeAreaShape(std::vector<std::shared_ptr<CShape>> c
 	return *maxArea;
 }
 
-std::shared_ptr<CShape> GetSmallPerimeterShape(std::vector<std::shared_ptr<CShape>> const & shapes)
+std::shared_ptr<IShape> GetSmallPerimeterShape(std::vector<std::shared_ptr<IShape>> const & shapes)
 {
 	auto minPerimeter = std::min_element(shapes.cbegin(), shapes.cend(), [](const auto & arg1, const auto & arg2) {
 		return arg1->GetPerimeter() < arg2->GetPerimeter();
@@ -39,7 +39,7 @@ std::shared_ptr<CShape> GetSmallPerimeterShape(std::vector<std::shared_ptr<CShap
 	return *minPerimeter;
 }
 
-bool CorrectColor(std::string const & color)
+bool IsColorCorrect(std::string const & color)
 {
 	if (color.length() != 6)
 	{
@@ -57,7 +57,7 @@ bool CorrectColor(std::string const & color)
 	return true;
 }
 
-void RectangleCommand(std::istream & stream, std::vector<std::shared_ptr<CShape>> & shapes)
+void RectangleCommand(std::istream & stream, std::vector<std::shared_ptr<IShape>> & shapes)
 {
 	SPoint vertex;
 	double width;
@@ -70,7 +70,7 @@ void RectangleCommand(std::istream & stream, std::vector<std::shared_ptr<CShape>
 		{
 			if ((stream >> outlineColor) && (stream >> fillColor))
 			{
-				if (CorrectColor(outlineColor) && CorrectColor(fillColor))
+				if (IsColorCorrect(outlineColor) && IsColorCorrect(fillColor))
 				{
 					shapes.push_back(std::make_shared<CRectangle>(vertex, width, height, outlineColor, fillColor));
 					std::cout << "Rectangle was created\n";
@@ -97,7 +97,7 @@ void RectangleCommand(std::istream & stream, std::vector<std::shared_ptr<CShape>
 	}
 }
 
-void TriangleCommand(std::istream & stream, std::vector<std::shared_ptr<CShape>>& shapes)
+void TriangleCommand(std::istream & stream, std::vector<std::shared_ptr<IShape>>& shapes)
 {
 	SPoint vertex1;
 	SPoint vertex2;
@@ -112,7 +112,7 @@ void TriangleCommand(std::istream & stream, std::vector<std::shared_ptr<CShape>>
 			{
 				if ((stream >> outlineColor) && (stream >> fillColor))
 				{
-					if (CorrectColor(outlineColor) && CorrectColor(fillColor))
+					if (IsColorCorrect(outlineColor) && IsColorCorrect(fillColor))
 					{
 						shapes.push_back(std::make_shared<CTriangle>(vertex1, vertex2, vertex3, outlineColor, fillColor));
 						std::cout << "Triangle was created\n";
@@ -144,7 +144,7 @@ void TriangleCommand(std::istream & stream, std::vector<std::shared_ptr<CShape>>
 	}
 }
 
-void CircleCommand(std::istream & stream, std::vector<std::shared_ptr<CShape>>& shapes)
+void CircleCommand(std::istream & stream, std::vector<std::shared_ptr<IShape>>& shapes)
 {
 	SPoint center;
 	double radius;
@@ -156,7 +156,7 @@ void CircleCommand(std::istream & stream, std::vector<std::shared_ptr<CShape>>& 
 		{
 			if ((stream >> outlineColor) && (stream >> fillColor))
 			{
-				if (CorrectColor(outlineColor) && CorrectColor(fillColor))
+				if (IsColorCorrect(outlineColor) && IsColorCorrect(fillColor))
 				{
 					shapes.push_back(std::make_shared<CCircle>(center, radius, outlineColor, fillColor));
 					std::cout << "Circle was created\n";
@@ -183,7 +183,7 @@ void CircleCommand(std::istream & stream, std::vector<std::shared_ptr<CShape>>& 
 	}
 }
 
-void LineCommand(std::istream & stream, std::vector<std::shared_ptr<CShape>>& shapes)
+void LineCommand(std::istream & stream, std::vector<std::shared_ptr<IShape>>& shapes)
 {
 	SPoint startPoint;
 	SPoint endPoint;
@@ -194,7 +194,7 @@ void LineCommand(std::istream & stream, std::vector<std::shared_ptr<CShape>>& sh
 		{
 			if ((stream >> outlineColor))
 			{
-				if (CorrectColor(outlineColor))
+				if (IsColorCorrect(outlineColor))
 				{
 					shapes.push_back(std::make_shared<CLineSegment>(startPoint, endPoint, outlineColor));
 					std::cout << "Line was created\n";

@@ -11,6 +11,6 @@ public:
 
 	void RunCommand(std::istream & stream);
 private:
-	std::vector<std::shared_ptr<CShape>> m_shapes;
+	std::vector<std::shared_ptr<IShape>> m_shapes;
 };
 
