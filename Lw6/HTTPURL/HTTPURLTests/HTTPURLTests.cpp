@@ -30,7 +30,7 @@ BOOST_AUTO_TEST_SUITE(HttpUrl)
 	{
 		try
 		{
-			CHttpUrl url("https://local.host/index.html");
+			CHttpUrl url("https:///index.html");
 		}
 		catch (CUrlParsingError & err)
 		{
@@ -62,7 +62,7 @@ BOOST_AUTO_TEST_SUITE(HttpUrl)
 	{
 		try
 		{
-			CHttpUrl url("https://local.host/in.dex.html");
+			CHttpUrl url("https://localhost//");
 		}
 		catch (CUrlParsingError & err)
 		{
