@@ -9,7 +9,7 @@ public:
 
 	~CConsoleMenu() = default;
 
-	void RunCommand(std::istream & stream);
+	void RunCommand(std::istream & stream, std::ostream & output);
 private:
 	std::vector<std::shared_ptr<IShape>> m_shapes;
 };

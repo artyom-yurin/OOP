@@ -12,7 +12,7 @@ int main()
 		getline(std::cin, command);
 		buffer << command;
 		std::cout << "\n";
-		menu.RunCommand(buffer);
+		menu.RunCommand(buffer, std::cout);
 	}
     return 0;
 }

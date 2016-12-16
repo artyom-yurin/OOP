@@ -6,12 +6,12 @@ std::shared_ptr<IShape> GetSmallPerimeterShape(std::vector<std::shared_ptr<IShap
 
 bool IsColorCorrect(std::string const & color);
 
-void RectangleCommand(std::istream & stream, std::vector<std::shared_ptr<IShape>> & shapes);
+void RectangleCommand(std::istream & stream, std::ostream & output, std::vector<std::shared_ptr<IShape>> & shapes);
 
-void TriangleCommand(std::istream & stream, std::vector<std::shared_ptr<IShape>> & shapes);
+void TriangleCommand(std::istream & stream, std::ostream & output, std::vector<std::shared_ptr<IShape>> & shapes);
 
-void CircleCommand(std::istream & stream, std::vector<std::shared_ptr<IShape>> & shapes);
+void CircleCommand(std::istream & stream, std::ostream & output, std::vector<std::shared_ptr<IShape>> & shapes);
 
-void LineCommand(std::istream & stream, std::vector<std::shared_ptr<IShape>> & shapes);
+void LineCommand(std::istream & stream, std::ostream & output, std::vector<std::shared_ptr<IShape>> & shapes);
 
 std::string ToString(std::shared_ptr<IShape> const & shape);
