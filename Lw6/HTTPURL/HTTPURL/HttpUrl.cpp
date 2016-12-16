@@ -3,7 +3,7 @@
 #include "UrlParsingError.h"
 
 const std::string PROTOCOL_PATTERN = "((https)|(http))";
-const std::string DOMAIN_PATTERN = "(((\\d)+\\.)+\\d+)|(\\w+)";
+const std::string DOMAIN_PATTERN = "((((\\d)+\\.)+\\d+)|([A-Za-z]+))";
 const std::string DOCUMEN_PATTERN = "(((/(\\w|-|\\.|_)+)+/?)|/)";
 const std::string QUERY_STRING = "(\\?.*)?";
 
@@ -14,6 +14,18 @@ std::string ProtocolToString(Protocol const & protocol)
 		return "http";
 	}
 	return "https";
+}
+
+bool IsNumber(std::string const & string)
+{
+	for (char ch : string)
+	{
+		if (!isdigit(ch))
+		{
+			return false;
+		}
+	}
+	return true;
 }
 
 Protocol StringToProtocol(std::string const & protocol)
@@ -50,7 +62,11 @@ std::string GetDomainFromUrl(std::string & url)
 			domainEndPos = url.find("/");
 			if (domainEndPos == std::string::npos)
 			{
-				domainEndPos = url.length();
+				domainEndPos = url.find("?");
+				if (domainEndPos == std::string::npos)
+				{
+					domainEndPos = url.length();
+				}
 			}
 		}
 		std::string domain = url.substr(0, domainEndPos);
@@ -71,7 +87,11 @@ std::string GetPortFromUrl(std::string & url)
 		auto portEndPos = url.find("/");
 		if (portEndPos == std::string::npos)
 		{
-			portEndPos = url.length();
+			portEndPos = url.find("?");
+			if (portEndPos == std::string::npos)
+			{
+				portEndPos = url.length();
+			}
 		}
 		std::string port = url.substr(0, portEndPos);
 		url.erase(0, port.length());
@@ -97,7 +117,7 @@ CHttpUrl::CHttpUrl(std::string const & url)
 			m_port = 443;
 		}
 	}
-	else if ((stoi(port) > 1) && (stoi(port) < 65535))
+	else if ((IsNumber(port)) && (stoi(port) > 1) && (stoi(port) < 65535))
 	{
 		m_port = static_cast<unsigned short>(stoi(port));
 	}
@@ -171,4 +191,15 @@ Protocol CHttpUrl::GetProtocol() const
 unsigned short CHttpUrl::GetPort() const
 {
 	return m_port;
+}
+
+std::string CHttpUrl::ToString() const
+{
+	std::stringstream line;
+	line << "URL: " << GetURL() << "\n"
+		<< "Protocol: " << ProtocolToString(m_protocol) << "\n"
+		<< "Domain: " << m_domain << "\n"
+		<< "Port: " << m_port << "\n"
+		<< "Document: " << m_document << "\n";
+	return line.str();
 }

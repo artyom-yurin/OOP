@@ -44,6 +44,8 @@ public:
 
 	// возвращает номер порта
 	unsigned short GetPort()const;
+
+	std::string ToString() const;
 private:
 	unsigned short m_port;
 	Protocol m_protocol;
