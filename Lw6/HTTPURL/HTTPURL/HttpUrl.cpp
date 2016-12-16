@@ -3,7 +3,7 @@
 #include "UrlParsingError.h"
 
 const std::string PROTOCOL_PATTERN = "((https)|(http))";
-const std::string DOMAIN_PATTERN = "(((\\w|-)+\\.)+\\w+)";
+const std::string DOMAIN_PATTERN = "(((\\d)+\\.)+\\d+)|(\\w+)";
 const std::string DOCUMEN_PATTERN = "(((/(\\w|-|\\.|_)+)+/?)|/)";
 const std::string QUERY_STRING = "(\\?.*)?";
 
@@ -77,7 +77,7 @@ std::string GetPortFromUrl(std::string & url)
 		url.erase(0, port.length());
 		return port;
 	}
-	throw CUrlParsingError("Incorrect Port");
+	throw CUrlParsingError("Incorrect port");
 }
 
 CHttpUrl::CHttpUrl(std::string const & url)
@@ -97,9 +97,13 @@ CHttpUrl::CHttpUrl(std::string const & url)
 			m_port = 443;
 		}
 	}
-	else //TODO: Check Port
+	else if ((stoi(port) > 1) && (stoi(port) < 65535))
 	{
-		m_port = stoi(port);
+		m_port = static_cast<unsigned short>(stoi(port));
+	}
+	else
+	{
+		throw  CUrlParsingError("Incorrect port");
 	}
 	if (copyUrl.length() == 0 || copyUrl[0] == '?')
 	{
