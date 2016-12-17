@@ -4,7 +4,7 @@
 
 const std::string PROTOCOL_PATTERN = "((https)|(http))";
 const std::string DOMAIN_PATTERN = "((((\\d)+\\.)+\\d+)|([A-Za-z]+))";
-const std::string DOCUMEN_PATTERN = "(((/(\\w|-|\\.|_)+)+/?)|/)";
+const std::string DOCUMENT_PATTERN = "(((/(\\w|-|\\.|_)+)+/?)|/)";
 const std::string QUERY_STRING = "(\\?.*)?";
 
 std::string ProtocolToString(Protocol const & protocol)
@@ -16,29 +16,13 @@ std::string ProtocolToString(Protocol const & protocol)
 	return "https";
 }
 
-bool IsNumber(std::string const & string)
-{
-	for (char ch : string)
-	{
-		if (!isdigit(ch))
-		{
-			return false;
-		}
-	}
-	return true;
-}
-
 Protocol StringToProtocol(std::string const & protocol)
 {
 	if (protocol == "http")
 	{
 		return HTTP;
 	}
-	else if (protocol == "https")
-	{
-		return HTTPS;
-	}
-	throw CUrlParsingError("Incorrect protocol");
+	return HTTPS;
 }
 
 Protocol GetProtocolFromUrl(std::string & url)
@@ -117,7 +101,7 @@ CHttpUrl::CHttpUrl(std::string const & url)
 			m_port = 443;
 		}
 	}
-	else if ((IsNumber(port)) && (stoi(port) > 1) && (stoi(port) < 65535))
+	else if ((stoi(port) >= 1) && (stoi(port) <= 65535))
 	{
 		m_port = static_cast<unsigned short>(stoi(port));
 	}
@@ -129,7 +113,7 @@ CHttpUrl::CHttpUrl(std::string const & url)
 	{
 		copyUrl = "/" + copyUrl;
 	}
-	if (std::regex_match(copyUrl, std::regex(DOCUMEN_PATTERN + QUERY_STRING)))
+	if (std::regex_match(copyUrl, std::regex(DOCUMENT_PATTERN + QUERY_STRING)))
 	{
 		m_document = copyUrl;
 	}
@@ -139,7 +123,10 @@ CHttpUrl::CHttpUrl(std::string const & url)
 	}
 }
 
-CHttpUrl::CHttpUrl(std::string const & domain, std::string const & document, Protocol protocol, unsigned short port)
+CHttpUrl::CHttpUrl(std::string const & domain, 
+	std::string const & document, 
+	Protocol protocol, 
+	unsigned short port)
 {
 	if (!std::regex_match(domain, std::regex(DOMAIN_PATTERN)))
 	{
@@ -150,9 +137,13 @@ CHttpUrl::CHttpUrl(std::string const & domain, std::string const & document, Pro
 	{
 		newDocument = "/" + document;	
 	}
-	if (!std::regex_match(newDocument, std::regex(DOCUMEN_PATTERN + QUERY_STRING)))
+	if (!std::regex_match(newDocument, std::regex(DOCUMENT_PATTERN + QUERY_STRING)))
 	{
 		throw CUrlParsingError("Incorrect document");
+	}
+	if ((port < 1) || (port > 65535))
+	{
+		throw CUrlParsingError("Incorrect port");
 	}
 	m_domain = domain;
 	m_document = newDocument;
