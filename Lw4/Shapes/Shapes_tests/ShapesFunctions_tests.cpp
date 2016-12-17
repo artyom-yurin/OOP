@@ -277,7 +277,7 @@ BOOST_AUTO_TEST_SUITE(ShapesFunctions)
 			std::stringstream input;
 			std::stringstream output;
 			std::vector<std::shared_ptr<IShape>> shapes;
-			input << "0 0 0 0 ffggff ffffff";
+			input << "0 0 0 0 ffggff";
 			LineCommand(input, output, shapes);
 			BOOST_CHECK_EQUAL(output.str(), "Invalid color\nUse 16 hexadecimal code\n");
 		}
@@ -287,7 +287,7 @@ BOOST_AUTO_TEST_SUITE(ShapesFunctions)
 			std::stringstream input;
 			std::stringstream output;
 			std::vector<std::shared_ptr<IShape>> shapes;
-			input << "0 0 0 0 ffFFff ffffff";
+			input << "0 0 0 0 ffFFff";
 			LineCommand(input, output, shapes);
 			BOOST_CHECK_EQUAL(output.str(), "Line was created\n");
 			BOOST_CHECK(!shapes.empty());
