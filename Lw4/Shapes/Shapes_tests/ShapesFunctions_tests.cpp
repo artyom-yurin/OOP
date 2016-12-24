@@ -31,6 +31,7 @@ BOOST_FIXTURE_TEST_SUITE(VectorFunction, VectorShapeFixture)
 	{	
 		BOOST_CHECK(IsColorCorrect("FF00ff"));
 		BOOST_CHECK(!IsColorCorrect("FF00fG"));
+		BOOST_CHECK(!IsColorCorrect("FF"));
 	}
 
 	BOOST_AUTO_TEST_CASE(not_process_empty_vector)
