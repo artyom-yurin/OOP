@@ -18,6 +18,7 @@ class CStringList
 public:
 	size_t GetSize()const;
 	void Append(const std::string& data);
+	void push_front(const std::string& data);
 
 	class CIterator
 	{
@@ -35,6 +36,8 @@ public:
 
 	std::string & GetBackElement();
 	std::string const& GetBackElement()const;
+	std::string & GetFrontElement();
+	std::string const& GetFrontElement()const;
 private:
 	size_t m_size = 0;
 	std::unique_ptr<Node> m_firstNode;

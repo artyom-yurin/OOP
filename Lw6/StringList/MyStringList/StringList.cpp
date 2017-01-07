@@ -25,6 +25,17 @@ void CStringList::Append(const std::string & data)
 	++m_size;
 }
 
+void CStringList::push_front(const std::string & data)
+{
+	if (!m_size)
+	{
+		Append(data);
+	}
+	auto secondNode = move(m_firstNode);
+	m_firstNode = make_unique<Node>(data, nullptr, move(secondNode));
+	++m_size;
+}
+
 CStringList::CIterator CStringList::begin()
 {
 	return CIterator(m_firstNode.get());
@@ -40,6 +51,18 @@ std::string const & CStringList::GetBackElement() const
 {
 	assert(m_lastNode);
 	return m_lastNode->data;
+}
+
+std::string & CStringList::GetFrontElement()
+{
+	assert(m_firstNode);
+	return m_firstNode->data;
+}
+
+std::string const & CStringList::GetFrontElement() const
+{
+	assert(m_firstNode);
+	return m_firstNode->data;
 }
 
 CStringList::CIterator::CIterator(Node * node)

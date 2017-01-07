@@ -28,6 +28,10 @@ BOOST_FIXTURE_TEST_SUITE(String_list, EmptyStringList)
 			BOOST_CHECK_EQUAL(list.GetSize(), oldSize + 1);
 			list.Append("hello");
 			BOOST_CHECK_EQUAL(list.GetSize(), oldSize + 2);
+			list.push_front("hello");
+			BOOST_CHECK_EQUAL(list.GetSize(), oldSize + 3);
+			list.push_front("hello");
+			BOOST_CHECK_EQUAL(list.GetSize(), oldSize + 4);
 		}
 
 		BOOST_AUTO_TEST_CASE(makes_it_accessible_via_GetBackElement_method)
@@ -36,6 +40,14 @@ BOOST_FIXTURE_TEST_SUITE(String_list, EmptyStringList)
 			BOOST_CHECK_EQUAL(list.GetBackElement(), "hello");
 			list.Append("goodbye");
 			BOOST_CHECK_EQUAL(list.GetBackElement(), "goodbye");
+		}
+
+		BOOST_AUTO_TEST_CASE(makes_it_accessible_via_GetFrontElement_method)
+		{
+			list.push_front("hello");
+			BOOST_CHECK_EQUAL(list.GetFrontElement(), "hello");
+			list.push_front("goodbye");
+			BOOST_CHECK_EQUAL(list.GetFrontElement(), "goodbye");
 		}
 
 		BOOST_AUTO_TEST_CASE(makes_it_accessible_via_iterator_to_first_element)
