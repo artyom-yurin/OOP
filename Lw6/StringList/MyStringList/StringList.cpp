@@ -27,13 +27,18 @@ void CStringList::Append(const std::string & data)
 
 void CStringList::push_front(const std::string & data)
 {
-	if (!m_size)
+	if (empty())
 	{
 		Append(data);
 	}
 	auto secondNode = move(m_firstNode);
 	m_firstNode = make_unique<Node>(data, nullptr, move(secondNode));
 	++m_size;
+}
+
+bool CStringList::empty()
+{
+	return !m_size;
 }
 
 CStringList::CIterator CStringList::begin()

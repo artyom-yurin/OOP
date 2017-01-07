@@ -19,6 +19,7 @@ public:
 	size_t GetSize()const;
 	void Append(const std::string& data);
 	void push_front(const std::string& data);
+	bool empty();
 
 	class CIterator
 	{

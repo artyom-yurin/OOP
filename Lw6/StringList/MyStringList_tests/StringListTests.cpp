@@ -15,6 +15,7 @@ BOOST_FIXTURE_TEST_SUITE(String_list, EmptyStringList)
 		BOOST_AUTO_TEST_CASE(is_empty)
 		{
 			BOOST_CHECK_EQUAL(list.GetSize(), 0u);
+			BOOST_CHECK(list.empty());
 		}
 
 	BOOST_AUTO_TEST_SUITE_END()
@@ -23,6 +24,7 @@ BOOST_FIXTURE_TEST_SUITE(String_list, EmptyStringList)
 
 		BOOST_AUTO_TEST_CASE(increases_its_size_by_1)
 		{
+			BOOST_CHECK(list.empty());
 			auto oldSize = list.GetSize();
 			list.Append("hello");
 			BOOST_CHECK_EQUAL(list.GetSize(), oldSize + 1);
@@ -32,6 +34,7 @@ BOOST_FIXTURE_TEST_SUITE(String_list, EmptyStringList)
 			BOOST_CHECK_EQUAL(list.GetSize(), oldSize + 3);
 			list.push_front("hello");
 			BOOST_CHECK_EQUAL(list.GetSize(), oldSize + 4);
+			BOOST_CHECK(!list.empty());
 		}
 
 		BOOST_AUTO_TEST_CASE(makes_it_accessible_via_GetBackElement_method)
