@@ -5,7 +5,7 @@
 #include <boost/algorithm/string/replace.hpp>
 
 class SpecLogFormatter :
-	public boost::unit_test::output::compiler_log_formatter
+public boost::unit_test::output::compiler_log_formatter
 {
 public:
 	SpecLogFormatter() : m_indent(0) {}

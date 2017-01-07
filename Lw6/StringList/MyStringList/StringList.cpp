@@ -17,7 +17,7 @@ void CStringList::Append(const std::string & data)
 	{
 		m_lastNode->next = move(newNode);
 	}
-	else // empty list
+	else
 	{
 		m_firstNode = move(newNode);
 	}

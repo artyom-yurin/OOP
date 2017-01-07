@@ -21,18 +21,18 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="StringList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="MyStringList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="StringListTests.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\String_list\StringList.cpp">
+    <ClCompile Include="StringList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
