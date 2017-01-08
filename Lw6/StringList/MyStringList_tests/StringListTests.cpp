@@ -60,11 +60,18 @@ BOOST_FIXTURE_TEST_SUITE(String_list, EmptyStringList)
 			BOOST_CHECK_EQUAL(addressof(*it), addressof(list.GetBackElement()));
 		}
 
+		BOOST_AUTO_TEST_CASE(makes_it_accessible_via_const_iterator_to_first_element)
+		{
+			list.Append("hello");
+			auto it = list.cbegin();
+			BOOST_CHECK_EQUAL(addressof(*it), addressof(list.GetBackElement()));
+		}
+
 	BOOST_AUTO_TEST_SUITE_END()
 
 	BOOST_AUTO_TEST_SUITE(iterator)
 
-		BOOST_AUTO_TEST_CASE(can_be_increnenting)
+		BOOST_AUTO_TEST_CASE(can_be_increnenting_and_decrementing)
 		{
 			list.Append("first");
 			list.Append("second");
@@ -72,6 +79,8 @@ BOOST_FIXTURE_TEST_SUITE(String_list, EmptyStringList)
 			BOOST_CHECK_EQUAL(*iter, "first");
 			++iter;
 			BOOST_CHECK_EQUAL(*iter, "second");
+			--iter;
+			BOOST_CHECK_EQUAL(*iter, "first");
 		}
 
 	BOOST_AUTO_TEST_SUITE_END()

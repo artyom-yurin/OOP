@@ -19,7 +19,7 @@ public:
 	size_t GetSize()const;
 	void Append(const std::string& data);
 	void push_front(const std::string& data);
-	bool empty();
+	bool empty()const;
 
 	class CIterator
 	{
@@ -29,11 +29,17 @@ public:
 		CIterator() = default;
 		std::string & operator*()const;
 		CIterator & operator++();
+		CIterator & operator--();
+
 	private:
 		Node *m_node = nullptr;
 	};
 
 	CIterator begin();
+	CIterator end();
+
+	const CIterator cbegin()const;
+	const CIterator cend()const;
 
 	std::string & GetBackElement();
 	std::string const& GetBackElement()const;

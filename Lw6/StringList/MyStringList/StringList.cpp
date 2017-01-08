@@ -36,7 +36,7 @@ void CStringList::push_front(const std::string & data)
 	++m_size;
 }
 
-bool CStringList::empty()
+bool CStringList::empty() const
 {
 	return !m_size;
 }
@@ -44,6 +44,29 @@ bool CStringList::empty()
 CStringList::CIterator CStringList::begin()
 {
 	return CIterator(m_firstNode.get());
+}
+
+CStringList::CIterator CStringList::end()
+{
+	if (empty())
+	{
+		begin();
+	}
+	return CIterator(m_lastNode->next.get());
+}
+
+const CStringList::CIterator CStringList::cbegin() const
+{
+	return CIterator(m_firstNode.get());
+}
+
+const CStringList::CIterator CStringList::cend() const
+{
+	if (empty())
+	{
+		cbegin();
+	}
+	return CIterator(m_lastNode->next.get());
 }
 
 std::string & CStringList::GetBackElement()
@@ -83,5 +106,11 @@ std::string & CStringList::CIterator::operator*() const
 CStringList::CIterator & CStringList::CIterator::operator++()
 {
 	m_node = m_node->next.get();
+	return *this;
+}
+
+CStringList::CIterator & CStringList::CIterator::operator--()
+{
+	m_node = m_node->prev;
 	return *this;
 }
