@@ -20,6 +20,7 @@ public:
 	void Append(const std::string& data);
 	void push_front(const std::string& data);
 	bool empty()const;
+	void clear();
 
 	class CIterator
 	{

@@ -18,9 +18,20 @@ BOOST_FIXTURE_TEST_SUITE(String_list, EmptyStringList)
 			BOOST_CHECK(list.empty());
 		}
 
-	BOOST_AUTO_TEST_SUITE_END()
+BOOST_AUTO_TEST_SUITE_END()
 
-	BOOST_AUTO_TEST_SUITE(after_appeding_a_string)
+BOOST_AUTO_TEST_SUITE(after_appeding_a_string)
+
+		BOOST_AUTO_TEST_CASE(can_be_clear)
+		{
+			list.Append("hello");
+			list.Append("hello");
+			list.Append("hello");
+			list.Append("hello");
+			BOOST_CHECK_EQUAL(list.GetSize(), 4);
+			list.clear();
+			BOOST_CHECK_EQUAL(list.GetSize(), 0);
+		}
 
 		BOOST_AUTO_TEST_CASE(increases_its_size_by_1)
 		{

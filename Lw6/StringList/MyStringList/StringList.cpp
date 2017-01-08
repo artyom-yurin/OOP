@@ -41,6 +41,13 @@ bool CStringList::empty() const
 	return !m_size;
 }
 
+void CStringList::clear()
+{
+	m_firstNode = nullptr;
+	m_lastNode = nullptr;
+	m_size = 0;
+}
+
 CStringList::CIterator CStringList::begin()
 {
 	return CIterator(m_firstNode.get());
