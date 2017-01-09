@@ -49,6 +49,7 @@ public:
 	std::string const& GetFrontElement()const;
 
 	void insert(const CIterator & it, const std::string & data);
+	void erase(const CIterator & it);
 private:
 	size_t m_size = 0;
 	std::unique_ptr<Node> m_firstNode;

@@ -99,6 +99,23 @@ BOOST_AUTO_TEST_SUITE(after_appeding_a_string)
 			BOOST_CHECK_EQUAL(*it, "fourth");
 		}
 
+		BOOST_AUTO_TEST_CASE(can_delete_the_item_in_place_iterator)
+		{
+			list.Append("first");
+			list.Append("second");
+			list.Append("third");
+			list.Append("fourth");
+			auto it = list.begin();
+			++it;
+			list.erase(it);
+			it = list.begin();
+			list.erase(it);
+			it = list.end();
+			list.erase(it);
+			it = list.begin();
+			BOOST_CHECK_EQUAL(*it, "third");
+		}
+
 	BOOST_AUTO_TEST_SUITE_END()
 
 	BOOST_AUTO_TEST_SUITE(iterator)

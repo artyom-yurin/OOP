@@ -119,6 +119,31 @@ void CStringList::insert(const CIterator & it, const std::string & data)
 	}
 }
 
+void CStringList::erase(const CIterator & it)
+{
+	if (m_size == 1)
+	{
+		clear();
+		return;
+	}
+	else if (it == begin())
+	{
+		m_firstNode = move(it.m_node->next);
+		m_firstNode->prev = nullptr;
+	}
+	else if (it == end())
+	{
+		m_lastNode = move(m_lastNode->prev);
+		m_lastNode->next = nullptr;
+	}
+	else
+	{
+		it.m_node->next->prev = move(it.m_node->prev);
+		it.m_node->prev->next = move(it.m_node->next);
+	}
+	--m_size;
+}
+
 CStringList::CIterator::CIterator(Node * node)
 	:m_node(node)
 {
