@@ -78,6 +78,22 @@ BOOST_AUTO_TEST_SUITE(after_appeding_a_string)
 			BOOST_CHECK_EQUAL(addressof(*it), addressof(list.GetBackElement()));
 		}
 
+		BOOST_AUTO_TEST_CASE(makes_it_accessible_via_iterator_to_last_element)
+		{
+			list.Append("hello");
+			list.Append("hi");
+			auto it = list.rbegin();
+			BOOST_CHECK_EQUAL(addressof(*it), addressof(list.GetBackElement()));
+		}
+
+		BOOST_AUTO_TEST_CASE(makes_it_accessible_via_const_iterator_to_last_element)
+		{
+			list.Append("hello");
+			list.Append("hi");
+			auto it = list.crbegin();
+			BOOST_CHECK_EQUAL(addressof(*it), addressof(list.GetBackElement()));
+		}
+
 		BOOST_AUTO_TEST_CASE(can_insert_element_in_place_of_the_iterator)
 		{
 			list.Append("second");
@@ -125,6 +141,8 @@ BOOST_AUTO_TEST_SUITE(after_appeding_a_string)
 			CStringList emptyList;
 			BOOST_CHECK(emptyList.begin() == emptyList.end());
 			BOOST_CHECK(emptyList.cbegin() == emptyList.cend());
+			BOOST_CHECK(emptyList.rbegin() == emptyList.rend());
+			BOOST_CHECK(emptyList.crbegin() == emptyList.crend());
 		}
 
 		BOOST_AUTO_TEST_CASE(can_be_increnenting_and_decrementing)

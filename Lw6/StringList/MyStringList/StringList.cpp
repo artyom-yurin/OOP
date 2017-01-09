@@ -48,6 +48,42 @@ void CStringList::clear()
 	m_size = 0;
 }
 
+CStringList::CIterator CStringList::rbegin()
+{
+	if (empty())
+	{
+		return CIterator(m_firstNode.get(), true);
+	}
+	return CIterator(m_lastNode, true);
+}
+
+CStringList::CIterator CStringList::rend()
+{
+	if (empty())
+	{
+		return rbegin();
+	}
+	return CIterator(m_firstNode->prev, true);
+}
+
+const CStringList::CIterator CStringList::crbegin() const
+{
+	if (empty())
+	{
+		return CIterator(m_firstNode.get(), true);
+	}
+	return CIterator(m_lastNode, true);
+}
+
+const CStringList::CIterator CStringList::crend() const
+{
+	if (empty())
+	{
+		return crbegin();
+	}
+	return CIterator(m_firstNode->prev, true);
+}
+
 CStringList::CIterator CStringList::begin()
 {
 	return CIterator(m_firstNode.get());
@@ -144,8 +180,9 @@ void CStringList::erase(const CIterator & it)
 	--m_size;
 }
 
-CStringList::CIterator::CIterator(Node * node)
-	:m_node(node)
+CStringList::CIterator::CIterator(Node * node, bool isReverse)
+	:m_node(node),
+	m_isReverse(isReverse)
 {
 }
 
@@ -156,13 +193,27 @@ std::string & CStringList::CIterator::operator*() const
 
 CStringList::CIterator & CStringList::CIterator::operator++()
 {
-	m_node = m_node->next.get();
+	if (m_isReverse)
+	{
+		m_node = m_node->prev;
+	}
+	else
+	{
+		m_node = m_node->next.get();
+	}
 	return *this;
 }
 
 CStringList::CIterator & CStringList::CIterator::operator--()
 {
-	m_node = m_node->prev;
+	if (m_isReverse)
+	{
+		m_node = m_node->next.get();
+	}
+	else
+	{
+		m_node = m_node->prev;
+	}
 	return *this;
 }
 
