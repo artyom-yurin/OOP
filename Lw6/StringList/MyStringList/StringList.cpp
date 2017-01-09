@@ -57,7 +57,7 @@ CStringList::CIterator CStringList::end()
 {
 	if (empty())
 	{
-		begin();
+		return begin();
 	}
 	return CIterator(m_lastNode->next.get());
 }
@@ -71,7 +71,7 @@ const CStringList::CIterator CStringList::cend() const
 {
 	if (empty())
 	{
-		cbegin();
+		return cbegin();
 	}
 	return CIterator(m_lastNode->next.get());
 }
@@ -100,6 +100,25 @@ std::string const & CStringList::GetFrontElement() const
 	return m_firstNode->data;
 }
 
+void CStringList::insert(const CIterator & it, const std::string & data)
+{
+	if (it == begin())
+	{
+		push_front(data);
+	}
+	else if (it == end())
+	{
+		Append(data);
+	}
+	else
+	{
+		auto newNode = std::make_unique<Node>(data, it.m_node->prev, move(it.m_node->prev->next));
+		it.m_node->prev = std::move(newNode.get());
+		newNode->prev->next = std::move(newNode);
+		++m_size;
+	}
+}
+
 CStringList::CIterator::CIterator(Node * node)
 	:m_node(node)
 {
@@ -120,4 +139,9 @@ CStringList::CIterator & CStringList::CIterator::operator--()
 {
 	m_node = m_node->prev;
 	return *this;
+}
+
+bool CStringList::CIterator::operator==(const CStringList::CIterator & it) const
+{
+	return (m_node == it.m_node);
 }

@@ -31,6 +31,7 @@ public:
 		std::string & operator*()const;
 		CIterator & operator++();
 		CIterator & operator--();
+		bool operator==(const CIterator & it) const;
 
 	private:
 		Node *m_node = nullptr;
@@ -46,6 +47,8 @@ public:
 	std::string const& GetBackElement()const;
 	std::string & GetFrontElement();
 	std::string const& GetFrontElement()const;
+
+	void insert(const CIterator & it, const std::string & data);
 private:
 	size_t m_size = 0;
 	std::unique_ptr<Node> m_firstNode;

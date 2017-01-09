@@ -78,9 +78,37 @@ BOOST_AUTO_TEST_SUITE(after_appeding_a_string)
 			BOOST_CHECK_EQUAL(addressof(*it), addressof(list.GetBackElement()));
 		}
 
+		BOOST_AUTO_TEST_CASE(can_insert_element_in_place_of_the_iterator)
+		{
+			list.Append("second");
+			auto it = list.begin();
+			list.insert(it, "first");
+			++it;
+			list.insert(it, "fourth");
+			it = list.begin();
+			++it;
+			++it;
+			list.insert(it, "third");
+			it = list.begin();
+			BOOST_CHECK_EQUAL(*it, "first");
+			++it;
+			BOOST_CHECK_EQUAL(*it, "second");
+			++it;
+			BOOST_CHECK_EQUAL(*it, "third");
+			++it;
+			BOOST_CHECK_EQUAL(*it, "fourth");
+		}
+
 	BOOST_AUTO_TEST_SUITE_END()
 
 	BOOST_AUTO_TEST_SUITE(iterator)
+
+		BOOST_AUTO_TEST_CASE(when_list_is_empty_begin_and_end_iterator_are_equal)
+		{
+			CStringList emptyList;
+			BOOST_CHECK(emptyList.begin() == emptyList.end());
+			BOOST_CHECK(emptyList.cbegin() == emptyList.cend());
+		}
 
 		BOOST_AUTO_TEST_CASE(can_be_increnenting_and_decrementing)
 		{
