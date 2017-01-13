@@ -4,12 +4,12 @@
 
 std::shared_ptr<CVariable> CVariable::Create()
 {
-	return std::shared_ptr<CVariable>(new CVariable());
+	return std::make_shared<CVariable>();
 }
 
 std::shared_ptr<CVariable> CVariable::Create(double value)
 {
-	return std::shared_ptr<CVariable>(new CVariable(value));
+	return std::make_shared<CVariable>(value);
 }
 
 void CVariable::SetValue(double value)
@@ -21,7 +21,7 @@ void CVariable::SetValue(double value)
 	}
 }
 
-void CVariable::AddDependentFunction(std::shared_ptr<CFunction> pFunction)
+void CVariable::AddDependentFunction(std::shared_ptr<CFunction> const & pFunction)
 {
 	m_dependentFunctions.push_back(pFunction);
 }

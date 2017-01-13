@@ -9,11 +9,17 @@ public:
 
 	~CCalc() = default;
 
-	void Var(std::string name);
+	void Var(std::string const & name);
 
-	void Let(std::string name, double value);
+	void Let(std::string const & name, double value);
 
-	std::shared_ptr<CIndex> GetIndex(std::string name);
+	void Let(std::string const & name, std::string const & indexName);
+
+	void Fn(std::string const & name, std::string const & indexName);
+
+	void Fn(std::string const & name, std::string const & firstIndexName, Sign sign, std::string const & secondIndexName);
+
+	std::shared_ptr<CIndex> GetIndex(std::string const & name);
 
 	std::map<std::string, std::shared_ptr<CVariable>> GetVariables() const;
 

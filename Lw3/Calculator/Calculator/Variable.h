@@ -15,12 +15,12 @@ public:
 
 	void SetValue(double value);
 
-	void AddDependentFunction(std::shared_ptr<CFunction> pFunction);
+	void AddDependentFunction(std::shared_ptr<CFunction> const & pFunction);
 
-private:
 	CVariable() = default;
 
 	CVariable(double value);
+private:
 
 	std::vector<std::shared_ptr<CFunction>> m_dependentFunctions;
 };

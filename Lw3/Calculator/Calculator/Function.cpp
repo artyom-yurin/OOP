@@ -2,13 +2,13 @@
 #include "Function.h"
 #include "Variable.h"
 
-CFunction::CFunction(const std::shared_ptr<CIndex> index)
+CFunction::CFunction(std::shared_ptr<CIndex> const & index)
 {
 	m_value = index->GetResult();
 	m_firstIndex = index;
 }
 
-CFunction::CFunction(std::shared_ptr<CIndex> firstIndex, Sign sign, std::shared_ptr<CIndex> secondIndex)
+CFunction::CFunction(std::shared_ptr<CIndex> const & firstIndex, Sign sign, std::shared_ptr<CIndex> const & secondIndex)
 {
 	m_sign = sign;
 	if (m_sign == Sign::plus)
@@ -38,19 +38,24 @@ CFunction::CFunction(std::shared_ptr<CIndex> firstIndex, Sign sign, std::shared_
 	m_secondIndex = secondIndex;
 }
 
-std::shared_ptr<CFunction> CFunction::Create(std::shared_ptr<CIndex> index)
+std::shared_ptr<CFunction> CFunction::Create(std::shared_ptr<CIndex> const & index)
 {
-	return std::shared_ptr<CFunction>(new CFunction(index));
+	return std::make_shared<CFunction>(index);
 }
 
-std::shared_ptr<CFunction> CFunction::Create(std::shared_ptr<CIndex> firstIndex, Sign sign, std::shared_ptr<CIndex> secondIndex)
+std::shared_ptr<CFunction> CFunction::Create(std::shared_ptr<CIndex> const & firstIndex, Sign sign, std::shared_ptr<CIndex> const & secondIndex)
 {
-	return std::shared_ptr<CFunction>(new CFunction(firstIndex, sign, secondIndex));
+	return std::make_shared<CFunction>(firstIndex, sign, secondIndex);
 }
 
-void CFunction::AddDependentVariables(std::vector<std::shared_ptr<CVariable>> & dependentVariables)
+void CFunction::AddDependentVariables(std::vector<std::shared_ptr<CVariable>> const & dependentVariables)
 {
 	m_dependentVariables = dependentVariables;
+}
+
+void CFunction::AddDependentVariable(std::shared_ptr<CVariable> const & dependentVariable)
+{
+	m_dependentVariables.push_back(dependentVariable);
 }
 
 std::vector<std::shared_ptr<CVariable>> CFunction::GetDependentVariables()

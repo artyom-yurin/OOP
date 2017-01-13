@@ -15,21 +15,25 @@ enum class Sign
 class CFunction : public CIndex
 {
 public:
-	static std::shared_ptr<CFunction> Create(std::shared_ptr<CIndex> index);
+	static std::shared_ptr<CFunction> Create(std::shared_ptr<CIndex> const & index);
 
-	static std::shared_ptr<CFunction> Create(std::shared_ptr<CIndex> firstIndex, Sign sign, std::shared_ptr<CIndex> secondIndex);
+	static std::shared_ptr<CFunction> Create(std::shared_ptr<CIndex> const & firstIndex, Sign sign, std::shared_ptr<CIndex> const & secondIndex);
 
 	~CFunction() = default;
 
-	void AddDependentVariables(std::vector<std::shared_ptr<CVariable>> & dependentVariables);
+	void AddDependentVariables(std::vector<std::shared_ptr<CVariable>> const & dependentVariables);
+
+	void AddDependentVariable(std::shared_ptr<CVariable> const & dependentVariable);
 
 	std::vector<std::shared_ptr<CVariable>> GetDependentVariables();
 
 	void Refresh();
-private:
-	CFunction(const std::shared_ptr<CIndex> index);
 
-	CFunction(std::shared_ptr<CIndex> firstIndex, Sign sign, std::shared_ptr<CIndex> secondIndex);
+	CFunction(std::shared_ptr<CIndex> const & index);
+
+	CFunction(std::shared_ptr<CIndex> const & firstIndex, Sign sign, std::shared_ptr<CIndex> const & secondIndex);
+
+private:
 
 	std::shared_ptr<CIndex> m_firstIndex = nullptr;
 
