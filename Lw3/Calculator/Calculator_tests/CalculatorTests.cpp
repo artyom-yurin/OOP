@@ -134,6 +134,12 @@ BOOST_FIXTURE_TEST_SUITE(Calculator, CalcFixture)
 			calc.Fn("fn", "var");
 			calc.Let("var", 10);
 			BOOST_CHECK_EQUAL(calc.GetFunctions()["fn"]->GetResult(), calc.GetVariables()["var"]->GetResult());
+			calc.Fn("fn1", "var", Sign::plus, "var");
+			BOOST_CHECK_EQUAL(calc.GetFunctions()["fn1"]->GetResult(), calc.GetVariables()["var"]->GetResult() * 2);
+			calc.Let("var", 90);
+			BOOST_CHECK_EQUAL(calc.GetFunctions()["fn1"]->GetResult(), calc.GetVariables()["var"]->GetResult() * 2);
+			calc.Fn("fn2", "var", Sign::minus, "fn");
+			BOOST_CHECK_EQUAL(calc.GetFunctions()["fn2"]->GetResult(), 0);
 		}
 
 		BOOST_AUTO_TEST_CASE(can_ptint_variable_with_nan_value)
