@@ -9,6 +9,8 @@ public:
 
 	~CCalc() = default;
 
+	bool isValidName(std::string const & name) const;
+
 	void Var(std::string const & name);
 
 	void Let(std::string const & name, double value);

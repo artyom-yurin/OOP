@@ -1,6 +1,11 @@
 #include "stdafx.h"
 #include "Calc.h"
 
+bool CCalc::isValidName(std::string const & name) const
+{
+	return std::regex_match(name, std::regex("[A-Za-z]\\w*"));
+}
+
 std::vector<std::shared_ptr<CVariable>> MergeVector(std::vector<std::shared_ptr<CVariable>> const & firstVector, std::vector<std::shared_ptr<CVariable>> const & secondVector)
 {
 	std::vector<std::shared_ptr<CVariable>> result = firstVector;

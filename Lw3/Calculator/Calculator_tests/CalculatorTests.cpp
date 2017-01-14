@@ -88,6 +88,14 @@ BOOST_FIXTURE_TEST_SUITE(Calculator, CalcFixture)
 		BOOST_CHECK(calc.GetVariables().empty());
 	}
 
+	BOOST_AUTO_TEST_CASE(can_check_name_on_valid)
+	{
+		BOOST_CHECK(calc.isValidName("var"));
+		BOOST_CHECK(calc.isValidName("v2a_r"));
+		BOOST_CHECK(!calc.isValidName("2var"));
+		BOOST_CHECK(!calc.isValidName("va r"));
+	}
+	
 	BOOST_AUTO_TEST_CASE(no_default_functions)
 	{
 		BOOST_CHECK(calc.GetFunctions().empty());
