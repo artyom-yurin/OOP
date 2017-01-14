@@ -70,7 +70,7 @@ void CCalc::Let(std::string const & name, std::string const & indexName)
 		}
 	}
 }
-//TODO: Find memory leaks down
+
 void CCalc::Fn(std::string const & name, std::string const & indexName)
 {
 	if (m_functions.find(name) == m_functions.end() && m_variables.find(name) == m_variables.end())
@@ -146,7 +146,7 @@ void CCalc::Fn(std::string const & name, std::string const & firstIndexName, Sig
 		}
 	}
 }
-//TODO: Find memory leaks up
+
 std::shared_ptr<CIndex> CCalc::GetIndex(std::string const & name)
 {
 	if (m_functions.find(name) != m_functions.end())
