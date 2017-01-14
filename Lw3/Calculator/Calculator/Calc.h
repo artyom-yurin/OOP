@@ -21,6 +21,8 @@ public:
 
 	void Print(std::ostream & output, std::string const & name);
 
+	void PrintVars(std::ostream & output);
+
 	std::shared_ptr<CIndex> GetIndex(std::string const & name);
 
 	std::map<std::string, std::shared_ptr<CVariable>> GetVariables() const;

@@ -99,6 +99,16 @@ BOOST_FIXTURE_TEST_SUITE(Calculator, CalcFixture)
 		BOOST_CHECK_EQUAL(calc.GetVariables().size(), 1);
 	}
 
+	BOOST_AUTO_TEST_CASE(can_print_all_variable)
+	{
+		calc.Var("var");
+		calc.Let("var1", 1);
+		calc.Let("var2", 2.45);
+		std::stringstream buffer;
+		calc.PrintVars(buffer);
+		BOOST_CHECK_EQUAL(buffer.str(), "var:nan\nvar1:1.00\nvar2:2.45\n");
+	}
+
 	BOOST_AUTO_TEST_CASE(can_declare_variable_with_default_value)
 	{
 		calc.Let("var", 10);
