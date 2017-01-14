@@ -157,6 +157,31 @@ BOOST_FIXTURE_TEST_SUITE(Calculator, CalcFixture)
 			BOOST_CHECK_EQUAL(buffer.str(), "var:13.13");
 		}
 
+		struct declareted_function_ : declareted_variable_
+		{
+			declareted_function_()
+			{
+				calc.Fn("fn", "var");
+			}
+		};
+
+		BOOST_FIXTURE_TEST_SUITE(declareted_function, declareted_function_)
+
+			BOOST_AUTO_TEST_CASE(can_declare_function)
+			{
+				calc.Fn("fn1", "fn");
+				calc.Let("var", 10);
+				BOOST_CHECK_EQUAL(calc.GetFunctions()["fn1"]->GetResult(), calc.GetFunctions()["fn"]->GetResult());
+				calc.Fn("fn2", "fn1", Sign::plus, "var");
+				BOOST_CHECK_EQUAL(calc.GetFunctions()["fn2"]->GetResult(), calc.GetFunctions()["fn1"]->GetResult() + calc.GetVariables()["var"]->GetResult());
+				calc.Let("var", 20);
+				BOOST_CHECK_EQUAL(calc.GetFunctions()["fn2"]->GetResult(), calc.GetFunctions()["fn1"]->GetResult() + calc.GetVariables()["var"]->GetResult());
+				calc.Fn("fn3", "fn1", Sign::minus, "fn");
+				BOOST_CHECK_EQUAL(calc.GetFunctions()["fn3"]->GetResult(), 0);
+			}
+
+		BOOST_AUTO_TEST_SUITE_END()
+
 	BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE_END()
