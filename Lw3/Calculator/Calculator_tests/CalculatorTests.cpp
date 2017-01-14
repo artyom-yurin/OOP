@@ -142,14 +142,14 @@ BOOST_FIXTURE_TEST_SUITE(Calculator, CalcFixture)
 			BOOST_CHECK_EQUAL(calc.GetFunctions()["fn2"]->GetResult(), 0);
 		}
 
-		BOOST_AUTO_TEST_CASE(can_ptint_variable_with_nan_value)
+		BOOST_AUTO_TEST_CASE(can_print_variable_with_nan_value)
 		{
 			std::stringstream buffer;
 			calc.Print(buffer, "var");
 			BOOST_CHECK_EQUAL(buffer.str(), "var:nan");
 		}
 
-		BOOST_AUTO_TEST_CASE(can_ptint_variable)
+		BOOST_AUTO_TEST_CASE(can_print_variable)
 		{
 			std::stringstream buffer;
 			calc.Let("var", 13.135);
@@ -178,6 +178,21 @@ BOOST_FIXTURE_TEST_SUITE(Calculator, CalcFixture)
 				BOOST_CHECK_EQUAL(calc.GetFunctions()["fn2"]->GetResult(), calc.GetFunctions()["fn1"]->GetResult() + calc.GetVariables()["var"]->GetResult());
 				calc.Fn("fn3", "fn1", Sign::minus, "fn");
 				BOOST_CHECK_EQUAL(calc.GetFunctions()["fn3"]->GetResult(), 0);
+			}
+			
+			BOOST_AUTO_TEST_CASE(can_print_function_with_nan_value)
+			{
+				std::stringstream buffer;
+				calc.Print(buffer, "fn");
+				BOOST_CHECK_EQUAL(buffer.str(), "fn:nan");
+			}
+
+			BOOST_AUTO_TEST_CASE(can_print_function)
+			{
+				std::stringstream buffer;
+				calc.Let("var", 13.135);
+				calc.Print(buffer, "fn");
+				BOOST_CHECK_EQUAL(buffer.str(), "fn:13.13");
 			}
 
 		BOOST_AUTO_TEST_SUITE_END()
