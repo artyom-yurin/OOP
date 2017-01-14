@@ -58,7 +58,7 @@ void CFunction::AddDependentVariable(std::shared_ptr<CVariable> const & dependen
 	m_dependentVariables.push_back(dependentVariable);
 }
 
-std::vector<std::shared_ptr<CVariable>> CFunction::GetDependentVariables()
+std::vector<std::shared_ptr<CVariable>> & CFunction::GetDependentVariables()
 {
 	return m_dependentVariables;
 }

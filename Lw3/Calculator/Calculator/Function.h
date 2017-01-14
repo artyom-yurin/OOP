@@ -25,7 +25,7 @@ public:
 
 	void AddDependentVariable(std::shared_ptr<CVariable> const & dependentVariable);
 
-	std::vector<std::shared_ptr<CVariable>> GetDependentVariables();
+	std::vector<std::shared_ptr<CVariable>> & GetDependentVariables();
 
 	void Refresh();
 

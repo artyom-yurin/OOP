@@ -148,11 +148,31 @@ std::shared_ptr<CIndex> CCalc::GetIndex(std::string const & name)
 	{
 		return m_functions[name];
 	}
-	else if (m_functions.find(name) != m_functions.end())
+	else if (m_variables.find(name) != m_variables.end())
 	{
 		return m_variables[name];
 	}
 	return nullptr;
+}
+
+void CCalc::Print(std::ostream & output, std::string const & name)
+{
+	auto index = GetIndex(name);
+	if (index != nullptr)
+	{
+		output << std::fixed;
+		output << std::setprecision(2);
+		output << name << ":";
+		double value = index->GetResult();
+		if (std::isnan(value))
+		{
+			output << "nan";
+		}
+		else
+		{
+			output << value;
+		}
+	}
 }
 
 std::map<std::string, std::shared_ptr<CVariable>> CCalc::GetVariables() const

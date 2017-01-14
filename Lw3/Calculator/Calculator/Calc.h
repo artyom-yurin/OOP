@@ -19,6 +19,8 @@ public:
 
 	void Fn(std::string const & name, std::string const & firstIndexName, Sign sign, std::string const & secondIndexName);
 
+	void Print(std::ostream & output, std::string const & name);
+
 	std::shared_ptr<CIndex> GetIndex(std::string const & name);
 
 	std::map<std::string, std::shared_ptr<CVariable>> GetVariables() const;

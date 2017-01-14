@@ -4,7 +4,7 @@
 
 std::shared_ptr<CVariable> CVariable::Create()
 {
-	return std::make_shared<CVariable>();
+	return std::make_shared<CVariable>(NAN);
 }
 
 std::shared_ptr<CVariable> CVariable::Create(double value)

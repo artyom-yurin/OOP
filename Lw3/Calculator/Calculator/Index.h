@@ -11,5 +11,5 @@ public:
 
 protected:
 
-	double m_value = 0.0;
+	double m_value;
 };
