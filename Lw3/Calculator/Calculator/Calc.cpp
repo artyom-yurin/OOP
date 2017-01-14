@@ -195,6 +195,26 @@ void CCalc::PrintVars(std::ostream & output)
 	}
 }
 
+void CCalc::PrintFns(std::ostream & output)
+{
+	output << std::fixed
+		<< std::setprecision(2);
+	for (auto function : m_functions)
+	{
+		output << function.first << ":";
+		double value = function.second->GetResult();
+		if (std::isnan(value))
+		{
+			output << "nan";
+		}
+		else
+		{
+			output << value;
+		}
+		output << std::endl;
+	}
+}
+
 std::map<std::string, std::shared_ptr<CVariable>> CCalc::GetVariables() const
 {
 	return m_variables;
