@@ -22,5 +22,5 @@ public:
 	CVariable(double value);
 private:
 
-	std::vector<std::shared_ptr<CFunction>> m_dependentFunctions;
+	std::vector<std::weak_ptr<CFunction>> m_dependentFunctions;
 };

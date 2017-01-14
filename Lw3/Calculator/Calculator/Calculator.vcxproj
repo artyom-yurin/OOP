@@ -163,6 +163,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Calc.h" />
+    <ClInclude Include="ConsoleMenu.h" />
     <ClInclude Include="Function.h" />
     <ClInclude Include="Index.h" />
     <ClInclude Include="stdafx.h" />
@@ -171,6 +172,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Calc.cpp" />
+    <ClCompile Include="ConsoleMenu.cpp" />
     <ClCompile Include="Function.cpp" />
     <ClCompile Include="Index.cpp" />
     <ClCompile Include="main.cpp" />
