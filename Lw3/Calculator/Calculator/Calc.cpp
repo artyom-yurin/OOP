@@ -6,16 +6,32 @@ bool CCalc::isValidName(std::string const & name) const
 	return std::regex_match(name, std::regex("[A-Za-z]\\w*"));
 }
 
+std::vector<std::shared_ptr<CVariable>> CCalc::GetDependentVariables(std::string const & indexName)
+{
+	std::vector<std::shared_ptr<CVariable>> dependVariables;
+	auto variable = m_variables.find(indexName);
+	if (variable != m_variables.cend())
+	{
+		dependVariables.push_back(variable->second);
+	}
+	else
+	{
+		auto variables = m_functions.find(indexName)->second->GetDependentVariables();
+		dependVariables.insert(dependVariables.cend(), variables.cbegin(), variables.cend());
+	}
+	return dependVariables;
+}
+
 std::vector<std::shared_ptr<CVariable>> MergeVector(std::vector<std::shared_ptr<CVariable>> const & firstVector, std::vector<std::shared_ptr<CVariable>> const & secondVector)
 {
-	std::vector<std::shared_ptr<CVariable>> result = firstVector;
-
-	std::copy(secondVector.begin(), secondVector.end(), std::back_inserter(result));
-
-	result.erase(
-		std::unique(result.begin(), result.end()),
-		result.end());
-
+	std::vector<std::shared_ptr<CVariable>> result(firstVector);
+	for (auto element : secondVector)
+	{
+		if (!std::any_of(result.cbegin(), result.cend(), [element](std::shared_ptr<CVariable> el) { return el == element; }))
+		{
+			result.insert(result.cend(), element);
+		}
+	}
 	return result;
 }
 
@@ -75,21 +91,25 @@ void CCalc::Fn(std::string const & name, std::string const & indexName)
 {
 	if (m_functions.find(name) == m_functions.end() && m_variables.find(name) == m_variables.end())
 	{
-		if (m_variables.find(indexName) != m_variables.end())
+		auto index = GetIndex(indexName);
+		if (index != nullptr)
 		{
-			m_functions[name] = CFunction::Create(m_variables[indexName]);
-			m_variables[indexName]->AddDependentFunction(m_functions[name]);
-			m_functions[name]->AddDependentVariable(m_variables[indexName]);
-		} 
-		else if (m_functions.find(indexName) != m_functions.end())
-		{
-			m_functions[name] = CFunction::Create(m_functions[indexName]);
-			for (std::shared_ptr<CVariable> variable : m_functions[indexName]->GetDependentVariables())
+			std::vector<std::shared_ptr<CVariable>> dependentVariables = GetDependentVariables(indexName);
+			m_functions[name] = CFunction::Create(index);
+			for (std::shared_ptr<CVariable> variable : dependentVariables)
 			{
 				variable->AddDependentFunction(m_functions[name]);
 			}
-			m_functions[name]->AddDependentVariables(m_functions[indexName]->GetDependentVariables());
+			m_functions[name]->AddDependentVariables(dependentVariables);
 		}
+		else
+		{
+			throw std::invalid_argument("Element " + indexName + " does not exist");
+		}
+	}
+	else
+	{
+		throw std::invalid_argument("Name " + name + " busy");
 	}
 }
 
@@ -97,53 +117,34 @@ void CCalc::Fn(std::string const & name, std::string const & firstIndexName, Sig
 {
 	if (m_functions.find(name) == m_functions.end() && m_variables.find(name) == m_variables.end())
 	{
-		if (m_variables.find(firstIndexName) != m_variables.end())
+		auto firstIndex = GetIndex(firstIndexName);
+		if (firstIndex != nullptr)
 		{
-			if (m_variables.find(secondIndexName) != m_variables.end())
+			auto secondIndex = GetIndex(secondIndexName);
+			if (secondIndex != nullptr)
 			{
-				m_functions[name] = CFunction::Create(m_variables[firstIndexName], sign, m_variables[secondIndexName]);
-				m_variables[firstIndexName]->AddDependentFunction(m_functions[name]);
-				m_functions[name]->AddDependentVariable(m_variables[firstIndexName]);
-				if (firstIndexName != secondIndexName)
-				{
-					m_variables[secondIndexName]->AddDependentFunction(m_functions[name]);
-					m_functions[name]->AddDependentVariable(m_variables[secondIndexName]);
-				}
-			}
-			else if (m_functions.find(secondIndexName) != m_functions.end())
-			{
-				m_functions[name] = CFunction::Create(m_variables[firstIndexName], sign, m_functions[secondIndexName]);
-				std::vector<std::shared_ptr<CVariable>> dependentVariables = MergeVector(m_functions[secondIndexName]->GetDependentVariables(), std::vector<std::shared_ptr<CVariable>> {m_variables[firstIndexName]});
+				std::vector<std::shared_ptr<CVariable>> dependentVariables = GetDependentVariables(firstIndexName);
+				dependentVariables = MergeVector(dependentVariables, GetDependentVariables(secondIndexName));
+				m_functions[name] = CFunction::Create(firstIndex, sign, secondIndex);
 				for (std::shared_ptr<CVariable> variable : dependentVariables)
 				{
 					variable->AddDependentFunction(m_functions[name]);
 				}
 				m_functions[name]->AddDependentVariables(dependentVariables);
+			}
+			else
+			{
+				throw std::invalid_argument("Element " + secondIndexName + " does not exist");
 			}
 		}
-		else if (m_functions.find(firstIndexName) != m_functions.end())
+		else
 		{
-			if (m_variables.find(secondIndexName) != m_variables.end())
-			{
-				m_functions[name] = CFunction::Create(m_functions[firstIndexName], sign, m_variables[secondIndexName]);
-				std::vector<std::shared_ptr<CVariable>> dependentVariables = MergeVector(m_functions[firstIndexName]->GetDependentVariables(), std::vector<std::shared_ptr<CVariable>> {m_variables[secondIndexName]});
-				for (std::shared_ptr<CVariable> variable : dependentVariables)
-				{
-					variable->AddDependentFunction(m_functions[name]);
-				}
-				m_functions[name]->AddDependentVariables(dependentVariables);
-			}
-			else if (m_functions.find(secondIndexName) != m_functions.end())
-			{
-				m_functions[name] = CFunction::Create(m_functions[firstIndexName], sign, m_functions[secondIndexName]);
-				std::vector<std::shared_ptr<CVariable>> dependentVariables = MergeVector(m_functions[firstIndexName]->GetDependentVariables(), m_functions[secondIndexName]->GetDependentVariables());
-				for (std::shared_ptr<CVariable> variable : dependentVariables)
-				{
-					variable->AddDependentFunction(m_functions[name]);
-				}
-				m_functions[name]->AddDependentVariables(dependentVariables);
-			}
+			throw std::invalid_argument("Element " + firstIndexName + " does not exist");
 		}
+	}
+	else
+	{
+		throw std::invalid_argument("Name " + name + " busy");
 	}
 }
 

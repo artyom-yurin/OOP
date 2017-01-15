@@ -34,6 +34,8 @@ public:
 	std::map<std::string, std::shared_ptr<CFunction>> GetFunctions() const;
 
 private:
+	std::vector<std::shared_ptr<CVariable>> GetDependentVariables(std::string const & indexName);
+
 	std::map<std::string, std::shared_ptr<CVariable>> m_variables;
 	std::map<std::string, std::shared_ptr<CFunction>> m_functions;
 };

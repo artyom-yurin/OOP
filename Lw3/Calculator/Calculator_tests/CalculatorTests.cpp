@@ -88,6 +88,14 @@ BOOST_FIXTURE_TEST_SUITE(Calculator, CalcFixture)
 		BOOST_CHECK(calc.GetVariables().empty());
 	}
 
+	BOOST_AUTO_TEST_CASE(can_not_declare_function_with_with_the_not_creation_indexes)
+	{
+		BOOST_CHECK_THROW(calc.Fn("fn", "var"), std::invalid_argument);
+		BOOST_CHECK_THROW(calc.Fn("var", "var", Sign::plus, "var"), std::invalid_argument);
+		calc.Var("var1");
+		BOOST_CHECK_THROW(calc.Fn("var", "var1", Sign::plus, "var"), std::invalid_argument);
+	}
+
 	BOOST_AUTO_TEST_CASE(can_check_name_on_valid)
 	{
 		BOOST_CHECK(calc.isValidName("var"));
@@ -171,6 +179,12 @@ BOOST_FIXTURE_TEST_SUITE(Calculator, CalcFixture)
 			BOOST_CHECK_EQUAL(calc.GetFunctions()["fn1"]->GetResult(), calc.GetVariables()["var"]->GetResult() * 2);
 			calc.Fn("fn2", "var", Sign::minus, "fn");
 			BOOST_CHECK_EQUAL(calc.GetFunctions()["fn2"]->GetResult(), 0);
+		}
+
+		BOOST_AUTO_TEST_CASE(can_not_declare_function_with_employed_name)
+		{
+			BOOST_CHECK_THROW(calc.Fn("var", "var"), std::invalid_argument);
+			BOOST_CHECK_THROW(calc.Fn("var", "var", Sign::plus, "var"), std::invalid_argument);
 		}
 
 		BOOST_AUTO_TEST_CASE(can_print_variable_with_nan_value)

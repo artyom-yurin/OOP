@@ -14,7 +14,7 @@ std::shared_ptr<CVariable> CVariable::Create(double value)
 
 void CVariable::SetValue(double value)
 {
-	if (m_value == value)
+	if (m_value != value)
 	{
 		m_value = value;
 		for (std::weak_ptr<CFunction> function : m_dependentFunctions)
