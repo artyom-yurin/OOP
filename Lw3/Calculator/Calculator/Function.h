@@ -31,6 +31,8 @@ public:
 
 	CFunction(std::shared_ptr<CIndex> const & firstIndex, Sign sign, std::shared_ptr<CIndex> const & secondIndex);
 
+	void Clear();
+
 private:
 
 	std::shared_ptr<CIndex> m_firstIndex = nullptr;

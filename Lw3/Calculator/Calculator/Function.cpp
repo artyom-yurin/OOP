@@ -38,6 +38,13 @@ CFunction::CFunction(std::shared_ptr<CIndex> const & firstIndex, Sign sign, std:
 	m_secondIndex = secondIndex;
 }
 
+void CFunction::Clear()
+{
+	m_dependentVariables.clear();
+	m_firstIndex = nullptr;
+	m_secondIndex = nullptr;
+}
+
 std::shared_ptr<CFunction> CFunction::Create(std::shared_ptr<CIndex> const & index)
 {
 	return std::make_shared<CFunction>(index);

@@ -3,8 +3,10 @@
 
 CCalc::~CCalc()
 {
-	m_variables.erase(m_variables.begin(), m_variables.end());
-	m_functions.erase(m_functions.begin(), m_functions.end());
+	for (auto & function : m_functions)
+	{
+		function.second->Clear();
+	}
 }
 
 bool CCalc::isValidName(std::string const & name) const
@@ -213,11 +215,6 @@ void CCalc::PrintFns(std::ostream & output)
 		<< std::setprecision(2);
 	for (auto function : m_functions)
 	{
-		if (function.first == "fib9999")
-		{
-			auto b = 42;
-			b++;
-		}
 		output << function.first << ":";
 		double value = function.second->GetResult();
 		if (std::isnan(value))
