@@ -7,7 +7,7 @@ class CCalc
 public:
 	CCalc() = default;
 
-	~CCalc() = default;
+	~CCalc();
 
 	bool isValidName(std::string const & name) const;
 
