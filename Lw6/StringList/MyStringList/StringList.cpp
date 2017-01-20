@@ -114,6 +114,26 @@ const CStringList::CIterator CStringList::cend() const
 	return CIterator(m_lastNode);
 }
 
+//std::reverse_iterator<CStringList::CIterator> CStringList::rbegin()
+//{
+//	return std::reverse_iterator<CStringList::CIterator>(end());
+//}
+//
+//std::reverse_iterator<CStringList::CIterator> CStringList::rend()
+//{
+//	return std::reverse_iterator<CStringList::CIterator>(begin());
+//}
+//
+//std::reverse_iterator<const CStringList::CIterator> CStringList::crbegin() const
+//{
+//	return std::reverse_iterator<const CStringList::CIterator>(cend());
+//}
+//
+//std::reverse_iterator<const CStringList::CIterator> CStringList::crend() const
+//{
+//	return std::reverse_iterator<const CStringList::CIterator>(cbegin());
+//}
+
 std::string & CStringList::GetBackElement()
 {
 	return m_lastNode->prev->data;

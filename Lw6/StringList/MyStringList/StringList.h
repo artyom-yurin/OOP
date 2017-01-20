@@ -49,6 +49,12 @@ public:
 	const CIterator cbegin()const;
 	const CIterator cend()const;
 
+	/*std::reverse_iterator<CIterator> rbegin();
+	std::reverse_iterator<CIterator> rend();
+
+	std::reverse_iterator<const CIterator> crbegin() const;
+	std::reverse_iterator<const CIterator> crend() const;*/
+
 	std::string & GetBackElement();
 	std::string const& GetBackElement()const;
 	std::string & GetFrontElement();
