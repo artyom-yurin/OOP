@@ -1,8 +1,28 @@
 #include "stdafx.h"
 #include "StringList.h"
-#include <cassert>
 
-using namespace std;
+void ClearLinks(std::shared_ptr<Node> const & firstNode)
+{
+	auto currentNode = firstNode;
+	auto nextNode = firstNode->next;
+	while (nextNode != nullptr)
+	{
+		currentNode->next = nullptr;
+		currentNode->prev = nullptr;
+		currentNode = nextNode;
+		nextNode = currentNode->next;
+	}
+}
+
+CStringList::CStringList()
+{
+	clear();
+}
+
+CStringList::~CStringList()
+{
+	ClearLinks(m_firstNode);
+}
 
 size_t CStringList::GetSize() const
 {
@@ -11,28 +31,17 @@ size_t CStringList::GetSize() const
 
 void CStringList::Append(const std::string & data)
 {
-	auto newNode = make_unique<Node>(data, m_lastNode, nullptr);
-	Node *newLastNode = newNode.get();
-	if (m_lastNode)
-	{
-		m_lastNode->next = move(newNode);
-	}
-	else
-	{
-		m_firstNode = move(newNode);
-	}
-	m_lastNode = newLastNode;
+	auto newNode = std::make_shared<Node>(data, m_lastNode->prev, m_lastNode);
+	m_lastNode->prev->next = newNode;
+	m_lastNode->prev = newNode;
 	++m_size;
 }
 
 void CStringList::push_front(const std::string & data)
 {
-	if (empty())
-	{
-		Append(data);
-	}
-	auto secondNode = move(m_firstNode);
-	m_firstNode = make_unique<Node>(data, nullptr, move(secondNode));
+	auto newNode = std::make_shared<Node>(data, m_firstNode, m_firstNode->next);
+	m_firstNode->next->prev = newNode;
+	m_firstNode->next = newNode;
 	++m_size;
 }
 
@@ -43,181 +52,161 @@ bool CStringList::empty() const
 
 void CStringList::clear()
 {
-	m_firstNode = nullptr;
-	m_lastNode = nullptr;
+	ClearLinks(m_firstNode);
+	m_firstNode->next = m_lastNode;
+	m_lastNode->prev = m_firstNode;
 	m_size = 0;
 }
 
-CStringList::CIterator CStringList::rbegin()
-{
-	if (empty())
-	{
-		return CIterator(m_firstNode.get(), true);
-	}
-	return CIterator(m_lastNode, true);
-}
-
-CStringList::CIterator CStringList::rend()
-{
-	if (empty())
-	{
-		return rbegin();
-	}
-	return CIterator(m_firstNode->prev, true);
-}
-
-const CStringList::CIterator CStringList::crbegin() const
-{
-	if (empty())
-	{
-		return CIterator(m_firstNode.get(), true);
-	}
-	return CIterator(m_lastNode, true);
-}
-
-const CStringList::CIterator CStringList::crend() const
-{
-	if (empty())
-	{
-		return crbegin();
-	}
-	return CIterator(m_firstNode->prev, true);
-}
+//CStringList::CIterator CStringList::rbegin()
+//{
+//	if (empty())
+//	{
+//		return CIterator(m_firstNode.get(), true);
+//	}
+//	return CIterator(m_lastNode, true);
+//}
+//
+//CStringList::CIterator CStringList::rend()
+//{
+//	if (empty())
+//	{
+//		return rbegin();
+//	}
+//	return CIterator(m_firstNode->prev, true);
+//}
+//
+//const CStringList::CIterator CStringList::crbegin() const
+//{
+//	if (empty())
+//	{
+//		return CIterator(m_firstNode.get(), true);
+//	}
+//	return CIterator(m_lastNode, true);
+//}
+//
+//const CStringList::CIterator CStringList::crend() const
+//{
+//	if (empty())
+//	{
+//		return crbegin();
+//	}
+//	return CIterator(m_firstNode->prev, true);
+//}
 
 CStringList::CIterator CStringList::begin()
 {
-	return CIterator(m_firstNode.get());
+	return CIterator(m_firstNode->next);
 }
 
 CStringList::CIterator CStringList::end()
 {
-	if (empty())
-	{
-		return begin();
-	}
-	return CIterator(m_lastNode->next.get());
+	return CIterator(m_lastNode);
 }
 
 const CStringList::CIterator CStringList::cbegin() const
 {
-	return CIterator(m_firstNode.get());
+	return CIterator(m_firstNode->next);
 }
 
 const CStringList::CIterator CStringList::cend() const
 {
-	if (empty())
-	{
-		return cbegin();
-	}
-	return CIterator(m_lastNode->next.get());
+	return CIterator(m_lastNode);
 }
 
 std::string & CStringList::GetBackElement()
 {
-	assert(m_lastNode);
-	return m_lastNode->data;
+	return m_lastNode->prev->data;
 }
 
 std::string const & CStringList::GetBackElement() const
 {
-	assert(m_lastNode);
-	return m_lastNode->data;
+	return m_lastNode->prev->data;
 }
 
 std::string & CStringList::GetFrontElement()
 {
-	assert(m_firstNode);
-	return m_firstNode->data;
+	return m_firstNode->next->data;
 }
 
 std::string const & CStringList::GetFrontElement() const
 {
-	assert(m_firstNode);
-	return m_firstNode->data;
+	return m_firstNode->next->data;
 }
 
 void CStringList::insert(const CIterator & it, const std::string & data)
 {
-	if (it == begin())
-	{
-		push_front(data);
-	}
-	else if (it == end())
-	{
-		Append(data);
-	}
-	else
-	{
-		auto newNode = std::make_unique<Node>(data, it.m_node->prev, move(it.m_node->prev->next));
-		it.m_node->prev = std::move(newNode.get());
-		newNode->prev->next = std::move(newNode);
-		++m_size;
-	}
+	auto newNode = std::make_shared<Node>(data, it.m_node->prev, it.m_node);
+	it.m_node->prev->next = newNode;
+	it.m_node->prev = newNode;
+	++m_size;
 }
 
 void CStringList::erase(const CIterator & it)
 {
-	if (m_size == 1)
+	if (!it.m_node->prev || !it.m_node->next)
 	{
-		clear();
-		return;
+		throw std::logic_error("can not deleted the element of end or rend iterator");
 	}
-	else if (it == begin())
-	{
-		m_firstNode = move(it.m_node->next);
-		m_firstNode->prev = nullptr;
-	}
-	else if (it == end())
-	{
-		m_lastNode = move(m_lastNode->prev);
-		m_lastNode->next = nullptr;
-	}
-	else
-	{
-		it.m_node->next->prev = move(it.m_node->prev);
-		it.m_node->prev->next = move(it.m_node->next);
-	}
+	it.m_node->next->prev = it.m_node->prev;
+	it.m_node->prev->next = it.m_node->next;
 	--m_size;
 }
 
-CStringList::CIterator::CIterator(Node * node, bool isReverse)
-	:m_node(node),
-	m_isReverse(isReverse)
+CStringList::CIterator::CIterator(std::shared_ptr<Node> const & node)
+	:m_node(node)
 {
 }
 
 std::string & CStringList::CIterator::operator*() const
 {
+	if (!m_node->prev || !m_node->next)
+	{
+		throw std::logic_error("can not take the value of end or rend iterator");
+	}
 	return m_node->data;
 }
 
 CStringList::CIterator & CStringList::CIterator::operator++()
 {
-	if (m_isReverse)
+	if (!m_node->next)
 	{
-		m_node = m_node->prev;
+		throw std::logic_error("reached the end of the list");
 	}
-	else
-	{
-		m_node = m_node->next.get();
-	}
+	m_node = m_node->next;
 	return *this;
+}
+
+CStringList::CIterator CStringList::CIterator::operator++(int)
+{
+	auto copy = *this;
+	++*this;
+	return copy;
 }
 
 CStringList::CIterator & CStringList::CIterator::operator--()
 {
-	if (m_isReverse)
+	if (!m_node->prev->prev)
 	{
-		m_node = m_node->next.get();
+		throw std::logic_error("reached the begin of the list");
 	}
-	else
-	{
-		m_node = m_node->prev;
-	}
+	m_node = m_node->prev;
 	return *this;
+}
+
+CStringList::CIterator CStringList::CIterator::operator--(int)
+{
+	auto copy = *this;
+	--*this;
+	return copy;
 }
 
 bool CStringList::CIterator::operator==(const CStringList::CIterator & it) const
 {
 	return (m_node == it.m_node);
+}
+
+bool CStringList::CIterator::operator!=(const CStringList::CIterator & it) const
+{
+	return (m_node != it.m_node);
 }

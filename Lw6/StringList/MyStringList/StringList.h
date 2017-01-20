@@ -3,19 +3,22 @@
 #include <string>
 #include <memory>
 
+struct Node
+{
+	Node(std::string const & data, std::shared_ptr<Node> const & prev, std::shared_ptr<Node> const & next)
+		: data(data), prev(prev), next(next)
+	{
+	}
+	std::string data;
+	std::shared_ptr<Node> prev;
+	std::shared_ptr<Node> next;
+};
+
 class CStringList
 {
-	struct Node
-	{
-		Node(const std::string & data, Node * prev, std::unique_ptr<Node> && next)
-			: data(data), prev(prev), next(std::move(next))
-		{
-		}
-		std::string data;
-		Node *prev;
-		std::unique_ptr<Node> next;
-	};
 public:
+	CStringList();
+	~CStringList();
 	size_t GetSize()const;
 	void Append(const std::string& data);
 	void push_front(const std::string& data);
@@ -25,24 +28,20 @@ public:
 	class CIterator
 	{
 		friend CStringList;
-		CIterator(Node *node, bool isReverse = false);
+		CIterator(std::shared_ptr<Node> const & node);
 	public:
 		CIterator() = default;
 		std::string & operator*()const;
 		CIterator & operator++();
+		CIterator operator++(int);
 		CIterator & operator--();
+		CIterator operator--(int);
 		bool operator==(const CIterator & it) const;
+		bool operator!=(const CIterator & it) const;
 
 	private:
-		Node *m_node = nullptr;
-		bool m_isReverse = false;
+		std::shared_ptr<Node> m_node = nullptr;
 	};
-
-	CIterator rbegin();
-	CIterator rend();
-
-	const CIterator crbegin() const;
-	const CIterator crend() const;
 
 	CIterator begin();
 	CIterator end();
@@ -59,6 +58,6 @@ public:
 	void erase(const CIterator & it);
 private:
 	size_t m_size = 0;
-	std::unique_ptr<Node> m_firstNode;
-	Node * m_lastNode = nullptr;
+	std::shared_ptr<Node> m_firstNode = std::make_shared<Node>("", nullptr, nullptr);
+	std::shared_ptr<Node> m_lastNode = std::make_shared<Node>("", nullptr, nullptr);
 };

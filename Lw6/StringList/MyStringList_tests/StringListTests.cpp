@@ -18,9 +18,9 @@ BOOST_FIXTURE_TEST_SUITE(String_list, EmptyStringList)
 			BOOST_CHECK(list.empty());
 		}
 
-BOOST_AUTO_TEST_SUITE_END()
+	BOOST_AUTO_TEST_SUITE_END()
 
-BOOST_AUTO_TEST_SUITE(after_appeding_a_string)
+	BOOST_AUTO_TEST_SUITE(after_appeding_a_string)
 
 		BOOST_AUTO_TEST_CASE(can_be_clear)
 		{
@@ -82,7 +82,8 @@ BOOST_AUTO_TEST_SUITE(after_appeding_a_string)
 		{
 			list.Append("hello");
 			list.Append("hi");
-			auto it = list.rbegin();
+			auto it = list.end();
+			--it;
 			BOOST_CHECK_EQUAL(addressof(*it), addressof(list.GetBackElement()));
 		}
 
@@ -90,7 +91,8 @@ BOOST_AUTO_TEST_SUITE(after_appeding_a_string)
 		{
 			list.Append("hello");
 			list.Append("hi");
-			auto it = list.crbegin();
+			auto it = list.cend();
+			--it;
 			BOOST_CHECK_EQUAL(addressof(*it), addressof(list.GetBackElement()));
 		}
 
@@ -119,30 +121,29 @@ BOOST_AUTO_TEST_SUITE(after_appeding_a_string)
 		{
 			list.Append("first");
 			list.Append("second");
-			list.Append("third");
-			list.Append("fourth");
-			auto it = list.begin();
-			++it;
+			auto it = list.cbegin();
 			list.erase(it);
 			it = list.begin();
-			list.erase(it);
-			it = list.end();
-			list.erase(it);
-			it = list.begin();
-			BOOST_CHECK_EQUAL(*it, "third");
+			BOOST_CHECK_EQUAL(*it, "second");
+			it = list.cend();
+			BOOST_CHECK_THROW(list.erase(it), std::logic_error);
 		}
 
 	BOOST_AUTO_TEST_SUITE_END()
 
 	BOOST_AUTO_TEST_SUITE(iterator)
 
-		BOOST_AUTO_TEST_CASE(when_list_is_empty_begin_and_end_iterator_are_equal)
+		BOOST_AUTO_TEST_CASE(can_be_compared)
 		{
-			CStringList emptyList;
-			BOOST_CHECK(emptyList.begin() == emptyList.end());
-			BOOST_CHECK(emptyList.cbegin() == emptyList.cend());
-			BOOST_CHECK(emptyList.rbegin() == emptyList.rend());
-			BOOST_CHECK(emptyList.crbegin() == emptyList.crend());
+			 BOOST_CHECK(list.begin() == list.begin());
+			 list.Append("hello");
+			 BOOST_CHECK(list.begin() != list.end());
+		}
+
+		BOOST_AUTO_TEST_CASE(can_not_take_the_value_of_end_or_rend_iterator)
+		{
+			auto it = list.end();
+			BOOST_CHECK_THROW(*it, std::logic_error);
 		}
 
 		BOOST_AUTO_TEST_CASE(can_be_increnenting_and_decrementing)
@@ -150,11 +151,16 @@ BOOST_AUTO_TEST_SUITE(after_appeding_a_string)
 			list.Append("first");
 			list.Append("second");
 			auto iter = list.begin();
+			BOOST_CHECK_THROW(--iter, std::logic_error);
 			BOOST_CHECK_EQUAL(*iter, "first");
 			++iter;
 			BOOST_CHECK_EQUAL(*iter, "second");
 			--iter;
 			BOOST_CHECK_EQUAL(*iter, "first");
+			BOOST_CHECK_EQUAL(*(iter++), "first");
+			BOOST_CHECK_EQUAL(*(iter--), "second");
+			iter = list.end();
+			BOOST_CHECK_THROW(++iter, std::logic_error);
 		}
 
 	BOOST_AUTO_TEST_SUITE_END()
