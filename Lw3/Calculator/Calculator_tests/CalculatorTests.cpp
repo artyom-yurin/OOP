@@ -96,6 +96,12 @@ BOOST_FIXTURE_TEST_SUITE(Calculator, CalcFixture)
 		BOOST_CHECK_THROW(calc.Fn("var", "var1", Sign::plus, "var"), std::invalid_argument);
 	}
 
+	BOOST_AUTO_TEST_CASE(can_not_declare_variables_with_busy_name)
+	{
+		calc.Var("var");
+		BOOST_CHECK_THROW(calc.Var("var"), std::invalid_argument);
+	}
+
 	BOOST_AUTO_TEST_CASE(can_check_name_on_valid)
 	{
 		BOOST_CHECK(calc.isValidName("var"));
@@ -142,6 +148,21 @@ BOOST_FIXTURE_TEST_SUITE(Calculator, CalcFixture)
 	{
 		calc.Let("var", 10);
 		BOOST_CHECK_EQUAL(calc.GetVariables()["var"]->GetResult(), 10);
+	}
+
+	BOOST_AUTO_TEST_CASE(can_not_set_value_for_function)
+	{
+		calc.Var("var");
+		calc.Fn("fn", "var");
+		BOOST_CHECK_THROW(calc.Let("fn", 10), std::invalid_argument);
+		BOOST_CHECK_THROW(calc.Let("fn", "var"), std::invalid_argument);
+	}
+
+	BOOST_AUTO_TEST_CASE(can_not_set_value_with_not_exist_index)
+	{
+		BOOST_CHECK_THROW(calc.Let("var", "var"), std::invalid_argument);
+		calc.Var("var");
+		BOOST_CHECK_THROW(calc.Let("var", "var1"), std::invalid_argument);
 	}
 
 	struct declareted_variable_ : CalcFixture

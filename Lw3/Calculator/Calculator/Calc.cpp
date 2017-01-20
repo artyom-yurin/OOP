@@ -49,6 +49,10 @@ void CCalc::Var(std::string const & name)
 	{
 		m_variables[name] = CVariable::Create();
 	}
+	else
+	{
+		throw std::invalid_argument("Name " + name + " busy");
+	}
 }
 
 void CCalc::Let(std::string const & name, double value)
@@ -63,6 +67,10 @@ void CCalc::Let(std::string const & name, double value)
 		{
 			m_variables[name] = CVariable::Create(value);
 		}
+	}
+	else
+	{
+		throw std::invalid_argument(name + " is not a variable");
 	}
 }
 
@@ -80,6 +88,10 @@ void CCalc::Let(std::string const & name, std::string const & indexName)
 			{
 				m_variables[name]->SetValue(m_functions[indexName]->GetResult());
 			}
+			else
+			{
+				throw std::invalid_argument("Element " + indexName + " does not exist");
+			}
 		}
 		else
 		{
@@ -91,7 +103,15 @@ void CCalc::Let(std::string const & name, std::string const & indexName)
 			{
 				m_variables[name] = CVariable::Create(m_functions[indexName]->GetResult());
 			}
+			else
+			{
+				throw std::invalid_argument("Element " + indexName + " does not exist");
+			}
 		}
+	}
+	else
+	{
+		throw std::invalid_argument(name + " is not a variable");
 	}
 }
 
