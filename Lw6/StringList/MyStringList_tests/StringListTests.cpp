@@ -96,6 +96,26 @@ BOOST_FIXTURE_TEST_SUITE(String_list, EmptyStringList)
 			BOOST_CHECK_EQUAL(addressof(*it), addressof(list.GetBackElement()));
 		}
 
+		BOOST_AUTO_TEST_CASE(makes_it_accessible_via_reverse_iterator_to_last_element)
+		{
+			list.Append("hello");
+			list.Append("hi");
+			auto it = list.rbegin();
+			BOOST_CHECK_EQUAL(*it, "hi");
+			BOOST_CHECK_EQUAL(*(++it), "hello");
+			BOOST_CHECK_THROW(*(++it), std::logic_error);
+		}
+
+		BOOST_AUTO_TEST_CASE(makes_it_accessible_via_const_reverse_iterator_to_last_element)
+		{
+			list.Append("hello");
+			list.Append("hi");
+			auto it = list.crbegin();
+			BOOST_CHECK_EQUAL(*it, "hi");
+			BOOST_CHECK_EQUAL(*(++it), "hello");
+			BOOST_CHECK_THROW(*(++it), std::logic_error);
+		}
+
 		BOOST_AUTO_TEST_CASE(can_insert_element_in_place_of_the_iterator)
 		{
 			list.Append("second");
@@ -144,6 +164,12 @@ BOOST_FIXTURE_TEST_SUITE(String_list, EmptyStringList)
 		{
 			auto it = list.end();
 			BOOST_CHECK_THROW(*it, std::logic_error);
+			auto cit = list.cend();
+			BOOST_CHECK_THROW(*cit, std::logic_error);
+			auto rit = list.rend();
+			BOOST_CHECK_THROW(*rit, std::logic_error);
+			auto crit = list.crend();
+			BOOST_CHECK_THROW(*crit, std::logic_error);
 		}
 
 		BOOST_AUTO_TEST_CASE(can_be_increnenting_and_decrementing)
@@ -151,7 +177,9 @@ BOOST_FIXTURE_TEST_SUITE(String_list, EmptyStringList)
 			list.Append("first");
 			list.Append("second");
 			auto iter = list.begin();
+			--iter;
 			BOOST_CHECK_THROW(--iter, std::logic_error);
+			iter = list.begin();
 			BOOST_CHECK_EQUAL(*iter, "first");
 			++iter;
 			BOOST_CHECK_EQUAL(*iter, "second");

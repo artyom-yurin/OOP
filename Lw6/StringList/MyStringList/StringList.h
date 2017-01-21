@@ -2,6 +2,7 @@
 
 #include <string>
 #include <memory>
+#include <iterator>
 
 struct Node
 {
@@ -30,6 +31,11 @@ public:
 		friend CStringList;
 		CIterator(std::shared_ptr<Node> const & node);
 	public:
+		typedef std::bidirectional_iterator_tag iterator_category;
+		typedef std::string value_type;
+		typedef ptrdiff_t difference_type;
+		typedef std::string* pointer;
+		typedef std::string& reference;
 		CIterator() = default;
 		std::string & operator*()const;
 		CIterator & operator++();
@@ -42,18 +48,18 @@ public:
 	private:
 		std::shared_ptr<Node> m_node = nullptr;
 	};
-
+	typedef std::reverse_iterator<CIterator> CReverseIterator;
 	CIterator begin();
 	CIterator end();
 
 	const CIterator cbegin()const;
 	const CIterator cend()const;
 
-	/*std::reverse_iterator<CIterator> rbegin();
-	std::reverse_iterator<CIterator> rend();
+	CReverseIterator rbegin();
+	CReverseIterator rend();
 
-	std::reverse_iterator<const CIterator> crbegin() const;
-	std::reverse_iterator<const CIterator> crend() const;*/
+	const CReverseIterator crbegin() const;
+	const CReverseIterator crend() const;
 
 	std::string & GetBackElement();
 	std::string const& GetBackElement()const;

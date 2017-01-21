@@ -58,42 +58,6 @@ void CStringList::clear()
 	m_size = 0;
 }
 
-//CStringList::CIterator CStringList::rbegin()
-//{
-//	if (empty())
-//	{
-//		return CIterator(m_firstNode.get(), true);
-//	}
-//	return CIterator(m_lastNode, true);
-//}
-//
-//CStringList::CIterator CStringList::rend()
-//{
-//	if (empty())
-//	{
-//		return rbegin();
-//	}
-//	return CIterator(m_firstNode->prev, true);
-//}
-//
-//const CStringList::CIterator CStringList::crbegin() const
-//{
-//	if (empty())
-//	{
-//		return CIterator(m_firstNode.get(), true);
-//	}
-//	return CIterator(m_lastNode, true);
-//}
-//
-//const CStringList::CIterator CStringList::crend() const
-//{
-//	if (empty())
-//	{
-//		return crbegin();
-//	}
-//	return CIterator(m_firstNode->prev, true);
-//}
-
 CStringList::CIterator CStringList::begin()
 {
 	return CIterator(m_firstNode->next);
@@ -114,25 +78,25 @@ const CStringList::CIterator CStringList::cend() const
 	return CIterator(m_lastNode);
 }
 
-//std::reverse_iterator<CStringList::CIterator> CStringList::rbegin()
-//{
-//	return std::reverse_iterator<CStringList::CIterator>(end());
-//}
-//
-//std::reverse_iterator<CStringList::CIterator> CStringList::rend()
-//{
-//	return std::reverse_iterator<CStringList::CIterator>(begin());
-//}
-//
-//std::reverse_iterator<const CStringList::CIterator> CStringList::crbegin() const
-//{
-//	return std::reverse_iterator<const CStringList::CIterator>(cend());
-//}
-//
-//std::reverse_iterator<const CStringList::CIterator> CStringList::crend() const
-//{
-//	return std::reverse_iterator<const CStringList::CIterator>(cbegin());
-//}
+CStringList::CReverseIterator CStringList::rbegin()
+{
+	return CReverseIterator(end());
+}
+
+CStringList::CReverseIterator CStringList::rend()
+{
+	return CReverseIterator(begin());
+}
+
+const CStringList::CReverseIterator CStringList::crbegin() const
+{
+	return CReverseIterator(cend());
+}
+
+const CStringList::CReverseIterator CStringList::crend() const
+{
+	return CReverseIterator(cbegin());
+}
 
 std::string & CStringList::GetBackElement()
 {
@@ -206,7 +170,7 @@ CStringList::CIterator CStringList::CIterator::operator++(int)
 
 CStringList::CIterator & CStringList::CIterator::operator--()
 {
-	if (!m_node->prev->prev)
+	if (!m_node->prev)
 	{
 		throw std::logic_error("reached the begin of the list");
 	}
