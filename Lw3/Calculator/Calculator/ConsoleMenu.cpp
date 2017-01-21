@@ -162,7 +162,7 @@ void CConsoleMenu::CommandLet(std::istream & stream, std::ostream & output)
 	}
 	auto positionEqual = expression.find("=");
 	std::stringstream buffer;
-	buffer << expression.substr(0, positionEqual);
+	buffer << expression.substr(0, positionEqual) << " ";
 	buffer << expression.substr(positionEqual + 1);
 	std::string name;
 	buffer >> name;
