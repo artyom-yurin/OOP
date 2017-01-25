@@ -68,6 +68,16 @@ CStringList::CIterator CStringList::end()
 	return CIterator(m_lastNode);
 }
 
+const CStringList::CIterator CStringList::begin() const
+{
+	return CIterator(m_firstNode->next);
+}
+
+const CStringList::CIterator CStringList::end() const
+{
+	return CIterator(m_lastNode);
+}
+
 const CStringList::CIterator CStringList::cbegin() const
 {
 	return CIterator(m_firstNode->next);

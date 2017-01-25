@@ -118,15 +118,20 @@ BOOST_FIXTURE_TEST_SUITE(String_list, EmptyStringList)
 
 		BOOST_AUTO_TEST_CASE(can_insert_element_in_place_of_the_iterator)
 		{
+			BOOST_CHECK(list.empty());
 			list.Append("second");
 			auto it = list.begin();
+			BOOST_CHECK_EQUAL(list.GetSize(), 1);
 			list.insert(it, "first");
 			++it;
+			BOOST_CHECK_EQUAL(list.GetSize(), 2);
 			list.insert(it, "fourth");
+			BOOST_CHECK_EQUAL(list.GetSize(), 3);
 			it = list.begin();
 			++it;
 			++it;
 			list.insert(it, "third");
+			BOOST_CHECK_EQUAL(list.GetSize(), 4);
 			it = list.begin();
 			BOOST_CHECK_EQUAL(*it, "first");
 			++it;
@@ -141,7 +146,7 @@ BOOST_FIXTURE_TEST_SUITE(String_list, EmptyStringList)
 		{
 			list.Append("first");
 			list.Append("second");
-			auto it = list.cbegin();
+			auto it = list.begin();
 			list.erase(it);
 			it = list.begin();
 			BOOST_CHECK_EQUAL(*it, "second");
@@ -164,6 +169,8 @@ BOOST_FIXTURE_TEST_SUITE(String_list, EmptyStringList)
 		{
 			auto it = list.end();
 			BOOST_CHECK_THROW(*it, std::logic_error);
+			const CStringList::CIterator ccit = list.end();
+			BOOST_CHECK_THROW(*ccit, std::logic_error);
 			auto cit = list.cend();
 			BOOST_CHECK_THROW(*cit, std::logic_error);
 			auto rit = list.rend();
