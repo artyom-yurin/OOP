@@ -98,6 +98,16 @@ CStringList::CReverseIterator CStringList::rend()
 	return CReverseIterator(begin());
 }
 
+const CStringList::CReverseIterator CStringList::rbegin() const
+{
+	return CReverseIterator(end());
+}
+
+const CStringList::CReverseIterator CStringList::rend() const
+{
+	return CReverseIterator(begin());
+}
+
 const CStringList::CReverseIterator CStringList::crbegin() const
 {
 	return CReverseIterator(cend());

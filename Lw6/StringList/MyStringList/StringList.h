@@ -61,6 +61,9 @@ public:
 	CReverseIterator rbegin();
 	CReverseIterator rend();
 
+	const CReverseIterator rbegin() const;
+	const CReverseIterator rend() const;
+
 	const CReverseIterator crbegin() const;
 	const CReverseIterator crend() const;
 

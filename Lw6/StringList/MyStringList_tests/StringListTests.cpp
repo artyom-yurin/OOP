@@ -175,6 +175,8 @@ BOOST_FIXTURE_TEST_SUITE(String_list, EmptyStringList)
 			BOOST_CHECK_THROW(*cit, std::logic_error);
 			auto rit = list.rend();
 			BOOST_CHECK_THROW(*rit, std::logic_error);
+			const CStringList::CReverseIterator ccrit = list.rend();
+			BOOST_CHECK_THROW(*ccrit, std::logic_error);
 			auto crit = list.crend();
 			BOOST_CHECK_THROW(*crit, std::logic_error);
 		}
