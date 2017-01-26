@@ -50,6 +50,14 @@ public:
 		bool operator!=(const CIterator & it) const;
 
 	private:
+		Node * CIterator::operator->() const
+		{
+			if (!m_node->next || !m_node->prev)
+			{
+				throw std::logic_error("can not end or rend iterator value");
+			}
+			return m_node.get();
+		}
 		CIterator() = delete;
 		std::shared_ptr<Node> m_node = nullptr;
 	};
