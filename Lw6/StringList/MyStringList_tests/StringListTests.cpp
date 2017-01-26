@@ -10,6 +10,19 @@ struct EmptyStringList
 
 BOOST_FIXTURE_TEST_SUITE(String_list, EmptyStringList)
 	
+	BOOST_AUTO_TEST_CASE(can_be_compared)
+	{
+		CStringList otherList;
+		BOOST_CHECK(list == otherList);
+		otherList.Append("hello");
+		BOOST_CHECK(list != otherList);
+		list.Append("hello");
+		BOOST_CHECK(list == otherList);
+		list.Append("hola");
+		otherList.Append("aloh");
+		BOOST_CHECK(list != otherList);
+	}
+
 	BOOST_AUTO_TEST_CASE(can_not_get_element_from_empty_list)
 	{
 		BOOST_CHECK_THROW(list.GetFrontElement(), std::logic_error);
@@ -17,6 +30,22 @@ BOOST_FIXTURE_TEST_SUITE(String_list, EmptyStringList)
 		const CStringList constList;
 		BOOST_CHECK_THROW(constList.GetFrontElement(), std::logic_error);
 		BOOST_CHECK_THROW(constList.GetBackElement(), std::logic_error);
+	}
+
+	BOOST_AUTO_TEST_CASE(can_get_const_last_element)
+	{
+		list.Append("halo");
+		list.Append("hello");
+		const auto el = list.GetBackElement();
+		BOOST_CHECK_EQUAL(el, "hello");
+	}
+
+	BOOST_AUTO_TEST_CASE(can_get_const_first_element)
+	{
+		list.Append("halo");
+		list.Append("hello");
+		const auto el = list.GetFrontElement();
+		BOOST_CHECK_EQUAL(el, "halo");
 	}
 
 	BOOST_AUTO_TEST_CASE(can_be_copied)
@@ -195,25 +224,20 @@ BOOST_FIXTURE_TEST_SUITE(String_list, EmptyStringList)
 
 		BOOST_AUTO_TEST_CASE(can_be_compared)
 		{
-			 BOOST_CHECK(list.begin() == list.begin());
+			 BOOST_CHECK(list.begin() == list.end());
 			 list.Append("hello");
 			 BOOST_CHECK(list.begin() != list.end());
 		}
 		
 		BOOST_AUTO_TEST_CASE(can_not_take_the_value_of_end_or_rend_iterator)
 		{
-			auto it = list.end();
-			BOOST_CHECK_THROW(*it, std::logic_error);
-			const CStringList::CIterator ccit = list.end();
-			BOOST_CHECK_THROW(*ccit, std::logic_error);
-			auto cit = list.cend();
-			BOOST_CHECK_THROW(*cit, std::logic_error);
-			auto rit = list.rend();
-			BOOST_CHECK_THROW(*rit, std::logic_error);
-			const CStringList::CReverseIterator ccrit = list.rend();
-			BOOST_CHECK_THROW(*ccrit, std::logic_error);
-			auto crit = list.crend();
-			BOOST_CHECK_THROW(*crit, std::logic_error);
+			BOOST_CHECK_THROW(*list.end(), std::logic_error);
+			BOOST_CHECK_THROW(*list.cend(), std::logic_error);
+			BOOST_CHECK_THROW(*list.rend(), std::logic_error);
+			BOOST_CHECK_THROW(*list.crend(), std::logic_error);
+			const CStringList constList;
+			BOOST_CHECK_THROW(*constList.end(), std::logic_error);
+			BOOST_CHECK_THROW(*constList.rend(), std::logic_error);
 		}
 		
 		BOOST_AUTO_TEST_CASE(can_be_increnenting_and_decrementing)

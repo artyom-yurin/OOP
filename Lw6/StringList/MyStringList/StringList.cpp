@@ -77,7 +77,7 @@ void CStringList::clear()
 
 CStringList & CStringList::operator=(const CStringList & list)
 {
-	if (list != *this)
+	if (&list != this)
 	{
 		CStringList tempList(list);
 		std::swap(tempList, *this);
