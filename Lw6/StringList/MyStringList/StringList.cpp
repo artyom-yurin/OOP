@@ -155,21 +155,37 @@ const CStringList::CReverseIterator CStringList::crend() const
 
 std::string & CStringList::GetBackElement()
 {
+	if (empty())
+	{
+		throw std::logic_error("list is empty");
+	}
 	return m_lastNode->prev->data;
 }
 
 std::string const & CStringList::GetBackElement() const
 {
+	if (empty())
+	{
+		throw std::logic_error("list is empty");
+	}
 	return m_lastNode->prev->data;
 }
 
 std::string & CStringList::GetFrontElement()
 {
+	if (empty())
+	{
+		throw std::logic_error("list is empty");
+	}
 	return m_firstNode->next->data;
 }
 
 std::string const & CStringList::GetFrontElement() const
 {
+	if (empty())
+	{
+		throw std::logic_error("list is empty");
+	}
 	return m_firstNode->next->data;
 }
 

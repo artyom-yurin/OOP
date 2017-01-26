@@ -10,6 +10,15 @@ struct EmptyStringList
 
 BOOST_FIXTURE_TEST_SUITE(String_list, EmptyStringList)
 	
+	BOOST_AUTO_TEST_CASE(can_not_get_element_from_empty_list)
+	{
+		BOOST_CHECK_THROW(list.GetFrontElement(), std::logic_error);
+		BOOST_CHECK_THROW(list.GetBackElement(), std::logic_error);
+		const CStringList constList;
+		BOOST_CHECK_THROW(constList.GetFrontElement(), std::logic_error);
+		BOOST_CHECK_THROW(constList.GetBackElement(), std::logic_error);
+	}
+
 	BOOST_AUTO_TEST_CASE(can_be_copied)
 	{
 		CStringList tempList;
