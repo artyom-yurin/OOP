@@ -41,7 +41,6 @@ public:
 		typedef ptrdiff_t difference_type;
 		typedef std::string* pointer;
 		typedef std::string& reference;
-		CIterator() = default;
 		std::string & operator*()const;
 		CIterator & operator++();
 		CIterator operator++(int);
@@ -51,6 +50,7 @@ public:
 		bool operator!=(const CIterator & it) const;
 
 	private:
+		CIterator() = delete;
 		std::shared_ptr<Node> m_node = nullptr;
 	};
 	typedef std::reverse_iterator<CIterator> CReverseIterator;
