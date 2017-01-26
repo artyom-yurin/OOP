@@ -19,12 +19,17 @@ class CStringList
 {
 public:
 	CStringList();
+	CStringList(const CStringList & list);
+	CStringList(CStringList && list);
 	~CStringList();
 	size_t GetSize()const;
 	void Append(const std::string& data);
 	void push_front(const std::string& data);
 	bool empty()const;
 	void clear();
+
+	CStringList & operator=(const CStringList & list);
+	CStringList & operator=(CStringList && list);
 
 	class CIterator
 	{
@@ -79,3 +84,6 @@ private:
 	std::shared_ptr<Node> m_firstNode = std::make_shared<Node>("", nullptr, nullptr);
 	std::shared_ptr<Node> m_lastNode = std::make_shared<Node>("", nullptr, nullptr);
 };
+
+bool operator==(const CStringList & lhs, const CStringList & rhs);
+bool operator!=(const CStringList & lhs, const CStringList & rhs);

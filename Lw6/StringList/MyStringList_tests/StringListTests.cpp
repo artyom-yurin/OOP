@@ -9,6 +9,32 @@ struct EmptyStringList
 };
 
 BOOST_FIXTURE_TEST_SUITE(String_list, EmptyStringList)
+	
+	BOOST_AUTO_TEST_CASE(can_be_copied)
+	{
+		CStringList tempList;
+		tempList.Append("hello");
+		tempList.Append("hi");
+		tempList.Append("hola");
+		list = tempList;
+		BOOST_CHECK_EQUAL(tempList.GetSize(), 3);
+		BOOST_CHECK_EQUAL(list.GetSize(), 3);
+		auto it = list.begin();
+		BOOST_CHECK_EQUAL(*it, "hello");
+	}
+	
+	BOOST_AUTO_TEST_CASE(can_be_moved)
+	{
+		CStringList tempList;
+		tempList.Append("hello");
+		tempList.Append("hi");
+		tempList.Append("hola");
+		list = std::move(tempList);
+		BOOST_CHECK_EQUAL(tempList.GetSize(), 0);
+		BOOST_CHECK_EQUAL(list.GetSize(), 3);
+		auto it = list.begin();
+		BOOST_CHECK_EQUAL(*it, "hello");
+	}
 
 	BOOST_AUTO_TEST_SUITE(when_created)
 
@@ -150,7 +176,7 @@ BOOST_FIXTURE_TEST_SUITE(String_list, EmptyStringList)
 			list.erase(it);
 			it = list.begin();
 			BOOST_CHECK_EQUAL(*it, "second");
-			it = list.cend();
+			it = list.end();
 			BOOST_CHECK_THROW(list.erase(it), std::logic_error);
 		}
 
@@ -164,7 +190,7 @@ BOOST_FIXTURE_TEST_SUITE(String_list, EmptyStringList)
 			 list.Append("hello");
 			 BOOST_CHECK(list.begin() != list.end());
 		}
-
+		
 		BOOST_AUTO_TEST_CASE(can_not_take_the_value_of_end_or_rend_iterator)
 		{
 			auto it = list.end();
@@ -180,7 +206,7 @@ BOOST_FIXTURE_TEST_SUITE(String_list, EmptyStringList)
 			auto crit = list.crend();
 			BOOST_CHECK_THROW(*crit, std::logic_error);
 		}
-
+		
 		BOOST_AUTO_TEST_CASE(can_be_increnenting_and_decrementing)
 		{
 			list.Append("first");

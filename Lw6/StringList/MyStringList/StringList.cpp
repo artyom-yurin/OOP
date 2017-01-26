@@ -19,6 +19,23 @@ CStringList::CStringList()
 	clear();
 }
 
+CStringList::CStringList(const CStringList & list)
+{
+	CStringList tempList;
+	for (auto it = list.begin(); it != list.end(); ++it)
+	{
+		tempList.Append(*it);
+	}
+	std::swap(tempList, *this);
+}
+
+CStringList::CStringList(CStringList && list)
+{
+	std::swap(m_firstNode, list.m_firstNode);
+	std::swap(m_lastNode, list.m_lastNode);
+	std::swap(m_size, list.m_size);
+}
+
 CStringList::~CStringList()
 {
 	ClearLinks(m_firstNode);
@@ -56,6 +73,24 @@ void CStringList::clear()
 	m_firstNode->next = m_lastNode;
 	m_lastNode->prev = m_firstNode;
 	m_size = 0;
+}
+
+CStringList & CStringList::operator=(const CStringList & list)
+{
+	if (list != *this)
+	{
+		CStringList tempList(list);
+		std::swap(tempList, *this);
+	}
+	return *this;
+}
+
+CStringList & CStringList::operator=(CStringList && list)
+{
+	std::swap(m_firstNode, list.m_firstNode);
+	std::swap(m_lastNode, list.m_lastNode);
+	std::swap(m_size, list.m_size);
+	return *this;
 }
 
 CStringList::CIterator CStringList::begin()
@@ -213,4 +248,30 @@ bool CStringList::CIterator::operator==(const CStringList::CIterator & it) const
 bool CStringList::CIterator::operator!=(const CStringList::CIterator & it) const
 {
 	return (m_node != it.m_node);
+}
+
+bool operator==(const CStringList & lhs, const CStringList & rhs)
+{
+	if (&lhs == &rhs)
+	{
+		return true;
+	}
+	if (lhs.GetSize() == rhs.GetSize())
+	{
+		auto rhsIt = rhs.begin();
+		for (auto lhsIt = lhs.begin(); lhsIt != lhs.end(); ++lhsIt, ++rhsIt)
+		{
+			if (*lhsIt != *rhsIt)
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+	return false;
+}
+
+bool operator!=(const CStringList & lhs, const CStringList & rhs)
+{
+	return !(lhs == rhs);
 }
