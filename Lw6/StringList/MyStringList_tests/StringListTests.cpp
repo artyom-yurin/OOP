@@ -12,6 +12,7 @@ BOOST_FIXTURE_TEST_SUITE(String_list, EmptyStringList)
 	
 	BOOST_AUTO_TEST_CASE(can_be_compared)
 	{
+		BOOST_CHECK(list == list);
 		CStringList otherList;
 		BOOST_CHECK(list == otherList);
 		otherList.Append("hello");
