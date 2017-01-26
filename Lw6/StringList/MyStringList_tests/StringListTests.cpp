@@ -36,16 +36,16 @@ BOOST_FIXTURE_TEST_SUITE(String_list, EmptyStringList)
 	{
 		list.Append("halo");
 		list.Append("hello");
-		const auto el = list.GetBackElement();
-		BOOST_CHECK_EQUAL(el, "hello");
+		const auto constList(list);
+		BOOST_CHECK_EQUAL(constList.GetBackElement(), "hello");
 	}
 
 	BOOST_AUTO_TEST_CASE(can_get_const_first_element)
 	{
 		list.Append("halo");
 		list.Append("hello");
-		const auto el = list.GetFrontElement();
-		BOOST_CHECK_EQUAL(el, "halo");
+		const auto constList(list);
+		BOOST_CHECK_EQUAL(constList.GetFrontElement(), "halo");
 	}
 
 	BOOST_AUTO_TEST_CASE(can_be_copied)
@@ -165,6 +165,17 @@ BOOST_FIXTURE_TEST_SUITE(String_list, EmptyStringList)
 			list.Append("hello");
 			list.Append("hi");
 			auto it = list.rbegin();
+			BOOST_CHECK_EQUAL(*it, "hi");
+			BOOST_CHECK_EQUAL(*(++it), "hello");
+			BOOST_CHECK_THROW(*(++it), std::logic_error);
+		}
+
+		BOOST_AUTO_TEST_CASE(makes_it_accessible_via_reverse_iterator_to_last_element_const)
+		{
+			list.Append("hello");
+			list.Append("hi");
+			const CStringList constList(list);
+			auto it = constList.rbegin();
 			BOOST_CHECK_EQUAL(*it, "hi");
 			BOOST_CHECK_EQUAL(*(++it), "hello");
 			BOOST_CHECK_THROW(*(++it), std::logic_error);
