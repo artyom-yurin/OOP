@@ -107,7 +107,7 @@ public:
 	class CIterator
 	{
 		friend CMyList;
-		CIterator(std::shared_ptr<Node<IterT>> const & node)
+		CIterator(std::shared_ptr<Node<T>> const & node)
 			:m_node(node)
 		{
 		}
@@ -117,6 +117,10 @@ public:
 		typedef ptrdiff_t difference_type;
 		typedef IterT* pointer;
 		typedef IterT& reference;
+		operator CIterator<const IterT>()
+		{
+			return CIterator<const IterT>(m_node);
+		}
 		IterT & operator*()const
 		{
 			if (!m_node->prev || !m_node->next)
@@ -183,7 +187,9 @@ public:
 		std::shared_ptr<Node<T>> m_node = nullptr;
 	};
 	typedef CIterator<T> IteratorType;
-	typedef std::reverse_iterator<CIterator<T>> CReverseIterator;
+	typedef CIterator<const T> ConstIteratorType;
+	typedef std::reverse_iterator<CIterator<T>> ReverseIteratorType;
+	typedef std::reverse_iterator<CIterator<const T>> ConstReverseIteratorType;
 
 	IteratorType begin()
 	{
@@ -195,54 +201,54 @@ public:
 		return IteratorType(m_lastNode);
 	}
 
-	const IteratorType begin()const
+	ConstIteratorType begin()const
 	{
-		return IteratorType(m_firstNode->next);
+		return ConstIteratorType(m_firstNode->next);
 	}
 
-	const IteratorType end()const
+	ConstIteratorType end()const
 	{
-		return IteratorType(m_lastNode);
+		return ConstIteratorType(m_lastNode);
 	}
 
-	const IteratorType cbegin()const
+	ConstIteratorType cbegin()const
 	{
-		return IteratorType(m_firstNode->next);
+		return ConstIteratorType(m_firstNode->next);
 	}
 
-	const IteratorType cend()const
+	ConstIteratorType cend()const
 	{
-		return IteratorType(m_lastNode);
+		return ConstIteratorType(m_lastNode);
 	}
 
-	CReverseIterator rbegin()
+	ReverseIteratorType rbegin()
 	{
-		return CReverseIterator(end());
+		return ReverseIteratorType(end());
 	}
 
-	CReverseIterator rend()
+	ReverseIteratorType rend()
 	{
-		return CReverseIterator(begin());
+		return ReverseIteratorType(begin());
 	}
 
-	const CReverseIterator rbegin() const
+	ConstReverseIteratorType rbegin() const
 	{
-		return CReverseIterator(end());
+		return ConstReverseIteratorType(end());
 	}
 
-	const CReverseIterator rend() const
+	ConstReverseIteratorType rend() const
 	{
-		return CReverseIterator(begin());
+		return ConstReverseIteratorType(begin());
 	}
 
-	const CReverseIterator crbegin() const
+	ConstReverseIteratorType crbegin() const
 	{
-		return CReverseIterator(cend());
+		return ConstReverseIteratorType(cend());
 	}
 
-	const CReverseIterator crend() const
+	ConstReverseIteratorType crend() const
 	{
-		return CReverseIterator(cbegin());
+		return ConstReverseIteratorType(cbegin());
 	}
 
 	T & GetBackElement()
@@ -281,7 +287,7 @@ public:
 		return *m_firstNode->next->data;
 	}
 
-	void insert(const IteratorType & it, const T & data)
+	void insert(const ConstIteratorType & it, const T & data)
 	{
 		auto newNode = std::make_shared<Node<T>>(data, it.m_node->prev, it.m_node);
 		it.m_node->prev->next = newNode;
@@ -289,7 +295,7 @@ public:
 		++m_size;
 	}
 
-	void erase(const IteratorType & it)
+	void erase(const ConstIteratorType & it)
 	{
 		if (!it.m_node->prev || !it.m_node->next)
 		{
