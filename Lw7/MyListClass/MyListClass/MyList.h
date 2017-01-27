@@ -93,9 +93,12 @@ public:
 
 	CMyList & operator=(CMyList && list)
 	{
-		std::swap(m_firstNode, list.m_firstNode);
-		std::swap(m_lastNode, list.m_lastNode);
-		std::swap(m_size, list.m_size);
+		if (&list != this)
+		{
+			std::swap(m_firstNode, list.m_firstNode);
+			std::swap(m_lastNode, list.m_lastNode);
+			std::swap(m_size, list.m_size);
+		}
 		return *this;
 	}
 
