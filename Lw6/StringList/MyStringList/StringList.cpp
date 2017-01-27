@@ -192,6 +192,25 @@ std::string const & CStringList::GetFrontElement() const
 	return m_firstNode->next->data;
 }
 
+void CStringList::insert(const ConstIteratorType & it, const std::string & data)
+{
+	auto newNode = std::make_shared<Node>(data, it.m_node->prev, it.m_node);
+	it.m_node->prev->next = newNode;
+	it.m_node->prev = newNode;
+	++m_size;
+}
+
+void CStringList::erase(const ConstIteratorType & it)
+{
+	if (!it.m_node->prev || !it.m_node->next)
+	{
+		throw std::logic_error("can not deleted the element of end or rend iterator");
+	}
+	it.m_node->next->prev = it.m_node->prev;
+	it.m_node->prev->next = it.m_node->next;
+	--m_size;
+}
+
 bool operator==(const CStringList & lhs, const CStringList & rhs)
 {
 	if (&lhs == &rhs)
