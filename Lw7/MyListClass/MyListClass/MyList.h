@@ -7,13 +7,14 @@
 template <typename T>
 struct Node
 {
+	Node() {};
 	Node(T const & data, std::shared_ptr<Node<T>> const & prev, std::shared_ptr<Node<T>> const & next)
-		: data(data), prev(prev), next(next)
+		: data(std::make_unique<T>(data)), prev(prev), next(next)
 	{
 	}
-	T data;
-	std::shared_ptr<Node<T>> prev;
-	std::shared_ptr<Node<T>> next;
+	std::unique_ptr<T> data = nullptr;
+	std::shared_ptr<Node<T>> prev = nullptr;
+	std::shared_ptr<Node<T>> next = nullptr;	
 };
 
 template <typename T>
@@ -122,7 +123,7 @@ public:
 			{
 				throw std::logic_error("can not take the value of end or rend iterator");
 			}
-			return m_node->data;
+			return *m_node->data;
 		}
 
 		CIterator & operator++()
@@ -176,7 +177,7 @@ public:
 			{
 				throw std::logic_error("can not end or rend iterator value");
 			}
-			return m_node.get();
+			return m_node->data.get();
 		}
 		CIterator() = delete;
 		std::shared_ptr<Node<T>> m_node = nullptr;
@@ -250,7 +251,7 @@ public:
 		{
 			throw std::logic_error("list is empty");
 		}
-		return m_lastNode->prev->data;
+		return *m_lastNode->prev->data;
 	}
 
 	T const& GetBackElement()const
@@ -259,7 +260,7 @@ public:
 		{
 			throw std::logic_error("list is empty");
 		}
-		return m_lastNode->prev->data;
+		return *m_lastNode->prev->data;
 	}
 
 	T & GetFrontElement()
@@ -268,7 +269,7 @@ public:
 		{
 			throw std::logic_error("list is empty");
 		}
-		return m_firstNode->next->data;
+		return *m_firstNode->next->data;
 	}
 
 	T const& GetFrontElement()const
@@ -277,7 +278,7 @@ public:
 		{
 			throw std::logic_error("list is empty");
 		}
-		return m_firstNode->next->data;
+		return *m_firstNode->next->data;
 	}
 
 	void insert(const IteratorType & it, const T & data)
@@ -314,8 +315,8 @@ private:
 	}
 	
 	size_t m_size = 0;
-	std::shared_ptr<Node<T>> m_firstNode = std::make_shared<Node<T>>(T(), nullptr, nullptr);
-	std::shared_ptr<Node<T>> m_lastNode = std::make_shared<Node<T>>(T(), nullptr, nullptr);
+	std::shared_ptr<Node<T>> m_firstNode = std::make_shared<Node<T>>();
+	std::shared_ptr<Node<T>> m_lastNode = std::make_shared<Node<T>>();
 };
 
 template <class T>
