@@ -174,7 +174,7 @@ public:
 		}
 
 	private:
-		IterT * CIterator::operator->() const
+		IterT * operator->() const
 		{
 			if (!m_node->next || !m_node->prev)
 			{
