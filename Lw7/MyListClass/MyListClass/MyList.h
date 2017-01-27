@@ -120,7 +120,7 @@ public:
 		{
 			return CIterator<const IterT>(m_node);
 		}
-		T & operator*()const
+		IterT & operator*()const
 		{
 			if (!m_node->prev || !m_node->next)
 			{
@@ -174,7 +174,7 @@ public:
 		}
 
 	private:
-		boost::optional<T> * CIterator::operator->() const
+		IterT * CIterator::operator->() const
 		{
 			if (!m_node->next || !m_node->prev)
 			{
