@@ -31,62 +31,134 @@ public:
 	CStringList & operator=(const CStringList & list);
 	CStringList & operator=(CStringList && list);
 
+	template <class T>
 	class CIterator
 	{
 		friend CStringList;
-		CIterator(std::shared_ptr<Node> const & node);
+		CIterator(std::shared_ptr<Node> const & node)
+			:m_node(node)
+		{
+		}
 	public:
 		typedef std::bidirectional_iterator_tag iterator_category;
-		typedef std::string value_type;
+		typedef T value_type;
 		typedef ptrdiff_t difference_type;
-		typedef std::string* pointer;
-		typedef std::string& reference;
-		std::string & operator*()const;
-		CIterator & operator++();
-		CIterator operator++(int);
-		CIterator & operator--();
-		CIterator operator--(int);
-		bool operator==(const CIterator & it) const;
-		bool operator!=(const CIterator & it) const;
+		typedef T* pointer;
+		typedef T& reference;
+		operator CIterator<const T>()
+		{
+			return CIterator<const T>(m_node);
+		}
+		T & operator*()const
+		{
+			if (!m_node->prev || !m_node->next)
+			{
+				throw std::logic_error("can not take the value of end or rend iterator");
+			}
+			return m_node->data;
+		}
+
+		CIterator & operator++()
+		{
+			if (!m_node->next)
+			{
+				throw std::logic_error("reached the end of the list");
+			}
+			m_node = m_node->next;
+			return *this;
+		}
+
+		CIterator operator++(int)
+		{
+			auto copy = *this;
+			++*this;
+			return copy;
+		}
+
+		CIterator & operator--()
+		{
+			if (!m_node->prev)
+			{
+				throw std::logic_error("reached the begin of the list");
+			}
+			m_node = m_node->prev;
+			return *this;
+		}
+
+		CIterator operator--(int)
+		{
+			auto copy = *this;
+			--*this;
+			return copy;
+		}
+
+		bool operator==(const CIterator & it) const
+		{
+			return (m_node == it.m_node);
+		}
+
+		bool operator!=(const CIterator & it) const
+		{
+			return (m_node != it.m_node);
+		}
 
 	private:
-		Node * CIterator::operator->() const
+		T * operator->() const
 		{
 			if (!m_node->next || !m_node->prev)
 			{
 				throw std::logic_error("can not end or rend iterator value");
 			}
-			return m_node.get();
+			return &m_node->data;
 		}
 		CIterator() = delete;
 		std::shared_ptr<Node> m_node = nullptr;
 	};
-	typedef std::reverse_iterator<CIterator> CReverseIterator;
-	CIterator begin();
-	CIterator end();
+	typedef CIterator<std::string> IteratorType;
+	typedef CIterator<const std::string> ConstIteratorType;
+	typedef std::reverse_iterator<CIterator<std::string>> ReverseIteratorType;
+	typedef std::reverse_iterator<CIterator<const std::string>> ConstReverseIteratorType;
+	IteratorType begin();
+	IteratorType end();
 
-	const CIterator begin()const;
-	const CIterator end()const;
+	ConstIteratorType begin()const;
+	ConstIteratorType end()const;
 
-	const CIterator cbegin()const;
-	const CIterator cend()const;
+	ConstIteratorType cbegin()const;
+	ConstIteratorType cend()const;
 
-	CReverseIterator rbegin();
-	CReverseIterator rend();
+	ReverseIteratorType rbegin();
+	ReverseIteratorType rend();
 
-	const CReverseIterator rbegin() const;
-	const CReverseIterator rend() const;
+	ConstReverseIteratorType rbegin() const;
+	ConstReverseIteratorType rend() const;
 
-	const CReverseIterator crbegin() const;
-	const CReverseIterator crend() const;
+	ConstReverseIteratorType crbegin() const;
+	ConstReverseIteratorType crend() const;
 
 	std::string & GetBackElement();
 	std::string const& GetBackElement()const;
 	std::string & GetFrontElement();
 	std::string const& GetFrontElement()const;
 
-	void insert(const CIterator & it, const std::string & data);
-	void erase(const CIterator & it);
+	
+	void insert(const ConstIteratorType & it, const std::string & data)
+	{
+		auto newNode = std::make_shared<Node>(data, it.m_node->prev, it.m_node);
+		it.m_node->prev->next = newNode;
+		it.m_node->prev = newNode;
+		++m_size;
+	}
+	void erase(const ConstIteratorType & it)
+	{
+		if (!it.m_node->prev || !it.m_node->next)
+		{
+			throw std::logic_error("can not deleted the element of end or rend iterator");
+		}
+		it.m_node->next->prev = it.m_node->prev;
+		it.m_node->prev->next = it.m_node->next;
+		--m_size;
+	}
 private:
 	size_t m_size = 0;
 	std::shared_ptr<Node> m_firstNode = std::make_shared<Node>("", nullptr, nullptr);
