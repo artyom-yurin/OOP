@@ -3,16 +3,15 @@
 #include <string>
 #include <memory>
 #include <iterator>
+#include <boost/optional.hpp>
 
 template <typename T>
 struct Node
 {
-	Node() {};
-	Node(T const & data, std::shared_ptr<Node<T>> const & prev, std::shared_ptr<Node<T>> const & next)
-		: data(std::make_unique<T>(data)), prev(prev), next(next)
-	{
-	}
-	std::unique_ptr<T> data = nullptr;
+	Node(boost::optional<T> const & data, std::shared_ptr<Node<T>> const & prev, std::shared_ptr<Node<T>> const & next)
+		: data(data), prev(prev), next(next)
+	{}
+	boost::optional<T> data;
 	std::shared_ptr<Node<T>> prev = nullptr;
 	std::shared_ptr<Node<T>> next = nullptr;	
 };
@@ -121,7 +120,7 @@ public:
 		{
 			return CIterator<const IterT>(m_node);
 		}
-		IterT & operator*()const
+		T & operator*()const
 		{
 			if (!m_node->prev || !m_node->next)
 			{
@@ -175,13 +174,13 @@ public:
 		}
 
 	private:
-		Node<IterT> * CIterator::operator->() const
+		boost::optional<T> * CIterator::operator->() const
 		{
 			if (!m_node->next || !m_node->prev)
 			{
 				throw std::logic_error("can not end or rend iterator value");
 			}
-			return m_node->data.get();
+			return m_node->data;
 		}
 		CIterator() = delete;
 		std::shared_ptr<Node<T>> m_node = nullptr;
@@ -321,8 +320,8 @@ private:
 	}
 	
 	size_t m_size = 0;
-	std::shared_ptr<Node<T>> m_firstNode = std::make_shared<Node<T>>();
-	std::shared_ptr<Node<T>> m_lastNode = std::make_shared<Node<T>>();
+	std::shared_ptr<Node<T>> m_firstNode = std::make_shared<Node<T>>(boost::none, nullptr, nullptr);
+	std::shared_ptr<Node<T>> m_lastNode = std::make_shared<Node<T>>(boost::none, nullptr, nullptr);
 };
 
 template <class T>
