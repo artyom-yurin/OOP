@@ -43,7 +43,7 @@ public:
 	{
 		if ((hours > 23) || (minutes > 59) || (seconds > 59))
 		{
-			throw std::invalid_argument("Out of the top border 23:59:59");
+			throw std::invalid_argument("One or more value out of the top border");
 		}
 		if ((hours < 0) || (minutes < 0) || (seconds < 0))
 		{
