@@ -102,7 +102,7 @@ public:
 		return *this;
 	}
 
-	template <class IterT>
+	template <class DataT>
 	class CIterator
 	{
 		friend CMyList;
@@ -112,15 +112,15 @@ public:
 		}
 	public:
 		typedef std::bidirectional_iterator_tag iterator_category;
-		typedef IterT value_type;
+		typedef DataT value_type;
 		typedef ptrdiff_t difference_type;
-		typedef IterT* pointer;
-		typedef IterT& reference;
-		operator CIterator<const IterT>()
+		typedef DataT* pointer;
+		typedef DataT& reference;
+		operator CIterator<const DataT>()
 		{
-			return CIterator<const IterT>(m_node);
+			return CIterator<const DataT>(m_node);
 		}
-		IterT & operator*()const
+		DataT & operator*()const
 		{
 			if (!m_node->prev || !m_node->next)
 			{
@@ -163,25 +163,26 @@ public:
 			return copy;
 		}
 
-		bool operator==(const CIterator & it) const
+		friend bool operator==(const CIterator & lhs, const CIterator & rhs)
 		{
-			return (m_node == it.m_node);
+			return (lhs.m_node == rhs.m_node);
 		}
 
-		bool operator!=(const CIterator & it) const
+		friend bool operator!=(const CIterator & lhs, const CIterator & rhs)
 		{
-			return (m_node != it.m_node);
+			return (lhs.m_node != rhs.m_node);
 		}
 
-	private:
-		IterT * operator->() const
+		DataT * operator->() const
 		{
 			if (!m_node->next || !m_node->prev)
 			{
-				throw std::logic_error("can not end or rend iterator value");
+				throw std::logic_error("can not take pointer of end or rend iterator");
 			}
-			return m_node->data;
+			return m_node->data.get_ptr();
 		}
+
+	private:
 		CIterator() = delete;
 		std::shared_ptr<Node<T>> m_node = nullptr;
 	};
