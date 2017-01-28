@@ -41,13 +41,17 @@ public:
 	// исключение invalid_argument
 	CTime(int hours, int minutes, int seconds)
 	{
-		if ((hours > 23) || (minutes > 59) || (seconds > 59))
+		if ((hours > 23) || (hours < 0))
 		{
-			throw std::invalid_argument("One or more value out of the top border");
+			throw std::invalid_argument("Hours must be from 0 to 23");
 		}
-		if ((hours < 0) || (minutes < 0) || (seconds < 0))
+		if ((minutes > 59) || (minutes < 0))
 		{
-			throw std::invalid_argument("values can not be negative");
+			throw std::invalid_argument("Minutes must be from 0 to 59");
+		}
+		if ((seconds > 59) || (seconds < 0))
+		{
+			throw std::invalid_argument("Seconds must be from 0 to 59");
 		}
 		m_seconds = seconds;
 		m_minutes = minutes;
@@ -82,10 +86,10 @@ public:
 		result << (m_hours <= 9 ? "0" : "")
 			<< m_hours
 			<< ":"
-			<< (m_minutes <= 9 ? "0": "")
+			<< (m_minutes <= 9 ? "0" : "")
 			<< m_minutes
 			<< ":"
-			<< (m_seconds <= 9 ? "0": "")
+			<< (m_seconds <= 9 ? "0" : "")
 			<< m_seconds;
 		return result.str();
 	}
