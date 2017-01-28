@@ -43,7 +43,7 @@ public:
 	{
 		if ((hours > 23) || (minutes > 59) || (seconds > 59))
 		{
-			throw std::invalid_argument("Out of range");
+			throw std::invalid_argument("Out of the top border 23:59:59");
 		}
 		if ((hours < 0) || (minutes < 0) || (seconds < 0))
 		{
@@ -79,13 +79,13 @@ public:
 	string ToString()const
 	{
 		std::stringstream result;
-		result << (m_hours < 9 ? "0" : "")
+		result << (m_hours <= 9 ? "0" : "")
 			<< m_hours
 			<< ":"
-			<< (m_minutes < 9 ? "0": "")
+			<< (m_minutes <= 9 ? "0": "")
 			<< m_minutes
 			<< ":"
-			<< (m_seconds < 9 ? "0": "")
+			<< (m_seconds <= 9 ? "0": "")
 			<< m_seconds;
 		return result.str();
 	}
