@@ -92,25 +92,26 @@ public:
 			return copy;
 		}
 
-		bool operator==(const CIterator & it) const
+		friend bool operator==(const CIterator & lhs, const CIterator & rhs)
 		{
-			return (m_node == it.m_node);
+			return (lhs.m_node == rhs.m_node);
 		}
 
-		bool operator!=(const CIterator & it) const
+		friend bool operator!=(const CIterator & lhs, const CIterator & rhs)
 		{
-			return (m_node != it.m_node);
+			return (lhs.m_node != rhs.m_node);
 		}
 
-	private:
 		T * operator->() const
 		{
 			if (!m_node->next || !m_node->prev)
 			{
-				throw std::logic_error("can not end or rend iterator value");
+				throw std::logic_error("can not take pointer of end or rend iterator");
 			}
 			return &m_node->data;
 		}
+
+	private:
 		CIterator() = delete;
 		std::shared_ptr<Node> m_node = nullptr;
 	};

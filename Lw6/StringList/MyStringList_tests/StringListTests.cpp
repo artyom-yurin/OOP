@@ -75,6 +75,18 @@ BOOST_FIXTURE_TEST_SUITE(String_list, EmptyStringList)
 		BOOST_CHECK_EQUAL(*it, "hello");
 	}
 
+	BOOST_AUTO_TEST_CASE(can_not_move_themselves)
+	{
+		CStringList tempList;
+		tempList.Append("hello");
+		tempList.Append("hi");
+		tempList.Append("hola");
+		tempList = std::move(tempList);
+		BOOST_CHECK_EQUAL(tempList.GetSize(), 3);
+		auto it = tempList.begin();
+		BOOST_CHECK_EQUAL(*it, "hello");
+	}
+
 	BOOST_AUTO_TEST_SUITE(when_created)
 
 		BOOST_AUTO_TEST_CASE(is_empty)
@@ -236,11 +248,17 @@ BOOST_FIXTURE_TEST_SUITE(String_list, EmptyStringList)
 
 		BOOST_AUTO_TEST_CASE(can_be_compared)
 		{
-			 BOOST_CHECK(list.begin() == list.end());
+			 BOOST_CHECK(list.begin() == list.cbegin());
 			 list.Append("hello");
 			 BOOST_CHECK(list.begin() != list.end());
 		}
 		
+		BOOST_AUTO_TEST_CASE(can_give_pointer)
+		{
+			list.Append("Hello");
+			BOOST_CHECK_EQUAL(list.begin()->length(), 5);
+		}
+
 		BOOST_AUTO_TEST_CASE(can_not_take_the_value_of_end_or_rend_iterator)
 		{
 			BOOST_CHECK_THROW(*list.end(), std::logic_error);
@@ -252,6 +270,17 @@ BOOST_FIXTURE_TEST_SUITE(String_list, EmptyStringList)
 			BOOST_CHECK_THROW(*constList.rend(), std::logic_error);
 		}
 		
+		BOOST_AUTO_TEST_CASE(can_not_take_pointer_of_end_or_rend_iterator)
+		{
+			BOOST_CHECK_THROW(list.end()->length(), std::logic_error);
+			BOOST_CHECK_THROW(list.cend()->length(), std::logic_error);
+			BOOST_CHECK_THROW(list.rend()->length(), std::logic_error);
+			BOOST_CHECK_THROW(list.crend()->length(), std::logic_error);
+			const CStringList constList;
+			BOOST_CHECK_THROW(constList.end()->length(), std::logic_error);
+			BOOST_CHECK_THROW(constList.rend()->length(), std::logic_error);
+		}
+
 		BOOST_AUTO_TEST_CASE(can_be_increnenting_and_decrementing)
 		{
 			list.Append("first");
