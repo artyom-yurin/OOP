@@ -7,6 +7,11 @@ std::string FormatNumber(int number)
 	return (number <= 9 ? "0" + std::to_string(number) : std::to_string(number));
 }
 
+bool InRange(int number, int UpperLimit, int LowerLimit)
+{
+	return (number <= UpperLimit && number >= LowerLimit);
+}
+
 class CTime
 {
 public:
@@ -15,7 +20,7 @@ public:
 	// исключение invalid_argument
 	explicit CTime(int timeStamp)
 	{
-		if (timeStamp >= 86400 || timeStamp < 0)
+		if (!InRange(timeStamp, 86399, 0))
 		{
 			throw std::invalid_argument("Timestamp must be from 0 to 86399");
 		}
@@ -24,15 +29,15 @@ public:
 
 	CTime(int hours, int minutes, int seconds)
 	{
-		if ((hours > 23) || (hours < 0))
+		if (!InRange(hours, 23, 0))
 		{
 			throw std::invalid_argument("Hours must be from 0 to 23");
 		}
-		if ((minutes > 59) || (minutes < 0))
+		if (!InRange(minutes, 59, 0))
 		{
 			throw std::invalid_argument("Minutes must be from 0 to 59");
 		}
-		if ((seconds > 59) || (seconds < 0))
+		if (!InRange(seconds, 59, 0))
 		{
 			throw std::invalid_argument("Seconds must be from 0 to 59");
 		}
@@ -120,5 +125,6 @@ std::ostream & operator<<(std::ostream & output, const CTime & time)
 
 int main()
 {
+
 	return 0;
 }
