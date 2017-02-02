@@ -1,44 +1,27 @@
-п»ї#include <string>
-#include <sstream>
+#include <string>
 #include <iostream>
-
 using namespace std;
 
-void Normalize(int & hours, int & minutes, int & seconds)
+std::string FormatNumber(int number)
 {
-	if ((hours < 0) || (minutes < 0) || (seconds < 0))
-	{
-		if (seconds < 0)
-		{
-			seconds += 60;
-			--minutes;
-		}
-		if (minutes < 0)
-		{
-			minutes += 60;
-			--hours;
-		}
-		if (hours < 0)
-		{
-			hours += 24;
-		}
-	}
-	else
-	{
-		minutes += seconds / 60;
-		seconds = seconds % 60;
-		hours += minutes / 60;
-		minutes = minutes % 60;
-		hours = hours % 24;
-	}
+	return (number <= 9 ? "0" + std::to_string(number) : std::to_string(number));
 }
 
 class CTime
 {
 public:
-	// РљРѕРЅСЃС‚СЂСѓРёСЂСѓРµС‚ РІСЂРµРјСЏ (С‡С‡:РјРј:СЃСЃ). 
-	// Р•СЃР»Рё С‡Р°СЃС‹, РјРёРЅСѓС‚С‹, РёР»Рё СЃРµРєСѓРЅРґС‹ РІС‹С…РѕРґСЏС‚ Р·Р° РїСЂРµРґРµР»С‹ 23:59:59, Р±СЂРѕСЃР°РµС‚
-	// РёСЃРєР»СЋС‡РµРЅРёРµ invalid_argument
+	// Конструирует время (чч:мм:сс). 
+	// Если часы, минуты, или секунды выходят за пределы 23:59:59, бросает
+	// исключение invalid_argument
+	explicit CTime(int timeStamp)
+	{
+		if (timeStamp >= 86400 || timeStamp < 0)
+		{
+			throw std::invalid_argument("Timestamp must be from 0 to 86399");
+		}
+		m_timeStamp = timeStamp;
+	}
+
 	CTime(int hours, int minutes, int seconds)
 	{
 		if ((hours > 23) || (hours < 0))
@@ -53,126 +36,89 @@ public:
 		{
 			throw std::invalid_argument("Seconds must be from 0 to 59");
 		}
-		m_seconds = seconds;
-		m_minutes = minutes;
-		m_hours = hours;
+		m_timeStamp = hours * 3600 + minutes * 60 + seconds;
 	}
 
-	// Р’РѕР·РІСЂР°С‰Р°РµС‚ РєРѕР»РёС‡РµСЃС‚РІРѕ С‡Р°СЃРѕРІ (0..23)
+	// Возвращает количество часов (0..23)
 	int GetHours()const
 	{
-		return m_hours;
-		// РќР°РїРёСЃР°С‚СЊ  РЅРµРґРѕСЃС‚Р°СЋС‰РёР№ РєРѕРґ
+		return m_timeStamp / 3600;
+		// Написать  недостающий код
 	}
 
-	// Р’РѕР·РІСЂР°С‰Р°РµС‚ РєРѕР»РёС‡РµСЃС‚РІРѕ РјРёРЅСѓС‚ (0..59)
+	// Возвращает количество минут (0..59)
 	int GetMinutes()const
 	{
-		return m_minutes;
-		// РќР°РїРёСЃР°С‚СЊ  РЅРµРґРѕСЃС‚Р°СЋС‰РёР№ РєРѕРґ
+		return (m_timeStamp % 3600) / 60;
+		// Написать  недостающий код
 	}
 
-	// Р’РѕР·РІСЂР°С‰Р°РµС‚ РєРѕР»РёС‡РµСЃС‚РІРѕ СЃРµРєСѓРЅРґ (0..59)
+	// Возвращает количество секунд (0..59)
 	int GetSeconds()const
 	{
-		return m_seconds;
-		// РќР°РїРёСЃР°С‚СЊ  РЅРµРґРѕСЃС‚Р°СЋС‰РёР№ РєРѕРґ
+		return m_timeStamp % 60;
+		// Написать  недостающий код
 	}
 
-	// Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃС‚СЂРѕРєРѕРІРѕРµ РїСЂРµРґСЃС‚Р°РІР»РµРЅРёРµ РІСЂРµРјРµРЅРё РІ С„РѕСЂРјР°С‚Рµ С‡С‡:РјРј:СЃСЃ
+	// Возвращает строковое представление времени в формате чч:мм:сс
 	string ToString()const
 	{
-		std::stringstream result;
-		result << (m_hours <= 9 ? "0" : "")
-			<< m_hours
-			<< ":"
-			<< (m_minutes <= 9 ? "0" : "")
-			<< m_minutes
-			<< ":"
-			<< (m_seconds <= 9 ? "0" : "")
-			<< m_seconds;
-		return result.str();
+		std::string hours = FormatNumber(GetHours());
+		std::string minutes = FormatNumber(GetMinutes());
+		std::string seconds = FormatNumber(GetSeconds());
+		return{
+			hours + ":" + minutes + ":" + seconds
+		};
+	}
+
+	int GetTimeStamp()const
+	{
+		return m_timeStamp;
 	}
 
 	const CTime operator+=(const CTime & summand)
 	{
-		int hours = GetHours() + summand.GetHours();
-		int minutes = GetMinutes() + summand.GetMinutes();
-		int seconds = GetSeconds() + summand.GetSeconds();
-		Normalize(hours, minutes, seconds);
-		m_hours = hours;
-		m_minutes = minutes;
-		m_seconds = seconds;
+		m_timeStamp = (m_timeStamp + summand.m_timeStamp) % (24 * 60 * 60);
 		return *this;
 	}
 
 	const CTime operator-=(const CTime & subtrahend)
 	{
-		int hours = GetHours() - subtrahend.GetHours();
-		int minutes = GetMinutes() - subtrahend.GetMinutes();
-		int seconds = GetSeconds() - subtrahend.GetSeconds();
-		Normalize(hours, minutes, seconds);
-		m_hours = hours;
-		m_minutes = minutes;
-		m_seconds = seconds;
+		m_timeStamp = (m_timeStamp - subtrahend.m_timeStamp + (24 * 60 * 60)) % (24 * 60 * 60);
 		return *this;
 	}
 
 private:
-	int m_seconds;
-	int m_minutes;
-	int m_hours;
+	int m_timeStamp = 0;
 };
 
 const CTime operator+(const CTime & lhs, const CTime & rhs)
 {
-	int hours = lhs.GetHours() + rhs.GetHours();
-	int minutes = lhs.GetMinutes() + rhs.GetMinutes();
-	int seconds = lhs.GetSeconds() + rhs.GetSeconds();
-	Normalize(hours, minutes, seconds);
-	return CTime(hours, minutes, seconds);
+	return CTime((lhs.GetTimeStamp() + rhs.GetTimeStamp()) % (24 * 60 * 60));
 }
 
 const CTime operator-(const CTime & lhs, const CTime & rhs)
 {
-	int hours = lhs.GetHours() - rhs.GetHours();
-	int minutes = lhs.GetMinutes() - rhs.GetMinutes();
-	int seconds = lhs.GetSeconds() - rhs.GetSeconds();
-	Normalize(hours, minutes, seconds);
-	return CTime(hours, minutes, seconds);
+	return CTime((lhs.GetTimeStamp() - rhs.GetTimeStamp() + (24 * 60 * 60)) % (24 * 60 * 60));
 }
 
-std::ostream & operator<<(std::ostream & output, const CTime & value)
+std::ostream & operator<<(std::ostream & output, const CTime & time)
 {
-	output << value.ToString();
+	output << time.ToString();
 	return output;
 }
 
 /*
-Р РµР°Р»РёР·РѕРІР°С‚СЊ РјРµС‚РѕРґС‹ РєР»Р°СЃСЃР° Рё РїРµСЂРµС‡РёСЃР»РµРЅРЅС‹Рµ РЅРёР¶Рµ РѕРїРµСЂР°С†РёРё. РЎР»РѕР¶РµРЅРёРµ Рё РІС‹С‡РёС‚Р°РЅРёРµ РІС‹РїРѕР»РЅСЏРµС‚СЃСЏ РІ РїСЂРµРґРµР»Р°С… СЃСѓС‚РѕРє
-РџСЂРёРјРµСЂС‹:
-+	СЃРєР»Р°РґС‹РІР°РµС‚ РІСЂРµРјРµРЅРЅС‹Рµ РёРЅС‚РµСЂРІР°Р»С‹: 23:59:17 + 01:12:13 -> 01:11:30
--	РІС‹С‡РёС‚Р°РµС‚ РІСЂРµРјРµРЅРЅС‹Рµ РёРЅС‚РµСЂРІР°Р»С‹: 00:15:25 - 01:16:25 -> 22:59:00
-+=	a += b Р°РЅР°Р»РѕРіРёС‡РЅРѕ a = a + b
--=	a -= b Р°РЅР°Р»РѕРіРёС‡РЅРѕ a = a - b
-<<	РІС‹РІРѕРґРёС‚ РІСЂРµРјСЏ РІ Р·Р°РґР°РЅРЅС‹Р№ ostream РІ С„РѕСЂРјР°РµС‚ С‡С‡:РјРј:СЃСЃ
+Реализовать методы класса и перечисленные ниже операции. Сложение и вычитание выполняется в пределах суток
+Примеры:
++	складывает временные интервалы: 23:59:17 + 01:12:13 -> 01:11:30
+-	вычитает временные интервалы: 00:15:25 - 01:16:25 -> 22:59:00
++=	a += b аналогично a = a + b
+-=	a -= b аналогично a = a - b
+<<	выводит время в заданный ostream в формает чч:мм:сс
 */
 
 int main()
 {
-	CTime fTime(23, 59, 17);
-	CTime sTime(1, 12, 13);
-	std::cout << fTime + sTime << "\n";
-	fTime += sTime;
-	std::cout << fTime << "\n";
-	CTime tTime(0, 15, 25);
-	CTime foTime(1, 16, 25);
-	std::cout << tTime - foTime << "\n";
-	tTime -= foTime;
-	std::cout << tTime<< "\n";
-	std::cout << foTime - foTime << "\n";
-	/*
-
-	*/
 	return 0;
 }
